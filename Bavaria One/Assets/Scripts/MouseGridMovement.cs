@@ -31,7 +31,17 @@ public class MouseGridMovement : MonoBehaviour {
 
 			if(xBetweenPoints && zBetweenPoints)
 			{
-				Selection.gameObject.SetActive(false);
+                if ((hoveredPoint - temp).magnitude < hoverPrecision)
+                {
+                    var meshFilter = Selection.GetComponent<MeshFilter>();
+                    meshFilter.mesh = meshes[2];
+                    Selection.position = hoveredPoint;
+                    Selection.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Selection.gameObject.SetActive(false);
+                }
 			}
 			else 
 			{

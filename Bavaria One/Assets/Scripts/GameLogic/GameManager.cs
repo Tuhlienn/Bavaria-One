@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour{
     public int width, height;
     public ResourceCount startResources;
 
-    public float ResourceFrequency = 0.01f;
-    public int ResourceOctaves = 5;
+    public float ResourceFrequency = 0.1f;
+    public int ResourceOctaves = 6;
     public float ResourceSeed = 111.68465165f;
 
     private static GameManager instance;
