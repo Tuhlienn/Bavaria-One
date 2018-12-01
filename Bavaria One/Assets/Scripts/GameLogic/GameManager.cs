@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour{
     }
 
     public void addCity(Vector2 position) {
-        addCity(new City(position, Instance.connections, Instance.map));
+        addCity(new City(position, Instance.connections, Instance.map, CityNameGenerator.GenerateName()));
     }
 
     public void addCity(City city) {

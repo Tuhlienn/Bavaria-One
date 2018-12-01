@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641198, b: 0.5748169, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657737, g: 0.49641234, b: 0.5748175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -416,7 +416,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1089835585}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 25, z: -40}
+  m_LocalPosition: {x: 0, y: 10, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -517,6 +517,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TerrainPrefab: {fileID: 1244446481749324, guid: 2f3aa929311cf06489ea630fa676bd30,
     type: 2}
+  GeldIcon: {fileID: 1124367334943906, guid: 5f78d2b1012c70f42ac856c58cd5b5fe, type: 2}
+  BierIcon: {fileID: 1970388138569016, guid: 38c4da4c34198c14baf568773dc77f93, type: 2}
+  StahlIcon: {fileID: 1082398020241050, guid: d8022ec552e367e428df9c3709dd64d8, type: 2}
+  BetonIcon: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a, type: 2}
+  StromIcon: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8, type: 2}
   GridX: 2
   GridY: 2
   Spacing: 25
