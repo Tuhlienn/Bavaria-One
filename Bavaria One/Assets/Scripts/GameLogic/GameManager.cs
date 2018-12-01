@@ -4,7 +4,8 @@ using UnityEngine;
 using System.Xml.Serialization;
 
 public class GameManager : MonoBehaviour{
-    public int width, height;
+    public int width = 100;
+    public int height = 100;
     public ResourceCount startResources;
 
     public float ResourceFrequency = 0.1f;
@@ -20,12 +21,15 @@ public class GameManager : MonoBehaviour{
     private ResourceCount resources;
 
     private GameManager() {
-        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
         this.cities = new List<City>();
         this.trains = new List<Train>();
         this.tickingConnections = new List<Connection>();
         this.connections = new Graph(width + 1, height + 1);
         this.resources = startResources;
+    }
+    public void Start()
+    {
+        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
     }
 
     public void Update()
