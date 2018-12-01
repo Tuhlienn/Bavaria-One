@@ -1,17 +1,22 @@
 fileFormatVersion: 2
-guid: dd879d504aea067499ae1ec6433a9fb4
+guid: b1a9dd43e3bc7db4c9d6719c99a9b6b2
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Stadtv1
+    100000: StadtLV3
     100002: //RootNode
-    400000: Stadtv1
+    400000: StadtLV3
     400002: //RootNode
-    2100000: Stadtv1Mat
-    2300000: Stadtv1
-    3300000: Stadtv1
-    4300000: Stadtv1
-  externalObjects: {}
+    2100000: StadtLV3Mat
+    2300000: StadtLV3
+    3300000: StadtLV3
+    4300000: StadtLV3
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StadtLV3Mat
+    second: {fileID: 2100000, guid: 708a33d4157ef5349b0f0b1ad9f4d7c8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
