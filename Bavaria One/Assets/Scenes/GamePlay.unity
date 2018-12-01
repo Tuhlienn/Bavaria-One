@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657683, g: 0.49641198, b: 0.5748169, a: 1}
+  m_IndirectSpecularColor: {r: 0.24647513, g: 0.2823457, b: 0.34570342, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696d6c565172a38429fca6cf4bb6498f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CityPrefab: {fileID: 1778572386296750, guid: 9f3f9f49084934049bc398c178cdc4d9, type: 2}
 --- !u!1 &1305803420
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public struct Map{
                     float v = UnityEngine.Random.Range(0.0f, 1.0f);
                     if (v < 0.2f)
                     {
-                        tiles[i, j] = new Tile(new ResourceCount(0,0,0,0,0));
+                        tiles[i, j] = new Tile(new ResourceCount(0, 0, 0, 0, 0));
                     }
                     else if (v < 0.4f)
                     {
