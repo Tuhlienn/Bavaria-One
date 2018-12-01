@@ -26,7 +26,7 @@ public class CameraMover : MonoBehaviour {
 		}
 		if (Input.GetAxis("Vertical") != 0f )
 		{
-			deltaPosition.y += Input.GetAxis("Vertical") * CameraSpeed * Time.deltaTime;
+			deltaPosition.z += Input.GetAxis("Vertical") * CameraSpeed * Time.deltaTime;
 		}
 
 		if(EnablePanning) 
@@ -39,13 +39,13 @@ public class CameraMover : MonoBehaviour {
 				// Move the camera
 				deltaPosition.x -= CameraSpeed * Time.deltaTime;
 			}
-			if (Input.mousePosition.y >= Screen.height - PanningThreshold) {
+			if (Input.mousePosition.z >= Screen.height - PanningThreshold) {
 				// Move the camera
-				deltaPosition.y += CameraSpeed * Time.deltaTime;
+				deltaPosition.z += CameraSpeed * Time.deltaTime;
 			}
-			if (Input.mousePosition.y <= PanningThreshold) {
+			if (Input.mousePosition.z <= PanningThreshold) {
 				// Move the camera
-				deltaPosition.y -= CameraSpeed * Time.deltaTime;
+				deltaPosition.z-= CameraSpeed * Time.deltaTime;
 			}
 		}
 
@@ -54,7 +54,8 @@ public class CameraMover : MonoBehaviour {
 		if(deltaPosition.magnitude < 0.05f) {
 			deltaPosition = Vector3.zero;
 		}
-		transform.Translate(toMove);
+		toMove = Quaternion.Euler(0, 45, 0) * toMove;
+		transform.Translate(toMove, Space.World);
 
 		// Vector3 newPos = new Vector3();
 		// newPos.x = Mathf.Clamp(transform.position.x, bounds.xMin, bounds.xMax);
