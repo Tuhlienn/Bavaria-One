@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\GridOverlay.cs" />
     <Compile Include="Assets\Scripts\MouseGridMovement.cs" />
     <Compile Include="Assets\Scripts\NoiseTerrain.cs" />
+    <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <None Include="Assets\Effects\GridShader.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Anas/Desktop/Bavaria-One/Bavaria One/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
