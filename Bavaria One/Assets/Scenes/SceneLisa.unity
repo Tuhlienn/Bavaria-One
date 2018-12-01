@@ -439,8 +439,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images:
-  - {fileID: 21300000, guid: e23b59a9a13238740bff5575de78da10, type: 3}
+  - {fileID: 21300000, guid: bfa1bc35747052d40b37e23e91cc78df, type: 3}
+  - {fileID: 21300000, guid: d1b07a1cab46abb4f902a1989894fb19, type: 3}
   - {fileID: 21300000, guid: 22ac5463366506542af5fe066aee3715, type: 3}
+  - {fileID: 21300000, guid: 5bc180b7b79811646acc35949193473b, type: 3}
+  - {fileID: 21300000, guid: a235c6f2c30a6cc4899b25a230ca2ba4, type: 3}
+  - {fileID: 21300000, guid: 41cd2501f3e09d54f895dafc790a295a, type: 3}
+  - {fileID: 21300000, guid: dc3cacb41c4408240afb243a4f31cebe, type: 3}
   NewspaperPrefab: {fileID: 1020494526034846, guid: af73c7358f25e3f429438c158d614020,
     type: 2}
   parent: {fileID: 1529554823}
