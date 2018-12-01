@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 996b45caac5250647aa5d7879a5eab2f
+guid: a5563d07fd0cc2c44b9ae03fe6fe21e7
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: kuppelv1
+    100000: stadtLV1
     100002: //RootNode
-    400000: kuppelv1
+    400000: stadtLV1
     400002: //RootNode
-    2100000: kuppelv1Mat
-    2300000: kuppelv1
-    3300000: kuppelv1
-    4300000: kuppelv1
+    2100000: stadtLV1Mat
+    2300000: stadtLV1
+    3300000: stadtLV1
+    4300000: stadtLV1
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: kuppelv1Mat
-    second: {fileID: 2100000, guid: d23e02eaf3939b54a812616be8fe669a, type: 2}
+      name: stadtLV1Mat
+    second: {fileID: 2100000, guid: 7910ac3d36f2dd1469c7ec39c6e8c454, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
