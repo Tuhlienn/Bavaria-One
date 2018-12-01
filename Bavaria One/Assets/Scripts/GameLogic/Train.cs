@@ -23,7 +23,7 @@ public class Train : Ticking{
                 load = myCity.upgradeLevel * myCity.production;
             }
             else {
-                GameManager.Instance.resources += load;
+                GameManager.Instance.Resources += load;
                 load = 0 * load;
                 queue.Reverse();
             }

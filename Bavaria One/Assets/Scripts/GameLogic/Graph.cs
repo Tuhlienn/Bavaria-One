@@ -16,6 +16,7 @@ public class Graph
         this.width = width;
         this.height = height;
         connections = new Connection[width * height, width * height];
+        this.IntitializeConnections();
     }
 
     public Queue<Vector2> ToStammstrecke(Vector2 from) {
@@ -84,5 +85,13 @@ public class Graph
             }
         }
         return false;
+    }
+
+    private void IntitializeConnections() {
+        for (int i = 0; i < width * height; i++) {
+            for (int j = 0; j < width * height; j++) {
+                this.connections[i, j] = NO_CONNECTION;
+            }
+        }
     }
 }
