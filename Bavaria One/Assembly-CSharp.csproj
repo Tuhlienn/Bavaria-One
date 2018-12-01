@@ -74,8 +74,10 @@
     <Compile Include="Assets\Scripts\GameLogic\Train.cs" />
     <Compile Include="Assets\Scripts\GridOverlay.cs" />
     <Compile Include="Assets\Scripts\MouseGridMovement.cs" />
+    <Compile Include="Assets\Scripts\NoiseResources.cs" />
     <Compile Include="Assets\Scripts\NoiseTerrain.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\TerrainGenerator.cs" />
     <None Include="Assets\Effects\GridShader.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Anas/Desktop/Bavaria-One/Bavaria One/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

@@ -8,11 +8,13 @@ public class City {
 	public ResourceCount production;
     public Queue<Vector2> path;
     public int upgradeLevel;
+    public string cityName;
 
-    public City (Vector2 position, Graph graph, Map map) {
+    public City (Vector2 position, Graph graph, Map map, string name) {
         this.position = position;
         CalculatePaths(graph);
         CalculateProduction(map);
+        cityName = name;
     }
 
     private void CalculateProduction(Map map) {
