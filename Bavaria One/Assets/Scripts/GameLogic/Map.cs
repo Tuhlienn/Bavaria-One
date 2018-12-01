@@ -1,5 +1,4 @@
-﻿
-public struct Map{
+﻿public struct Map{
     
     public Tile[,] tiles;
 
