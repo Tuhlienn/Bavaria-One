@@ -10,9 +10,17 @@ public class ButtonManager : MonoBehaviour {
 
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
+    public RectTransform popUpTransform;
     public GameObject popUpUpgradeInProgress;
+    public RectTransform popUpInProgressTransform;
     public Text upgradeText;
     public Text costText;
+
+    private void Start()
+    {
+        popUpTransform = popUpUpgrade.GetComponent<RectTransform>();
+        popUpInProgressTransform = popUpUpgradeInProgress.GetComponent<RectTransform>();
+    }
 
     public void OnToggleBuildMode()
     {
@@ -29,6 +37,16 @@ public class ButtonManager : MonoBehaviour {
         for(int i = 0; i < resourceTextFields.Length; i ++)
         {
             //resourceTextField[i].text = gamemanager.resources[i].value.toString();
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 point;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, Input.mousePosition, null, out point);
+            popUpTransform.anchoredPosition = point;
         }
     }
 
