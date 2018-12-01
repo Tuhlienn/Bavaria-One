@@ -16,7 +16,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: stadtLV1Mat
-    second: {fileID: 2100000, guid: 7910ac3d36f2dd1469c7ec39c6e8c454, type: 2}
+    second: {fileID: 2100000, guid: 2d7607b480c53ae4fbe9bb93aacdc4bd, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
