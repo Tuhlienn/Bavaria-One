@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Train : Ticking{
+public class Train : Ticking
+{
     Vector2 position;
     ResourceCount load;
     City myCity;
@@ -21,6 +22,7 @@ public class Train : Ticking{
             queue.Concat(myCity.path);
             if (position.Equals(myCity.position)) {
                 load = myCity.upgradeLevel * myCity.production;
+                load = load + 0.25f * myCity.upgradeLevel * myCity.production;
             }
             else {
                 GameManager.Instance.Resources += load;
@@ -28,6 +30,9 @@ public class Train : Ticking{
                 queue.Reverse();
             }
         }
-        position = queue.Dequeue();
+        Vector2 NewPosition = queue.Dequeue();
+        GameManager Instance = GameManager.Instance;
+        GameManager.addConnection(Instance.Connections.ConnectionAt(position, NewPosition));
+        position = NewPosition;
     } 
 }
