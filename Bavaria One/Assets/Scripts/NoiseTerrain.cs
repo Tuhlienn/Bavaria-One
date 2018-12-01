@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshCollider))]
 public class NoiseTerrain : MonoBehaviour 
 {
 	public int mapSize = 50;
@@ -23,6 +24,7 @@ public class NoiseTerrain : MonoBehaviour
 	{
 		terrain = new Mesh();
 		GetComponent<MeshFilter>().mesh = terrain;
+		GetComponent<MeshCollider>().sharedMesh = terrain;
 
 		GenerateTerrain();
 		UpdateMesh();
@@ -43,7 +45,7 @@ public class NoiseTerrain : MonoBehaviour
 			for(int x = 0; x <= voxelCount; x++) 
 			{
 				float height = PerlinMultiOctave(x + (this.transform.position.x * voxelsPerUnit), z + (this.transform.position.z * voxelsPerUnit), frequency, octaves, seed) * amplitude;
-				vertices[i] = new Vector3(x / (float)voxelsPerUnit, height, z / (float)voxelsPerUnit);
+				vertices[i] = new Vector3(x / (float)voxelsPerUnit, height - amplitude, z / (float)voxelsPerUnit);
 				i++;
 			}
 		}
