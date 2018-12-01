@@ -8,7 +8,8 @@ public class CameraMover : MonoBehaviour {
 	public float CameraSpeed;
 	public float SmoothingFactor = 0.8f;
 
-	public float PanningThreshold = 50f; 
+	public float PanningThreshold = 50f;
+	public bool EnablePanning = true; 
 
 	private Rect bounds;
 
@@ -28,21 +29,24 @@ public class CameraMover : MonoBehaviour {
 			deltaPosition.y += Input.GetAxis("Vertical") * CameraSpeed * Time.deltaTime;
 		}
 
-		if (Input.mousePosition.x >= Screen.width - PanningThreshold) {
-			// Move the camera
-			deltaPosition.x += CameraSpeed * Time.deltaTime;
-		}
-		if (Input.mousePosition.x <= PanningThreshold) {
-			// Move the camera
-			deltaPosition.x -= CameraSpeed * Time.deltaTime;
-		}
-		if (Input.mousePosition.y >= Screen.height - PanningThreshold) {
-			// Move the camera
-			deltaPosition.y += CameraSpeed * Time.deltaTime;
-		}
-		if (Input.mousePosition.y <= PanningThreshold) {
-			// Move the camera
-			deltaPosition.y -= CameraSpeed * Time.deltaTime;
+		if(EnablePanning) 
+		{
+			if (Input.mousePosition.x >= Screen.width - PanningThreshold) {
+				// Move the camera
+				deltaPosition.x += CameraSpeed * Time.deltaTime;
+			}
+			if (Input.mousePosition.x <= PanningThreshold) {
+				// Move the camera
+				deltaPosition.x -= CameraSpeed * Time.deltaTime;
+			}
+			if (Input.mousePosition.y >= Screen.height - PanningThreshold) {
+				// Move the camera
+				deltaPosition.y += CameraSpeed * Time.deltaTime;
+			}
+			if (Input.mousePosition.y <= PanningThreshold) {
+				// Move the camera
+				deltaPosition.y -= CameraSpeed * Time.deltaTime;
+			}
 		}
 
 		Vector3 toMove = Vector3.Lerp(Vector3.zero, deltaPosition, SmoothingFactor);

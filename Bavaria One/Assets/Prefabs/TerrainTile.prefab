@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: 25
   voxelsPerUnit: 10
-  amplitude: 0.5
-  frequency: 0.1
+  amplitude: 0.3
+  frequency: 0.05
   octaves: 5
   seed: 54598

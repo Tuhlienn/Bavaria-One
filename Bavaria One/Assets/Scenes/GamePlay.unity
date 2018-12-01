@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 529128345}
   - component: {fileID: 529128344}
   - component: {fileID: 529128343}
-  - component: {fileID: 529128342}
   m_Layer: 0
   m_Name: Selection
   m_TagString: Untagged
@@ -219,18 +218,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &529128342
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 529128341}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &529128343
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -246,7 +233,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 43ba43eea8f69ae4ab131f362395977d, type: 2}
+  - {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -272,7 +259,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 529128341}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &529128345
 Transform:
   m_ObjectHideFlags: 0
@@ -286,6 +273,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &697348470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1769718569217012, guid: 0cd45f5724434f548a360b10f4f4b207,
+    type: 2}
+  m_PrefabInternal: {fileID: 1509340106}
+--- !u!114 &697348475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 697348470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1a874ecac94a445ae891b26428ecb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GridMaterial: {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
+  gridCount: 10
+  gridSize: 1
 --- !u!1001 &728685545
 Prefab:
   m_ObjectHideFlags: 0
@@ -344,98 +350,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e626fb2b90921f418fab8e6711176a7, type: 3}
   m_IsPrefabAsset: 0
---- !u!1 &1089835585
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1089835588}
-  - component: {fileID: 1089835587}
-  - component: {fileID: 1089835586}
-  - component: {fileID: 1089835589}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &1089835586
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089835585}
-  m_Enabled: 1
---- !u!20 &1089835587
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089835585}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1089835588
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089835585}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10, z: -40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
---- !u!114 &1089835589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1089835585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb1a874ecac94a445ae891b26428ecb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GridMaterial: {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
-  gridCount: 10
-  gridSize: 1
 --- !u!1 &1305803420
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +379,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Selection: {fileID: 529128345}
   hoverPrecision: 0.35
+  meshes:
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1305803422
 Transform:
   m_ObjectHideFlags: 0
@@ -483,6 +400,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4e626fb2b90921f418fab8e6711176a7,
     type: 3}
   m_PrefabInternal: {fileID: 728685545}
+--- !u!1001 &1509340106
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.23911765
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.3696438
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.09904577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.89239913
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757890347282086, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021984255692880, guid: 0cd45f5724434f548a360b10f4f4b207,
+        type: 2}
+      propertyPath: EnablePanning
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0cd45f5724434f548a360b10f4f4b207, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!4 &1742315176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4e626fb2b90921f418fab8e6711176a7,
@@ -517,6 +481,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TerrainPrefab: {fileID: 1244446481749324, guid: 2f3aa929311cf06489ea630fa676bd30,
     type: 2}
+  GeldIcon: {fileID: 1124367334943906, guid: 5f78d2b1012c70f42ac856c58cd5b5fe, type: 2}
+  BierIcon: {fileID: 1970388138569016, guid: 38c4da4c34198c14baf568773dc77f93, type: 2}
+  StahlIcon: {fileID: 1082398020241050, guid: d8022ec552e367e428df9c3709dd64d8, type: 2}
+  BetonIcon: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a, type: 2}
+  StromIcon: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8, type: 2}
   GridX: 2
   GridY: 2
   Spacing: 25

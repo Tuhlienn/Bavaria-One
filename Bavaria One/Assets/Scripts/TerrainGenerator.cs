@@ -92,19 +92,19 @@ public class TerrainGenerator : MonoBehaviour {
                     case Resources.Leer:
                         break;
                     case Resources.Geld:
-                        Instantiate(GeldIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), GeldIcon.transform.rotation, this.transform);
+                        Instantiate(GeldIcon, new Vector3(-25.0f * GridX + i, 0, -25 * GridY + j), GeldIcon.transform.rotation, this.transform);
                         break;
                     case Resources.Bier:
-                        Instantiate(BierIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), BierIcon.transform.rotation, this.transform);
+                        Instantiate(BierIcon, new Vector3(-25.0f * GridX + i, 0, -25 * GridY + j), BierIcon.transform.rotation, this.transform);
                         break;
                     case Resources.Stahl:
-                        Instantiate(StahlIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), StahlIcon.transform.rotation, this.transform);
+                        Instantiate(StahlIcon, new Vector3(-25.0f * GridX + i, 0, -25 * GridY + j), StahlIcon.transform.rotation, this.transform);
                         break;
                     case Resources.Beton:
-                        Instantiate(BetonIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), BetonIcon.transform.rotation, this.transform);
+                        Instantiate(BetonIcon, new Vector3(-25.0f * GridX + i, 0, -25 * GridY + j), BetonIcon.transform.rotation, this.transform);
                         break;
                     case Resources.Strom:
-                        Instantiate(StromIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), StromIcon.transform.rotation, this.transform);
+                        Instantiate(StromIcon, new Vector3(-25.0f * GridX + i, 0, -25 * GridY + j), StromIcon.transform.rotation, this.transform);
                         break;
                 }
             }

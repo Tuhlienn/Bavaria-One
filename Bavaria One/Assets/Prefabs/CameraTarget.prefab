@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432825773721710}
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4860734942740552}
@@ -133,6 +133,7 @@ MonoBehaviour:
   CameraSpeed: 12
   SmoothingFactor: 0.5
   PanningThreshold: 50
+  EnablePanning: 1
 --- !u!114 &114769964534814222
 MonoBehaviour:
   m_ObjectHideFlags: 1
