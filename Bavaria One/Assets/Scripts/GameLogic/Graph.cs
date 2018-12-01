@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 public class Graph
 {
-    public static Connection NO_CONNECTION = new Connection(false, false, 0);
+    public static readonly Connection NO_CONNECTION = new Connection(false, false, 0);
 
     Connection[,] connections;
     int width, height;
@@ -93,5 +93,11 @@ public class Graph
                 this.connections[i, j] = NO_CONNECTION;
             }
         }
+    }
+
+    public void Connect (Vector2 firstPos, Vector2 secondPos, bool isStammstrecke, int upgradeLevel) 
+    {
+        int first = (int)(width * (int)firstPos.y) + ((int)firstPos.x % width);
+        int second = (int)(width * (int)secondPos.y) + ((int)secondPos.x % width);
     }
 }
