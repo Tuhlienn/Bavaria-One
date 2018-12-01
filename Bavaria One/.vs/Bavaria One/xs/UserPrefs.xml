@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{6AEA03C6-CFE7-A486-8F0B-986095B230D5}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameLogic/Connection.cs">
+    <Files>
+      <File FileName="Assets/Scripts/GameLogic/ResourceCount.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GameLogic/Tile.cs" Line="2" Column="1" />
+      <File FileName="Assets/Scripts/GameLogic/Map.cs" Line="2" Column="17" />
+      <File FileName="Assets/Scripts/GameLogic/Graph.cs" Line="8" Column="30" />
+      <File FileName="Assets/Scripts/GameLogic/Train.cs" Line="12" Column="84" />
+      <File FileName="Assets/Scripts/GameLogic/City.cs" Line="18" Column="61" />
+      <File FileName="Assets/Scripts/GameLogic/GameManager.cs" Line="17" Column="10" />
+      <File FileName="Assets/Scripts/GameLogic/Ticking.cs" Line="6" Column="50" />
+      <File FileName="Assets/Scripts/GameLogic/Connection.cs" Line="7" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
