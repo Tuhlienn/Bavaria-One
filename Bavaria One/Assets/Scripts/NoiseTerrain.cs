@@ -42,7 +42,7 @@ public class NoiseTerrain : MonoBehaviour
 		{
 			for(int x = 0; x <= voxelCount; x++) 
 			{
-				float height = PerlinMultiOctave(x, z, frequency, octaves, seed) * amplitude;
+				float height = PerlinMultiOctave(x + (this.transform.position.x * voxelsPerUnit), z + (this.transform.position.z * voxelsPerUnit), frequency, octaves, seed) * amplitude;
 				vertices[i] = new Vector3(x / (float)voxelsPerUnit, height, z / (float)voxelsPerUnit);
 				i++;
 			}
