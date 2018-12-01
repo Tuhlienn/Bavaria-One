@@ -517,6 +517,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TerrainPrefab: {fileID: 1244446481749324, guid: 2f3aa929311cf06489ea630fa676bd30,
     type: 2}
+  GeldIcon: {fileID: 1124367334943906, guid: 5f78d2b1012c70f42ac856c58cd5b5fe, type: 2}
+  BierIcon: {fileID: 1970388138569016, guid: 38c4da4c34198c14baf568773dc77f93, type: 2}
+  StahlIcon: {fileID: 1082398020241050, guid: d8022ec552e367e428df9c3709dd64d8, type: 2}
+  BetonIcon: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a, type: 2}
+  StromIcon: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8, type: 2}
   GridX: 2
   GridY: 2
   Spacing: 25
@@ -527,7 +532,7 @@ MonoBehaviour:
   MeshOctaves: 5
   MeshSeed: 54598
   ResourceLowFrequency: 0.1
-  ResourceLowOctaves: 5
+  ResourceLowOctaves: 6
   ResourceLowSeed: 111.684654
   ResourceHighFrequency: 0.5
   ResourceHighOctaves: 6
