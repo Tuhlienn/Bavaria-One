@@ -54,16 +54,16 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ButtonManager.cs" />
-    <Compile Include="Assets\Scripts\CityNameGenerator.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\City.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Connection.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\GameManager.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Graph.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Map.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\ResourceCount.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Ticking.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Tile.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Train.cs" />
+     <Compile Include="Assets\Scripts\CityNameGenerator.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\City.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Connection.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Graph.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Map.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\ResourceCount.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Ticking.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Tile.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\Train.cs" />
      <Compile Include="Assets\Scripts\GridOverlay.cs" />
      <Compile Include="Assets\Scripts\MouseGridMovement.cs" />
      <Compile Include="Assets\Scripts\NoiseResources.cs" />
@@ -315,15 +315,12 @@
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-==== BASE ====
-==== BASE ====
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
-==== BASE ====
-==== BASE ====
   -->
+  
 </Project>
