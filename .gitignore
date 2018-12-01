@@ -4,3 +4,10 @@ Library
 /Bavaria One/.vs/Bavaria One/v15/Server/sqlite3/*.ide
 /Bavaria One/.vs/Bavaria One/v15/Server/sqlite3/*.ide-shm
 /Bavaria One/.vs/Bavaria One/v15/Server/sqlite3/*.ide-wal
+/Bavaria One/.vscode
+/Bavaria One/Assembly-CSharp.csproj
+/Bavaria One/Bavaria One.sln
+/Bavaria One/obj/Debug/Assembly-CSharp.csproj.CoreCompileInputs.cache
+/Bavaria One/obj/Debug/project.razor.json
+/Bavaria One/obj/Debug/Assembly-CSharp.csprojResolveAssemblyReference.cache
+/Bavaria One/obj/
