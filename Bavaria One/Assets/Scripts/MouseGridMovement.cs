@@ -15,13 +15,13 @@ public class MouseGridMovement : MonoBehaviour {
 	void Update () 
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Plane hPlane = new Plane(Vector3.up, Vector3.zero);
-		float distance = 0; 
-		if (hPlane.Raycast(ray, out distance)) 
+		RaycastHit hit;
+		
+		if (Physics.Raycast(ray, out hit, 100.0f)) 
 		{
 			// get the hit point:
-			Vector3 temp = ray.GetPoint(distance);
-			var hoveredPoint = new Vector3Int((int)Mathf.Round(temp.x), 0, (int)Mathf.Round(temp.z));
+			Vector3 temp = hit.point;
+			var hoveredPoint = new Vector3Int((int)Mathf.Round(temp.x), 1, (int)Mathf.Round(temp.z));
 
 			if((hoveredPoint - temp).magnitude < hoverPrecision)
 			{

@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshCollider))]
 public class NoiseTerrain : MonoBehaviour 
 {
 	public int mapSize = 50;
@@ -23,6 +24,7 @@ public class NoiseTerrain : MonoBehaviour
 	{
 		terrain = new Mesh();
 		GetComponent<MeshFilter>().mesh = terrain;
+		GetComponent<MeshCollider>().sharedMesh = terrain;
 
 		GenerateTerrain();
 		UpdateMesh();
