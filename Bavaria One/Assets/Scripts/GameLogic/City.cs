@@ -4,10 +4,10 @@ using UnityEngine;
 using System.Linq;
 
 public class City {
-	Vector2 position;
-	ResourceCount production;
+	public Vector2 position;
+	public ResourceCount production;
     public Queue<Vector2> path;
-    int upgradeLevel;
+    public int upgradeLevel;
 
     public City (Vector2 position, Graph graph, Map map) {
         this.position = position;
