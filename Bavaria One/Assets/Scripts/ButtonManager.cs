@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour {
 
     //Resource Fields
-    public Text[] resourceTextFields = new Text[5];
+    private Text[] resourceTextFields = new Text[5];
 
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
