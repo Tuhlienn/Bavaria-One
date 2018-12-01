@@ -23,7 +23,7 @@ public class Graph
         return BFS(from, IsStammstrecke);
     }
 
-    private Connection ConnectionAt(Vector2 firstPos, Vector2 secondPos) 
+    public Connection ConnectionAt(Vector2 firstPos, Vector2 secondPos) 
     {
         int first = (int)(width * (int) firstPos.y) + ((int) firstPos.x % width);
         int second= (int)(width * (int) secondPos.y) + ((int) secondPos.x % width);
