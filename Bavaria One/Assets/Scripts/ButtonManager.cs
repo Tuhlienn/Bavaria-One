@@ -39,7 +39,7 @@ public class ButtonManager : MonoBehaviour {
             switch (i) //why no array :(
             {
                 case 0:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.money.ToString();
+                    resourceTextFields[i].text = GameManager.Instance.Resources.money.ToString(); 
                     break;
 
                 case 1:

@@ -8,6 +8,8 @@ public class MouseGridMovement : MonoBehaviour {
 	public float hoverPrecision = 0.35f;
 	public Mesh[] meshes;
 
+    public bool selectMode = true;
+
 	void Start () 
 	{
 		
@@ -15,6 +17,9 @@ public class MouseGridMovement : MonoBehaviour {
 	
 	void Update () 
 	{
+        if (!selectMode)
+            return;
+
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		Plane xzPlane = new Plane(Vector3.up, Vector3.zero);
@@ -75,4 +80,9 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 		}
 	}
+
+    public void ToggleSelectMode()
+    {
+        selectMode = !selectMode;
+    }
 }
