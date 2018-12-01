@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour {
     public GameObject TerrainPrefab;
+    public GameObject GeldIcon;
+    public GameObject BierIcon;
+    public GameObject StahlIcon;
+    public GameObject BetonIcon;
+    public GameObject StromIcon;
+
     public int GridX;
     public int GridY;
     public float Spacing;
@@ -15,7 +21,7 @@ public class TerrainGenerator : MonoBehaviour {
     public int MeshOctaves = 5;
     public float MeshSeed = 54598.0f;
 
-    public float ResourceLowFrequency = 0.1f;
+    public float ResourceLowFrequency = 0.01f;
     public int ResourceLowOctaves = 5;
     public float ResourceLowSeed = 111.68465165f;
 
@@ -23,6 +29,7 @@ public class TerrainGenerator : MonoBehaviour {
     public int ResourceHighOctaves = 6;
     public float ResourceHighSeed = -64654.974654f;
 
+    [System.Serializable]
     public enum Resources { Leer, Geld, Bier, Stahl, Beton, Strom };
 
     public Resources[,] ResourceGrid;
@@ -34,7 +41,8 @@ public class TerrainGenerator : MonoBehaviour {
         {
             for(float z = -GridY; z < GridY; z += 1.0f)
             {
-                Instantiate(TerrainPrefab,
+                Instantiate(
+                    TerrainPrefab,
                     new Vector3(x * Spacing + this.transform.position.x, 0.0f, z * Spacing + this.transform.position.z),
                     Quaternion.identity,
                     this.transform);
@@ -42,11 +50,12 @@ public class TerrainGenerator : MonoBehaviour {
         }
         //Generate Resource Grid
         ResourceGrid = new Resources[50 * GridX, 50 * GridY];
-        for (int i = 0; i < 100; i++){
-            for (int j = 0; j < 100; j++)
+        for (int i = 0; i < 50 * GridX; i++){
+            for (int j = 0; j < 50 * GridY; j++)
             {
-                if (0.4f > PerlinMultiOctave(i, j, ResourceLowFrequency, ResourceLowOctaves, ResourceLowSeed)){
-                    float v = PerlinMultiOctave(i, j, ResourceHighFrequency, ResourceHighOctaves, ResourceHighSeed);
+                if (PerlinMultiOctave(i, j, ResourceLowFrequency, ResourceLowOctaves, ResourceLowSeed) < 0.4f)
+                {
+                    float v = Random.Range(0.0f, 1.0f);
                     if (v < 0.2f)
                     {
                         ResourceGrid[i, j] = Resources.Leer;
@@ -73,6 +82,33 @@ public class TerrainGenerator : MonoBehaviour {
                 }
             }
         }
+        //Generate Resource Display
+        for (int i = 0; i < 50 * GridX; i++)
+        {
+            for (int j = 0; j < 50 * GridY; j++)
+            {
+                switch (ResourceGrid[i, j])
+                {
+                    case Resources.Leer:
+                        break;
+                    case Resources.Geld:
+                        Instantiate(GeldIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), GeldIcon.transform.rotation, this.transform);
+                        break;
+                    case Resources.Bier:
+                        Instantiate(BierIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), BierIcon.transform.rotation, this.transform);
+                        break;
+                    case Resources.Stahl:
+                        Instantiate(StahlIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), StahlIcon.transform.rotation, this.transform);
+                        break;
+                    case Resources.Beton:
+                        Instantiate(BetonIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), BetonIcon.transform.rotation, this.transform);
+                        break;
+                    case Resources.Strom:
+                        Instantiate(StromIcon, new Vector3(-25.0f * GridX + i, 1.0f, -25 * GridY + j), StromIcon.transform.rotation, this.transform);
+                        break;
+                }
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -91,6 +127,6 @@ public class TerrainGenerator : MonoBehaviour {
 
     public static float Perlin(float x, float z, float frequency, float amplitude, float seed)
     {
-        return Mathf.PerlinNoise(0.1f + x * frequency + seed, 0.1f + z * frequency + seed) * amplitude;
+        return Mathf.PerlinNoise(0.1257f + x * frequency + seed, 0.355f + z * frequency + seed) * amplitude;
     }
 }
