@@ -8,12 +8,16 @@ public class Connection : Ticking
     public bool isStammstrecke;
     public int upgradeLevel;
     public int vehicleCount;
+    public Vector2 left, right;
 
-    public Connection(bool connected, bool isStammstrecke, int upgradeLevel){
-        this.connected = connected;
+    public Connection(bool isStammstrecke, int upgradeLevel, Vector2 left, Vector2 right)
+    {
+        this.connected = true;
         this.isStammstrecke = isStammstrecke;
         this.upgradeLevel = upgradeLevel;
         this.vehicleCount = 0;
+        this.left = left;
+        this.right = right;
     }
 
     public bool Equals ( Connection other){
@@ -36,5 +40,6 @@ public class Connection : Ticking
         }
         GameManager.Instance.Resources += EnergyCost;
     }
+
 }
 
