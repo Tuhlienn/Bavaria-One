@@ -36,8 +36,30 @@ public class ButtonManager : MonoBehaviour {
     {
         for(int i = 0; i < resourceTextFields.Length; i ++)
         {
-            //resourceTextField[i].text = gamemanager.resources[i].value.toString();
+            switch (i) //why no array :(
+            {
+                case 0:
+                    resourceTextFields[i].text = GameManager.Instance.Resources.money.ToString();
+                    break;
+
+                case 1:
+                    resourceTextFields[i].text = GameManager.Instance.Resources.beer.ToString();
+                    break;
+
+                case 2:
+                    resourceTextFields[i].text = GameManager.Instance.Resources.steel.ToString();
+                    break;
+
+                case 3:
+                    resourceTextFields[i].text = GameManager.Instance.Resources.concrete.ToString();
+                    break;
+
+                case 4:
+                    resourceTextFields[i].text = GameManager.Instance.Resources.energy.ToString();
+                    break;
+            }
         }
+        
     }
 
     private void Update()

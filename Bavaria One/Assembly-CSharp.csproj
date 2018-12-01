@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\CameraMover.cs" />
     <Compile Include="Assets\Scripts\CityNameGenerator.cs" />
     <Compile Include="Assets\Scripts\GameLogic\City.cs" />
     <Compile Include="Assets\Scripts\GameLogic\Connection.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Scripts\GameLogic\Tile.cs" />
     <Compile Include="Assets\Scripts\GameLogic\Train.cs" />
     <Compile Include="Assets\Scripts\GridOverlay.cs" />
+    <Compile Include="Assets\Scripts\IsometricCamera.cs" />
     <Compile Include="Assets\Scripts\MouseGridMovement.cs" />
     <Compile Include="Assets\Scripts\NoiseResources.cs" />
     <Compile Include="Assets\Scripts\NoiseTerrain.cs" />
