@@ -8,7 +8,10 @@ public class NoiseTerrain : MonoBehaviour
 {
 	public int mapSize = 50;
 	public int voxelsPerUnit = 10;
-	public float amplitude = 5.0f;
+	public float amplitude = 5;
+	public float frequency = 0.1f;
+	public int octaves = 4;
+	public float seed = 0;
 
 	Vector3[] vertices;
 	int[] triangles;
@@ -30,30 +33,30 @@ public class NoiseTerrain : MonoBehaviour
 		int voxelCount = mapSize * voxelsPerUnit;
 		int vertexCount = (voxelCount + 1) * (voxelCount + 1);
 
+		//Vertices
 		vertices = new Vector3[vertexCount];
+
 		int i = 0;
+
 		for(int z = 0; z <= voxelCount; z++) 
 		{
 			for(int x = 0; x <= voxelCount; x++) 
 			{
-				float height = Mathf.PerlinNoise(x / 100.0f, z / 100.0f) * amplitude;
+				float height = PerlinMultiOctave(x, z, frequency, octaves, seed) * amplitude;
 				vertices[i] = new Vector3(x / (float)voxelsPerUnit, height, z / (float)voxelsPerUnit);
 				i++;
 			}
 		}
 
-		colors = new Color[vertexCount];
-		for(i = 0; i < colors.Length; i++)
-		{
-			colors[i] = Color.red;
-		}
-		
+		//Triangles
 		triangles = new int[voxelCount * voxelCount * 6];
+
 		int vert = 0;
 		int tris = 0;
+
 		for(int z = 0; z < voxelCount; z++)
 		{
-			for(int x = 0; x < voxelCount; x++) 
+			for(int x = 0; x < voxelCount; x++)
 			{
 				triangles[tris + 0] = vert + 0;
 				triangles[tris + 1] = vert + voxelCount + 1;
@@ -68,6 +71,13 @@ public class NoiseTerrain : MonoBehaviour
 			vert++;
 		}
 
+		/* 
+		colors = new Color[vertexCount];
+		for(i = 0; i < colors.Length; i++)
+		{
+			colors[i] = Color.red;
+		} 
+		*/
 	}
 
 	void UpdateMesh()
@@ -80,35 +90,18 @@ public class NoiseTerrain : MonoBehaviour
 		terrain.RecalculateNormals();
 	}
 
-	public static Texture2D AddWithOffset(Texture2D texA, float offsetA, Texture2D texB, float offsetB) 
+	public static float PerlinMultiOctave(float x, float z, float frequency, int octaves, float seed) 
 	{
-		int resX = texA.width;
-		int resY = texA.height;
-
-		Texture2D result = new Texture2D(resX, resY);
-		result.filterMode = FilterMode.Point;
-
-		if(resX != texB.width || resY != texB.height)
+		var result = Perlin(x, z, frequency, 1, seed);
+		for(int i = 2; i <= octaves; i++) 
 		{
-			return result;
+			result += Perlin(x, z, frequency * i, 1f / i, seed) - (0.5f / i);
 		}
+		return Mathf.Clamp(result, 0, 1);
+	}
 
-		for (int y = 0; y < resY; y++)
-		{
-			for (int x = 0; x < resX; x++)
-			{
-				float[] rgb = new float[3];
-
-				rgb[0] = texA.GetPixel(x,y).r + offsetA + texB.GetPixel(x,y).r + offsetB;
-				rgb[1] = texA.GetPixel(x,y).g + offsetA + texB.GetPixel(x,y).g + offsetB;
-				rgb[2] = texA.GetPixel(x,y).b + offsetA + texB.GetPixel(x,y).b + offsetB;
-
-				result.SetPixel(x, y, new Color(rgb[0], rgb[1], rgb[2]));
-			}
-		}
-		
-		result.Apply();
-
-		return result;
+	public static float Perlin(float x, float z, float frequency, float amplitude, float seed)
+	{
+		return Mathf.PerlinNoise(0.1f + x * frequency + seed, 0.1f + z * frequency + seed) * amplitude;
 	}
 }
