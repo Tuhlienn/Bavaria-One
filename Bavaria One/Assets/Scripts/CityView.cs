@@ -7,6 +7,7 @@ public class CityView : MonoBehaviour
 {
     public Dictionary<City, GameObject> Cities;
     public GameObject CityPrefab;
+    bool Test = false;
     // Use this for initialization
     void Start()
     {
@@ -16,7 +17,11 @@ public class CityView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(!Test)
+        {
+            AddCity(new Vector2(0, 0));
+            Test = true;
+        }
     }
     public void AddCity(Vector2 position)
     {
@@ -25,12 +30,39 @@ public class CityView : MonoBehaviour
             GameManager.Instance.Map,
             CityNameGenerator.GenerateName());
 
-        GameManager.Instance.Cities.Add(city);
+        GameManager.addCity(city);
 
-        Cities.Add(city, Instantiate(CityPrefab));
+        Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
 
-        GameObject cityGO;
-        Cities.TryGetValue(city, out cityGO);
+        SetName(city, city.cityName);
+        SetLevel(city, "" + city.upgradeLevel);
+    }
+
+    public void AddConnection(bool isStammstrecke,Vector2 left, Vector2 right)
+    {
+        GameManager.Instance.Connections.Connect(left, right, isStammstrecke, 1);
+        HashSet<City> adjecent = new HashSet<City>();
+        foreach(City cty in GameManager.Instance.Cities)
+        {
+            if(cty.position == left || cty.position == right)
+            {
+                adjecent.Add(cty);
+            }
+        }
+
+        foreach(City cty in adjecent)
+        {
+            if(!GameManager.Instance.connected.Contains(cty))
+            {
+                GameManager.addTrain(new Train(cty.position, cty));
+                GameManager.Instance.connected.Add(cty);
+            }
+        }
+
+        foreach(City cty in GameManager.Instance.Cities)
+        {
+            cty.CalculatePaths(GameManager.Instance.Connections);
+        }
     }
 
     public void UpgradeCity(Vector2 position)
@@ -62,25 +94,37 @@ public class CityView : MonoBehaviour
         }
     }
 
-    public void SetText(City city, string text, int i)
+    private void SetText(City city, string text, string name)
     {
         GameObject cty;
         Cities.TryGetValue(city, out cty);
 
-        if(cty != null)
+        if (cty != null)
         {
-            GameObject nameBox = cty.transform.GetChild(i).gameObject;
-            nameBox.GetComponent<Text>().text = name;
+            Transform nameBox = null;
+            for (int i = 0; i < cty.transform.childCount; i++)
+            {
+                Transform nb = cty.transform.GetChild(i).Find(name);
+                nameBox = nb == null ? nameBox : nb;
+            }
+             if (nameBox != null)
+            {
+                TextMesh txt = nameBox.GetComponentInChildren<TextMesh>();
+                if(txt != null)
+                {
+                    txt.text = text;
+                }
+            }
         }
     }
 
     public void SetName(City city, string name)
     {
-        SetText(city, name, 0);
+        SetText(city, name, "Name Box");
     }
 
     public void SetLevel(City city, string level)
     {
-        SetText(city, name, 1);
+        SetText(city, level, "Lvl Box");
     }
 }

@@ -12,18 +12,21 @@ public class MouseGridMovement : MonoBehaviour {
     public bool selectMode = true;
     public ButtonManager buttonManager;
 
+	private CityView cityManager;
+
 	private Vector3 hoveredPoint;
+	bool xBetweenPoints;
+	bool zBetweenPoints;
+	private int hoverType; //0 = edge, 1 = point, 2 = face
 
 
-    void Start () 
+    void Awake () 
 	{
+		cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
     }
 	
 	void Update () 
 	{
-        if (!selectMode)
-            return;
-
         if (EventSystem.current.IsPointerOverGameObject())
         {
             Selection.gameObject.SetActive(false);
@@ -42,8 +45,8 @@ public class MouseGridMovement : MonoBehaviour {
 			Vector3 temp = ray.GetPoint(distance);
 			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
 
-			bool xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
-			bool zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
+			xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
+			zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
 
 			if(xBetweenPoints && zBetweenPoints)
 			{
@@ -51,6 +54,7 @@ public class MouseGridMovement : MonoBehaviour {
                 {
                     var meshFilter = Selection.GetComponent<MeshFilter>();
                     meshFilter.mesh = meshes[2];
+					hoverType = 2;
                     Selection.position = hoveredPoint;
                     Selection.gameObject.SetActive(true);
                 }
@@ -67,10 +71,12 @@ public class MouseGridMovement : MonoBehaviour {
 					if(!(xBetweenPoints || zBetweenPoints))
 					{
 						meshFilter.mesh = meshes[1];
+						hoverType = 1;
 					}
 					else 
 					{
 						meshFilter.mesh = meshes[0];
+						hoverType = 0;
 						if(xBetweenPoints) 
 						{
 							Selection.transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0);
@@ -91,9 +97,33 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetMouseButtonDown(0) && selectMode && Selection.gameObject.activeSelf) 
+		if(Selection.gameObject.activeSelf) 
 		{
-			buttonManager.showPopup(hoveredPoint);
+			if(Input.GetMouseButtonDown(0) && selectMode) 
+			{
+				if(hoverType == 1 || hoverType == 2)
+					buttonManager.showPopup(hoveredPoint);
+			}
+			
+			if(Input.GetMouseButton(0) && !selectMode) 
+			{
+				if(hoverType == 0) 
+				{
+					Vector2 left;
+					Vector2 right;
+					if(xBetweenPoints)
+					{
+						left = new Vector2(hoveredPoint.x - 0.5f, hoveredPoint.z);
+						right = new Vector2(hoveredPoint.x + 0.5f, hoveredPoint.z);
+					}
+					else
+					{
+						left = new Vector2(hoveredPoint.x, hoveredPoint.z - 0.5f);
+						right = new Vector2(hoveredPoint.x, hoveredPoint.z + 0.5f);
+					}
+					cityManager.AddConnection(false, left, right);
+				}
+			}
 		}
 	}
 
