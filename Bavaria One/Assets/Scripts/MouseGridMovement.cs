@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseGridMovement : MonoBehaviour {
 
@@ -9,18 +10,28 @@ public class MouseGridMovement : MonoBehaviour {
 	public Mesh[] meshes;
 
     public bool selectMode = true;
+    public ButtonManager buttonManager;
 
-	void Start () 
+    //public Vector3 lastSelectedPosition;
+
+
+    void Start () 
 	{
-		
-	}
+    }
 	
 	void Update () 
 	{
         if (!selectMode)
             return;
 
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            Selection.gameObject.SetActive(false);
+            return;
+        }
+
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		Plane xzPlane = new Plane(Vector3.up, Vector3.zero);
 		
@@ -84,5 +95,14 @@ public class MouseGridMovement : MonoBehaviour {
     public void ToggleSelectMode()
     {
         selectMode = !selectMode;
+
+        //Selection disabled
+        //1) deactivate selected
+        //2) disable popUp
+        if (!selectMode)
+        {
+        Selection.gameObject.SetActive(false);
+        buttonManager.popUpUpgrade.SetActive(false);
+        }
     }
 }

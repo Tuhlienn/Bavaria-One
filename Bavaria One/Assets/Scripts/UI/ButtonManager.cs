@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class ButtonManager : MonoBehaviour {
 
@@ -10,26 +11,31 @@ public class ButtonManager : MonoBehaviour {
 
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
-    public RectTransform popUpTransform;
-    public GameObject popUpUpgradeInProgress;
-    public RectTransform popUpInProgressTransform;
+    private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
+
+    //Build mode
+    public MouseGridMovement mgm;
+    public bool jpopUpFixed = false; //It's 2am, I fucking wrote jpop
 
     private void Start()
     {
         popUpTransform = popUpUpgrade.GetComponent<RectTransform>();
-        popUpInProgressTransform = popUpUpgradeInProgress.GetComponent<RectTransform>();
     }
 
     public void OnToggleBuildMode()
     {
-        //gamemanager.buildmode = !buildmode
+        mgm.ToggleSelectMode();
     }
 
     public void ExitGame()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     public void UpdateResources()
@@ -64,11 +70,20 @@ public class ButtonManager : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //Debug for Schildchen
+        if (Input.GetMouseButtonDown(0) && mgm.selectMode && !jpopUpFixed)
         {
+            popUpUpgrade.SetActive(true);
+
             Vector2 point;
             RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, Input.mousePosition, null, out point);
             popUpTransform.anchoredPosition = point;
+        }
+
+        //Modes
+        if (Input.GetKeyDown("1"))
+        {
+            OnToggleBuildMode();
         }
     }
 
@@ -85,8 +100,9 @@ public class ButtonManager : MonoBehaviour {
 
     public void Upgrade()
     {
-        // gamemanager.specificobject.lvl.Upgrade();
+        //Debug.Log("YAS"); werks
+        popUpUpgrade.SetActive(false);
+        jpopUpFixed = false;
     }
-
 
 }
