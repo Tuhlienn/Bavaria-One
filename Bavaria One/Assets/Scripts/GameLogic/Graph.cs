@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 public class Graph
 {
@@ -96,6 +97,9 @@ public class Graph
             queue.Enqueue(state);
             dict.TryGetValue(state, out state);
         } while (state != Vector2.one * -1);
+
+        if (queue.Count == 0) return null;
+        queue.Reverse();
         return queue;
     }
 

@@ -18,6 +18,9 @@ public class Train : Ticking
     override
     public void Tick()
     {
+        if (myCity.path == null)
+            return;
+
         if(queue.Count == 0) {
             queue.Concat(myCity.path);
             if (position.Equals(myCity.position)) {
