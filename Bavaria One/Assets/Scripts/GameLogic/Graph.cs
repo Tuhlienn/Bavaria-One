@@ -103,11 +103,14 @@ public class Graph
      */ 
     private bool IsStammstrecke(Vector2 position)
     {
-        for (int i = 0; i < height; i++)
+        for (int i = -1; i <= 1; i++)
         {
-            if (ConnectionAt(position, new Vector2(position.x, (float)i)).isStammstrecke)
+            for (int j = -1; j <= 1; j++)
             {
-                return true;
+                if (ConnectionAt(position, new Vector2(position.x, (float)i)).isStammstrecke)
+                {
+                    return true;
+                }
             }
         }
         return false;
