@@ -14,6 +14,7 @@ public class City {
         this.position = position;
         this.production = new ResourceCount(0, 0, 0, 0, 0);
         this.path = new Queue<Vector2>();
+        this.upgradeLevel = 1;
         CalculatePaths(graph);
         CalculateProduction(map);
         cityName = name;

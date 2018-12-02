@@ -34,8 +34,8 @@ public class CityView : MonoBehaviour
 
         Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
 
-        GameObject cityGO;
-        Cities.TryGetValue(city, out cityGO);
+        SetName(city, city.cityName);
+        SetLevel(city, "" + city.upgradeLevel);
     }
 
     public void UpgradeCity(Vector2 position)
@@ -67,25 +67,37 @@ public class CityView : MonoBehaviour
         }
     }
 
-    public void SetText(City city, string text, int i)
+    private void SetText(City city, string text, string name)
     {
         GameObject cty;
         Cities.TryGetValue(city, out cty);
 
-        if(cty != null)
+        if (cty != null)
         {
-            GameObject nameBox = cty.transform.GetChild(i).gameObject;
-            nameBox.GetComponent<Text>().text = name;
+            Transform nameBox = null;
+            for (int i = 0; i < cty.transform.childCount; i++)
+            {
+                Transform nb = cty.transform.GetChild(i).Find(name);
+                nameBox = nb == null ? nameBox : nb;
+            }
+             if (nameBox != null)
+            {
+                TextMesh txt = nameBox.GetComponentInChildren<TextMesh>();
+                if(txt != null)
+                {
+                    txt.text = text;
+                }
+            }
         }
     }
 
     public void SetName(City city, string name)
     {
-        SetText(city, name, 0);
+        SetText(city, name, "Name Box");
     }
 
     public void SetLevel(City city, string level)
     {
-        SetText(city, name, 1);
+        SetText(city, level, "Lvl Box");
     }
 }
