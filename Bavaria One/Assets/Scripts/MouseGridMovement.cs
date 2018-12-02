@@ -12,7 +12,7 @@ public class MouseGridMovement : MonoBehaviour {
     public bool selectMode = true;
     public ButtonManager buttonManager;
 
-    //public Vector3 lastSelectedPosition;
+	private Vector3 hoveredPoint;
 
 
     void Start () 
@@ -40,7 +40,7 @@ public class MouseGridMovement : MonoBehaviour {
 		{
 			// get the hit point:
 			Vector3 temp = ray.GetPoint(distance);
-			var hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
+			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
 
 			bool xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
 			bool zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
@@ -90,19 +90,21 @@ public class MouseGridMovement : MonoBehaviour {
 				}
 			}
 		}
+
+		if(Input.GetMouseButtonDown(0) && selectMode && Selection.gameObject.activeSelf) 
+		{
+			buttonManager.showPopup(hoveredPoint);
+		}
 	}
 
     public void ToggleSelectMode()
     {
         selectMode = !selectMode;
 
-        //Selection disabled
-        //1) deactivate selected
-        //2) disable popUp
         if (!selectMode)
         {
-        Selection.gameObject.SetActive(false);
-        buttonManager.popUpUpgrade.SetActive(false);
+			Selection.gameObject.SetActive(false);
+			buttonManager.popUpUpgrade.SetActive(false);
         }
     }
 }
