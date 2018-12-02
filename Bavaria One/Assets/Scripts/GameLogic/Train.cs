@@ -13,6 +13,7 @@ public class Train : Ticking
     public Train (Vector2 position, City myCity) {
         this.position = position;
         this.myCity = myCity;
+        queue = new Queue<Vector2>();
     }
 
     override
@@ -33,9 +34,13 @@ public class Train : Ticking
                 queue.Reverse();
             }
         }
-        Vector2 NewPosition = queue.Dequeue();
-        GameManager Instance = GameManager.Instance;
-        GameManager.addConnection(Instance.Connections.ConnectionAt(position, NewPosition));
-        position = NewPosition;
+        if(queue.Count > 0) 
+        {
+            Vector2 NewPosition = queue.Dequeue();
+            GameManager Instance = GameManager.Instance;
+            GameManager.addConnection(Instance.Connections.ConnectionAt(position, NewPosition));
+            position = NewPosition;
+
+        }
     } 
 }

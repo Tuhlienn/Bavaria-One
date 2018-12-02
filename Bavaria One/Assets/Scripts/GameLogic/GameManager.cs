@@ -199,6 +199,6 @@ public class GameManager : Singleton<GameManager>
     }
     public void AddToResourceDisplay(int w, int h, float amount)
     {
-        ResourceIcons[w, h].transform.GetChild(0).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
+        //ResourceIcons[w, h].transform.GetChild(0).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
     }
 }
