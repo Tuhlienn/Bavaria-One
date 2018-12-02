@@ -39,6 +39,7 @@ public class GameManager : Singleton<GameManager>
         this.tickingConnections = new List<Connection>();
         this.connections = new Graph(width + 1, height + 1);
         this.resources = startResources;
+        this.connected = new HashSet<City>();
     }
 
     void Start()
@@ -133,6 +134,14 @@ public class GameManager : Singleton<GameManager>
 
     public static void addCity(City city) {
         Instance.cities.Add(city);
+    }
+
+    public static City GetCity(Vector2 position) {
+        foreach(City city in Instance.Cities) {
+            if(city.position == position)
+                return city;
+        }
+        return null;
     }
 
     public static void addTrain(Train train) {
