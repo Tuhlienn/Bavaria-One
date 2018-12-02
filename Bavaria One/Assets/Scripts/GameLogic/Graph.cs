@@ -6,30 +6,53 @@ using System.Runtime.InteropServices;
 
 public class Graph
 {
-    public static readonly Connection NO_CONNECTION = new Connection(false, false, 0);
-
-    Connection[,] connections;
+    List<Connection> connections;
     int width, height;
     private delegate bool IsGoal(Vector2 position);
 
     public Graph (int width, int height) {
         this.width = width;
         this.height = height;
-        connections = new Connection[width * height, width * height];
-        this.IntitializeConnections();
+        connections = new List<Connection>();
     }
 
+    /*
+     *  Returns path from this node to Stammstrecke
+     */
     public Queue<Vector2> ToStammstrecke(Vector2 from) {
         return BFS(from, IsStammstrecke);
     }
 
-    public Connection ConnectionAt(Vector2 firstPos, Vector2 secondPos) 
+    /*
+     * Returns connection between two nodes
+     */
+    public Connection ConnectionAt(Vector2 left, Vector2 right) 
     {
-        int first = (int)(width * (int) firstPos.y) + ((int) firstPos.x % width);
-        int second= (int)(width * (int) secondPos.y) + ((int) secondPos.x % width);
-        return connections[first, second];
+        foreach(Connection con in connections)
+        {
+            if( (con.left == left && con.right == right) || (con.right == left && con.left == right))
+            {
+                return con;
+            }
+        }
+        return null;
     }
 
+    private List<Connection> ConnectionsWith(Vector2 vec)
+    {
+        List<Connection> cons = new List<Connection>();
+        foreach(Connection con in connections)
+        {
+            if (con.left == vec || con.right == vec)
+                cons.Add(con);
+        }
+
+        return cons;
+    }
+
+    /*
+     * Buggy BFS
+     */
     private Queue<Vector2> BFS (Vector2 from, IsGoal isGoal){
 
         Queue<Vector2> frontier = new Queue<Vector2>();
@@ -46,17 +69,14 @@ public class Graph
                 return ConstructPath(from, dict);
             }
 
-            for (int i = 0; i < connections.GetLength(fromIndex); i++)
+            foreach(Connection con in ConnectionsWith(from))
             {
-                if (!connections[fromIndex, i].Equals(NO_CONNECTION))
-                {
-                    Vector2 vec = new Vector2(i % width, (float)(i / width));
+                Vector2 vec = con.left == from ? con.right : con.left;
                     if (!set.Contains(vec))
                     {
                         dict.Add(vec, from);
                         frontier.Enqueue(vec);
                     }
-                }
             }
             set.Add(from);
             from = frontier.Dequeue();
@@ -65,6 +85,9 @@ public class Graph
         return null;
     }
 
+    /*
+     * Constucts path from BFS result
+     */
     private Queue<Vector2> ConstructPath(Vector2 state ,Dictionary<Vector2, Vector2> dict) {
         Queue<Vector2> queue = new Queue<Vector2>();
         do
@@ -75,29 +98,29 @@ public class Graph
         return queue;
     }
 
+    /*
+     * Returns true if this node is connected to a Stammstrecke edge
+     */ 
     private bool IsStammstrecke(Vector2 position)
     {
-        for (int i = 0; i < height; i++)
+        for (int i = -1; i <= 1; i++)
         {
-            if (ConnectionAt(position, new Vector2(position.x, (float)i)).isStammstrecke)
+            for (int j = -1; j <= 1; j++)
             {
-                return true;
+                if (ConnectionAt(position, new Vector2(position.x, (float)i)).isStammstrecke)
+                {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    private void IntitializeConnections() {
-        for (int i = 0; i < width * height; i++) {
-            for (int j = 0; j < width * height; j++) {
-                this.connections[i, j] = NO_CONNECTION;
-            }
-        }
-    }
-
-    public void Connect (Vector2 firstPos, Vector2 secondPos, bool isStammstrecke, int upgradeLevel) 
+    /*
+     *  Connect nodes (Bidirectional)
+     */
+    public void Connect (Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
     {
-        int first = (int)(width * (int)firstPos.y) + ((int)firstPos.x % width);
-        int second = (int)(width * (int)secondPos.y) + ((int)secondPos.x % width);
+        connections.Add(new Connection( isStammstrecke, upgradeLevel, first, second));
     }
 }

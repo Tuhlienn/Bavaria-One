@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
 
-public class GameManager : MonoBehaviour{
-    public int width, height;
+public class GameManager : Singleton<GameManager>
+{
+    public int width = 100;
+    public int height = 100;
     public ResourceCount startResources;
 
-    public float ResourceFrequency = 0.01f;
-    public int ResourceOctaves = 5;
+    public float ResourceFrequency = 0.1f;
+    public int ResourceOctaves = 6;
     public float ResourceSeed = 111.68465165f;
 
-    private static GameManager instance;
     private Map map;
     private List<City> cities;
     private List<Train> trains;
@@ -19,8 +20,8 @@ public class GameManager : MonoBehaviour{
     private Graph connections;
     private ResourceCount resources;
 
-    private GameManager() {
-        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
+    void Awake() 
+    {
         this.cities = new List<City>();
         this.trains = new List<Train>();
         this.tickingConnections = new List<Connection>();
@@ -28,7 +29,12 @@ public class GameManager : MonoBehaviour{
         this.resources = startResources;
     }
 
-    public void Update()
+    void Start()
+    {
+        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
+    }
+
+    void Update()
     {
         // Call Tick() on all Ticking objects 
         foreach(Train train in trains) {
@@ -100,14 +106,6 @@ public class GameManager : MonoBehaviour{
         set
         {
             this.resources = value;
-        }
-    }
-
-    public static GameManager Instance
-    {
-        get
-        {
-            return instance == null ? new GameManager() : instance;
         }
     }
 }

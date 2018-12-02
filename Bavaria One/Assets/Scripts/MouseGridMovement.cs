@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseGridMovement : MonoBehaviour {
 
@@ -8,14 +9,29 @@ public class MouseGridMovement : MonoBehaviour {
 	public float hoverPrecision = 0.35f;
 	public Mesh[] meshes;
 
-	void Start () 
+    public bool selectMode = true;
+    public ButtonManager buttonManager;
+
+	private Vector3 hoveredPoint;
+
+
+    void Start () 
 	{
-		
-	}
+    }
 	
 	void Update () 
 	{
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (!selectMode)
+            return;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            Selection.gameObject.SetActive(false);
+            return;
+        }
+
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		Plane xzPlane = new Plane(Vector3.up, Vector3.zero);
 		
@@ -24,14 +40,24 @@ public class MouseGridMovement : MonoBehaviour {
 		{
 			// get the hit point:
 			Vector3 temp = ray.GetPoint(distance);
-			var hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
+			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
 
 			bool xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
 			bool zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
 
 			if(xBetweenPoints && zBetweenPoints)
 			{
-				Selection.gameObject.SetActive(false);
+                if ((hoveredPoint - temp).magnitude < hoverPrecision)
+                {
+                    var meshFilter = Selection.GetComponent<MeshFilter>();
+                    meshFilter.mesh = meshes[2];
+                    Selection.position = hoveredPoint;
+                    Selection.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Selection.gameObject.SetActive(false);
+                }
 			}
 			else 
 			{
@@ -64,5 +90,21 @@ public class MouseGridMovement : MonoBehaviour {
 				}
 			}
 		}
+
+		if(Input.GetMouseButtonDown(0) && selectMode && Selection.gameObject.activeSelf) 
+		{
+			buttonManager.showPopup(hoveredPoint);
+		}
 	}
+
+    public void ToggleSelectMode()
+    {
+        selectMode = !selectMode;
+
+        if (!selectMode)
+        {
+			Selection.gameObject.SetActive(false);
+			buttonManager.popUpUpgrade.SetActive(false);
+        }
+    }
 }
