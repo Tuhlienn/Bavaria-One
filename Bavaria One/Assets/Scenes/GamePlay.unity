@@ -1538,11 +1538,6 @@ Prefab:
       propertyPath: m_FontData.m_MinSize
       value: 1
       objectReference: {fileID: 0}
-	- target: {fileID: 114378737377067766, guid: a79360b13bc930c4b9ca7424db52ece1,
-        type: 2}
-      propertyPath: gridMovement
-      value: 
-      objectReference: {fileID: 1305803421}
     - target: {fileID: 1595055184383660, guid: a79360b13bc930c4b9ca7424db52ece1, type: 2}
       propertyPath: m_IsActive
       value: 1
