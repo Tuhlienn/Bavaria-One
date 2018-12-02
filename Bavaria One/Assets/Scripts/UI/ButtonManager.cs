@@ -12,6 +12,8 @@ public class ButtonManager : MonoBehaviour {
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
     public GameObject pauseObject;
+    public GameObject creditsObject;
+    public GameObject selectB;
     private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
@@ -27,6 +29,8 @@ public class ButtonManager : MonoBehaviour {
     public bool popUpFixed = false;
 
     private CityView cityManager;
+
+    public AudioClip citySound;
 
     void Awake()
     {
@@ -45,7 +49,7 @@ public class ButtonManager : MonoBehaviour {
         {
             OnToggleBuildMode();
         }
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("escape")||Input.GetKeyDown("p"))
         {
             TogglePause();
         }
@@ -60,6 +64,7 @@ public class ButtonManager : MonoBehaviour {
     public void OnToggleBuildMode()
     {
         gridMovement.ToggleSelectMode();
+        selectB.SetActive(gridMovement.selectMode);
     }
 
     public void ExitGame()
@@ -130,19 +135,28 @@ public class ButtonManager : MonoBehaviour {
         popUpUpgrade.SetActive(false);
         popUpFixed = false;
 
+		SoundManager.Instance.Play(citySound);
         if(gridMovement.selectedCity == null) 
         {
             var position = new Vector2(upgradePosition.x, upgradePosition.z);
             cityManager.AddCity(position);
+			SoundManager.Instance.Play(citySound);
         }
         else 
         {
             GameObject.Find("CityManager").GetComponent<CityView>().UpgradeCity(gridMovement.selectedCity);
         }
+        
     }
     public void TogglePause()
     {
         pauseObject.SetActive(!pauseObject.active);
+        GameManager.Instance.IsPaused = pauseObject.active;
+        if (creditsObject.active) ToggleCredits();
+    }
+    public void ToggleCredits()
+    {
+        creditsObject.SetActive(!creditsObject.active);
     }
 
 }

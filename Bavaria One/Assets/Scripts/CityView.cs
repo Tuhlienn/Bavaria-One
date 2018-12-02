@@ -7,22 +7,25 @@ public class CityView : MonoBehaviour
 {
     public Dictionary<City, GameObject> Cities;
     public GameObject CityPrefab;
+    public GameObject MunichPrefab;
     bool Test = false;
     // Use this for initialization
     void Start()
     {
         this.Cities = new Dictionary<City, GameObject>();
+        AddMunich(new Vector2(0, 0));
+        AddConnection(true, new Vector2(0, 0), new Vector2(1, 0));
+        AddConnection(true, new Vector2(1, 0), new Vector2(2, 0));
+        AddConnection(true, new Vector2(2, 0), new Vector2(3, 0));
+        AddCity(new Vector2(3, 0));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!Test)
-        {
-            AddCity(new Vector2(0, 0));
-            Test = true;
-        }
+
     }
+
     public void AddCity(Vector2 position)
     {
         if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
@@ -37,6 +40,25 @@ public class CityView : MonoBehaviour
         GameManager.addCity(city);
 
         Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
+
+        SetName(city, city.cityName);
+        SetLevel(city, "" + city.upgradeLevel);
+    }
+
+    public void AddMunich(Vector2 position)
+    {
+        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
+            return;
+        GameManager.Instance.Resources += new ResourceCount(0, -1, -2, -4, 0);
+
+        City city = new City(position,
+            GameManager.Instance.Connections,
+            GameManager.Instance.Map,
+            "Neu-München");
+
+        GameManager.addCity(city);
+
+        Cities.Add(city, Instantiate(MunichPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
 
         SetName(city, city.cityName);
         SetLevel(city, "" + city.upgradeLevel);

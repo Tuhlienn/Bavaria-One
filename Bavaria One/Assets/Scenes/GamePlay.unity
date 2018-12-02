@@ -1428,6 +1428,7 @@ MonoBehaviour:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   selectMode: 1
   buttonManager: {fileID: 585806410}
+  railSound: {fileID: 8300000, guid: 405917747c4bf2046bcedea826d714f0, type: 3}
 --- !u!4 &1305803422
 Transform:
   m_ObjectHideFlags: 0
@@ -1575,7 +1576,7 @@ MonoBehaviour:
   CameraSpeed: 12
   SmoothingFactor: 0.5
   PanningThreshold: 50
-  EnablePanning: 0
+  EnablePanning: 1
   xMin: -45
   xMax: 45
   zMin: -45
@@ -2001,6 +2002,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 8.7
       objectReference: {fileID: 0}
+    - target: {fileID: 114378737377067766, guid: a79360b13bc930c4b9ca7424db52ece1,
+        type: 2}
+      propertyPath: citySound
+      value: 
+      objectReference: {fileID: 8300000, guid: ab987b56da6ecd045a50dae812bda5af, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a79360b13bc930c4b9ca7424db52ece1, type: 2}
   m_IsPrefabAsset: 0
