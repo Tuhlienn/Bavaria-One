@@ -29,7 +29,7 @@ public class City {
                 Vector2 vec = position + new Vector2(i, j);
                 if (i < 0 || i >= width || j < 0 || j >= height)
                     continue;
-                production += map.tiles[(int)vec.x, (int)vec.y].resource;
+                production += map.tiles[(int)vec.x + GameManager.Instance.width / 2, (int)vec.y + GameManager.Instance.height / 2].resource;
             }
         }
     }

@@ -25,6 +25,13 @@ public class ButtonManager : MonoBehaviour {
     public MouseGridMovement gridMovement;
     public bool popUpFixed = false;
 
+    private CityView cityManager;
+
+    void Awake()
+    {
+        cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
+    }
+
     private void Start()
     {
         popUpTransform = popUpUpgrade.GetComponent<RectTransform>();
@@ -114,6 +121,9 @@ public class ButtonManager : MonoBehaviour {
         //Debug.Log("YAS"); werks
         popUpUpgrade.SetActive(false);
         popUpFixed = false;
+
+        var position = new Vector2(upgradePosition.x, upgradePosition.z);
+        cityManager.AddCity(position);
     }
 
 }

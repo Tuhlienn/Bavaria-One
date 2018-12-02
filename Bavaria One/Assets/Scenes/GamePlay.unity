@@ -365,6 +365,8 @@ MonoBehaviour:
     steel: 100
     concrete: 100
     energy: 100
+  Speed: 1
+  IsPaused: 0
   ResourceFrequency: 0.1
   ResourceOctaves: 6
   ResourceSeed: 111.684654
@@ -433,6 +435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e501d0dd33a591f4babb15d74ebfd99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSize: 0.5
+  maxSize: 5
 --- !u!81 &697348473
 AudioListener:
   m_ObjectHideFlags: 0
@@ -494,6 +498,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridMaterial: {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
+  ConnectionMaterial: {fileID: 2100000, guid: 4a70d665a7b16db4fb13c231aa75ed69, type: 2}
+  TrafficMaterial: {fileID: 2100000, guid: 721aec5caa7787f4a8bdb159f2668e5b, type: 2}
   gridCount: 18
   gridSize: 1
 --- !u!114 &697348476
@@ -558,7 +564,7 @@ GameObject:
   - component: {fileID: 1058816253}
   - component: {fileID: 1058816254}
   m_Layer: 0
-  m_Name: MapEntities
+  m_Name: CityManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -585,7 +591,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1058816252}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696d6c565172a38429fca6cf4bb6498f, type: 3}
+  m_Script: {fileID: 11500000, guid: c6a8de402f748412cbd4c89e4ee03d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CityPrefab: {fileID: 1778572386296750, guid: 9f3f9f49084934049bc398c178cdc4d9, type: 2}
@@ -745,6 +751,10 @@ MonoBehaviour:
   SmoothingFactor: 0.5
   PanningThreshold: 50
   EnablePanning: 0
+  xMin: -45
+  xMax: 45
+  zMin: -45
+  zMax: 45
 --- !u!4 &1438160641
 Transform:
   m_ObjectHideFlags: 0
@@ -945,6 +955,11 @@ Prefab:
       propertyPath: m_FontData.m_MinSize
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114378737377067766, guid: a79360b13bc930c4b9ca7424db52ece1,
+        type: 2}
+      propertyPath: gridMovement
+      value: 
+      objectReference: {fileID: 1305803421}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a79360b13bc930c4b9ca7424db52ece1, type: 2}
   m_IsPrefabAsset: 0
