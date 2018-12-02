@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IsometricCamera : MonoBehaviour {
 
-	float minSize = 0.5f, maxSize = 5.0f;
+	public float minSize = 0.5f, maxSize = 5.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,7 +15,7 @@ public class IsometricCamera : MonoBehaviour {
 	void Update () {
 		if (Input.GetAxis("Mouse ScrollWheel") != 0f ) // forward
 		{
-			float newSize = GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel");
+			float newSize = GetComponent<Camera>().orthographicSize - (1.5f * Input.GetAxis("Mouse ScrollWheel"));
 			newSize = Mathf.Clamp(newSize, minSize, maxSize);
 			GetComponent<Camera>().orthographicSize = newSize;
 		}
