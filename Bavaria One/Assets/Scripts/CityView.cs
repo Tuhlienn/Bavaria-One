@@ -38,6 +38,33 @@ public class CityView : MonoBehaviour
         SetLevel(city, "" + city.upgradeLevel);
     }
 
+    public void AddConnection(bool isStammstrecke,Vector2 left, Vector2 right)
+    {
+        GameManager.addConnection(new Connection(isStammstrecke, 1, left, right));
+        HashSet<City> adjecent = new HashSet<City>();
+        foreach(City cty in GameManager.Instance.Cities)
+        {
+            if(cty.position == left || cty.position == right)
+            {
+                adjecent.Add(cty);
+            }
+        }
+
+        foreach(City cty in adjecent)
+        {
+            if(!GameManager.Instance.connected.Contains(cty))
+            {
+                GameManager.addTrain(new Train(cty.position, cty));
+                GameManager.Instance.connected.Add(cty);
+            }
+        }
+
+        foreach(City cty in GameManager.Instance.Cities)
+        {
+            cty.CalculatePaths(GameManager.Instance.Connections);
+        }
+    }
+
     public void UpgradeCity(Vector2 position)
     {
         foreach(City city in GameManager.Instance.Cities) 
