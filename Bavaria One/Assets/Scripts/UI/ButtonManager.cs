@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour {
 
@@ -157,6 +158,11 @@ public class ButtonManager : MonoBehaviour {
     public void ToggleCredits()
     {
         creditsObject.SetActive(!creditsObject.active);
+    }
+
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
     }
 
 }

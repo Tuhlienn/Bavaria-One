@@ -27,7 +27,7 @@ public class City {
         for (int i = -1; i <= 0; i++) {
             for (int j = -1; j <= 0; j++) {
                 Vector2 vec = position + new Vector2(i, j);
-                if (i < 0 || i >= width || j < 0 || j >= height)
+                if (vec.x < -(width / 2) || vec.x >= (width / 2) || vec.y < -(width / 2) || vec.y >= height / 2)
                     continue;
                 production += map.tiles[(int)vec.x + GameManager.Instance.width / 2, (int)vec.y + GameManager.Instance.height / 2].resource;
             }

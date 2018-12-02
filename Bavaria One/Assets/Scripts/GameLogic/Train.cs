@@ -25,7 +25,7 @@ public class Train : Ticking
             queue.Concat(myCity.path);
             if (position.Equals(myCity.position)) {
                 load = myCity.upgradeLevel * myCity.production;
-                load = load + 0.25f * myCity.upgradeLevel * myCity.production;
+                load = load + 0.25f * myCity.upgradeLevel * myCity.production.MultiResources();
             }
             else {
                 GameManager.Instance.Resources += load;
