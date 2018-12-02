@@ -14,19 +14,40 @@ public class ButtonManager : MonoBehaviour {
     private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
+    private Vector3 upgradePosition;
+    public Vector3 UpgradePosition 
+    {
+        get { return upgradePosition; }
+        set { upgradePosition = value; }
+    }
 
     //Build mode
-    public MouseGridMovement mgm;
-    public bool jpopUpFixed = false; //It's 2am, I fucking wrote jpop
+    public MouseGridMovement gridMovement;
+    public bool popUpFixed = false;
 
     private void Start()
     {
         popUpTransform = popUpUpgrade.GetComponent<RectTransform>();
     }
 
+    private void Update()
+    {
+        //Modes
+        if (Input.GetKeyDown("1"))
+        {
+            OnToggleBuildMode();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        UpdateResources();
+    }
+
+
     public void OnToggleBuildMode()
     {
-        mgm.ToggleSelectMode();
+        gridMovement.ToggleSelectMode();
     }
 
     public void ExitGame()
@@ -42,55 +63,45 @@ public class ButtonManager : MonoBehaviour {
     {
         for(int i = 0; i < resourceTextFields.Length; i ++)
         {
+            var resources = GameManager.Instance.Resources;
             switch (i) //why no array :(
             {
                 case 0:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.money.ToString(); 
+                    resourceTextFields[i].text = resources.money.ToString(); 
                     break;
 
                 case 1:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.beer.ToString();
+                    resourceTextFields[i].text = resources.beer.ToString();
                     break;
 
                 case 2:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.steel.ToString();
+                    resourceTextFields[i].text = resources.steel.ToString();
                     break;
 
                 case 3:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.concrete.ToString();
+                    resourceTextFields[i].text = resources.concrete.ToString();
                     break;
 
                 case 4:
-                    resourceTextFields[i].text = GameManager.Instance.Resources.energy.ToString();
+                    resourceTextFields[i].text = resources.energy.ToString();
                     break;
             }
         }
-        
     }
 
-    private void Update()
+    public void showPopup(Vector3 position) 
     {
-        //Debug for Schildchen
-        if (Input.GetMouseButtonDown(0) && mgm.selectMode && !jpopUpFixed)
+        if (!popUpFixed)
         {
+            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
+
+            Vector2 anchoredPosition;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, screenPoint, null, out anchoredPosition);
+            popUpTransform.anchoredPosition = anchoredPosition;
+            
             popUpUpgrade.SetActive(true);
-
-            Vector2 point;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, Input.mousePosition, null, out point);
-            popUpTransform.anchoredPosition = point;
+            upgradePosition = position;
         }
-
-        //Modes
-        if (Input.GetKeyDown("1"))
-        {
-            OnToggleBuildMode();
-        }
-    }
-
-    //Every Update, alternatively on every change
-    private void LateUpdate()
-    {
-        UpdateResources();
     }
 
     public void TogglePopUp(bool enabled)
@@ -102,7 +113,7 @@ public class ButtonManager : MonoBehaviour {
     {
         //Debug.Log("YAS"); werks
         popUpUpgrade.SetActive(false);
-        jpopUpFixed = false;
+        popUpFixed = false;
     }
 
 }

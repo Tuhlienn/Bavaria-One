@@ -9,12 +9,12 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler {
 
     public void OnDeselect(BaseEventData eventData)
     {
-        bm.jpopUpFixed = true;
+        bm.popUpFixed = true;
     }
 
     public void OnSelect(BaseEventData eventData)
     {
-        bm.jpopUpFixed = true;
+        bm.popUpFixed = true;
     }
 
     // Use this for initialization
