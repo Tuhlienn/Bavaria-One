@@ -15,8 +15,9 @@ public class MouseGridMovement : MonoBehaviour {
 	private CityView cityManager;
 
 	private Vector3 hoveredPoint;
-	bool xBetweenPoints;
-	bool zBetweenPoints;
+	public City selectedCity;
+	private bool xBetweenPoints;
+	private bool zBetweenPoints;
 	private int hoverType; //0 = edge, 1 = point, 2 = face
 
 
@@ -101,8 +102,22 @@ public class MouseGridMovement : MonoBehaviour {
 		{
 			if(selectMode) 
 			{
-				if(hoverType == 1 || hoverType == 2)
-					buttonManager.showPopup(hoveredPoint);
+				if(hoverType == 1)
+				{
+					var lvl = 0;
+					var cost = 2;
+					selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
+					if(selectedCity != null) 
+					{
+						lvl = selectedCity.upgradeLevel;
+						cost = cost + lvl;
+					}
+					buttonManager.showPopup(hoveredPoint, lvl, cost);
+				}
+				if(hoverType == 2)
+				{
+					//buttonManager.showPopup(hoveredPoint);
+				}
 			}
 			else
 			{

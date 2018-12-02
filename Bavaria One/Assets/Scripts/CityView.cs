@@ -84,25 +84,30 @@ public class CityView : MonoBehaviour
         {
             if (city.position == position)
             {   
-                city.upgradeLevel++;
-                SetLevel(city, "" + city.upgradeLevel);
+                UpgradeCity(city);
+            }
+        }
+    }
 
-                GameObject cty;
-                Cities.TryGetValue(city, out cty);
+    public void UpgradeCity(City city) 
+    {
+        city.upgradeLevel++;
+        SetLevel(city, "" + city.upgradeLevel);
 
-                if (cty != null)
-                {
-                    cty.transform.Find("stadtLV1").gameObject.SetActive(false);
-                    if (city.upgradeLevel == 2)
-                    {
-                        cty.transform.Find("StadtLv2").gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        cty.transform.Find("StadtLv3").gameObject.SetActive(true);
-                        cty.transform.Find("StadtLv2").gameObject.SetActive(false);
-                    }
-                }
+        GameObject cty;
+        Cities.TryGetValue(city, out cty);
+
+        if (cty != null)
+        {
+            cty.transform.Find("stadtLV1").gameObject.SetActive(false);
+            if (city.upgradeLevel == 2)
+            {
+                cty.transform.Find("StadtLV2").gameObject.SetActive(true);
+            }
+            else
+            {
+                cty.transform.Find("StadtLV3").gameObject.SetActive(true);
+                cty.transform.Find("StadtLV2").gameObject.SetActive(false);
             }
         }
     }

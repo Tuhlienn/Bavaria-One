@@ -101,7 +101,7 @@ public class ButtonManager : MonoBehaviour {
         }
     }
 
-    public void showPopup(Vector3 position) 
+    public void showPopup(Vector3 position, int currentLevel, int upgradeCost) 
     {
         if (!popUpFixed)
         {
@@ -113,6 +113,9 @@ public class ButtonManager : MonoBehaviour {
             
             popUpUpgrade.SetActive(true);
             upgradePosition = position;
+
+            upgradeText.text = "Level: " + currentLevel;
+            costText.text = "Cost: " + upgradeCost;
         }
     }
 
@@ -127,8 +130,15 @@ public class ButtonManager : MonoBehaviour {
         popUpUpgrade.SetActive(false);
         popUpFixed = false;
 
-        var position = new Vector2(upgradePosition.x, upgradePosition.z);
-        cityManager.AddCity(position);
+        if(gridMovement.selectedCity == null) 
+        {
+            var position = new Vector2(upgradePosition.x, upgradePosition.z);
+            cityManager.AddCity(position);
+        }
+        else 
+        {
+            GameObject.Find("CityManager").GetComponent<CityView>().UpgradeCity(gridMovement.selectedCity);
+        }
     }
     public void TogglePause()
     {
