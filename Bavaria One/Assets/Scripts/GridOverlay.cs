@@ -5,29 +5,84 @@ using UnityEngine;
 public class GridOverlay : MonoBehaviour 
 {
 	public Material GridMaterial;
+	public Material ConnectionMaterial;
+	public Material TrafficMaterial;
 	public int gridCount = 10;
 	public float gridSize = 1.0f;
 	 
+
 	void OnPostRender () 
 	{
 		GL.PushMatrix();
-		GridMaterial.SetPass(0);
-		GL.Begin(GL.LINES);		
 		
-		GL.Color(Color.white);
 
-		Vector3 center = new Vector3((int)Mathf.Round(transform.position.x), 0, (int)Mathf.Round(transform.position.z));
-		int lineCount = gridCount + 1;
-		for (int i = -lineCount; i <= lineCount; i++) 
+		int width = GameManager.Instance.width;
+		int height = GameManager.Instance.height;
+
+		GridMaterial.SetPass(0);
+		GL.Begin(GL.LINES);
+		GL.Color(Color.white);
+		for(int x = -width / 2; x < width / 2; x++)
 		{
-			GL.Vertex(center + new Vector3(i * gridSize, 0, -lineCount * gridSize));
-			GL.Vertex(center + new Vector3(i * gridSize, 0, lineCount * gridSize));
-			
-			GL.Vertex(center + new Vector3(-lineCount * gridSize, 0, i * gridSize));
-			GL.Vertex(center + new Vector3(lineCount * gridSize, 0, i * gridSize));
+			GL.Vertex(new Vector3(x, 0, -height / 2));
+			GL.Vertex(new Vector3(x, 0, height / 2));
 		}
-	
+		for(int z = -height / 2; z < height / 2; z++) 
+		{
+			GL.Vertex(new Vector3(-width / 2, 0, z));
+			GL.Vertex(new Vector3(width / 2, 0, z));
+		}
+		GL.End(); 
+
+		ConnectionMaterial.SetPass(0);
+		GL.Begin(GL.LINES);
+		GL.Color(Color.white);
+		for(int x = -width / 2; x < width / 2; x++)
+		{
+			for(int z = -height / 2; z < height / 2; z++) 
+			{
+				if(GameManager.Instance.Connections.ConnectionAt(new Vector2(x, z), new Vector2(x, z + 1)) != null)
+				{
+					GL.Vertex(new Vector3(x, 0, z));
+					GL.Vertex(new Vector3(x, 0, z + 1));
+				}
+			}
+		}
+		for(int z = -height / 2; z < height / 2; z++) 
+		{
+			for(int x = -width / 2; x < width / 2; x++)
+			{
+				if(GameManager.Instance.Connections.ConnectionAt(new Vector2(x, z), new Vector2(x + 1, z)) != null)
+				{
+					GL.Vertex(new Vector3(x, 0, z));
+					GL.Vertex(new Vector3(x + 1, 0, z));
+				}
+			}
+		}
 		GL.End();
+		/* 
+		TrafficMaterial.SetPass(0);
+		GL.Begin(GL.LINES);
+		GL.Color(Color.white);
+		for(int x = -width / 2; x < width / 2; x++)
+		{
+			for(int z = -height / 2; z < height / 2; z++) 
+			{
+				GL.Vertex(new Vector3(x, 0, z));
+				GL.Vertex(new Vector3(x, 0, z + 1));
+			}
+		}
+		for(int z = -height / 2; z < height / 2; z++) 
+		{
+			for(int x = -width / 2; x < width / 2; x++)
+			{
+				GL.Vertex(new Vector3(x, 0, z));
+				GL.Vertex(new Vector3(x + 1, 0, z));
+			}
+		}
+		GL.End(); 
+		*/
+
 		GL.PopMatrix();
 	}
 }

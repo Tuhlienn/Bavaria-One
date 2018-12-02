@@ -25,6 +25,7 @@ public class GameManager : Singleton<GameManager>
 
     private Map map;
     private List<City> cities;
+    public HashSet<City> connected;
     private List<Train> trains;
     private List<Connection> tickingConnections;
     private Graph connections;
