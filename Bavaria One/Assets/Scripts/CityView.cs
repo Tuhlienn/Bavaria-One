@@ -46,9 +46,14 @@ public class CityView : MonoBehaviour
     {
         if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 1 || GameManager.Instance.Resources.concrete < 1)
             return;
+        
+        if(!GameManager.Instance.Connections.Connect(left, right, isStammstrecke, 1))
+        {
+            return;
+        }
+
         GameManager.Instance.Resources += new ResourceCount(0, -1, -1, -1, 0);
 
-        GameManager.addConnection(new Connection(isStammstrecke, 1, left, right));
         HashSet<City> adjecent = new HashSet<City>();
         foreach(City cty in GameManager.Instance.Cities)
         {
@@ -79,25 +84,30 @@ public class CityView : MonoBehaviour
         {
             if (city.position == position)
             {   
-                city.upgradeLevel++;
-                SetLevel(city, "" + city.upgradeLevel);
+                UpgradeCity(city);
+            }
+        }
+    }
 
-                GameObject cty;
-                Cities.TryGetValue(city, out cty);
+    public void UpgradeCity(City city) 
+    {
+        city.upgradeLevel++;
+        SetLevel(city, "" + city.upgradeLevel);
 
-                if (cty != null)
-                {
-                    cty.transform.Find("stadtLV1").gameObject.SetActive(false);
-                    if (city.upgradeLevel == 2)
-                    {
-                        cty.transform.Find("StadtLv2").gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        cty.transform.Find("StadtLv3").gameObject.SetActive(true);
-                        cty.transform.Find("StadtLv2").gameObject.SetActive(false);
-                    }
-                }
+        GameObject cty;
+        Cities.TryGetValue(city, out cty);
+
+        if (cty != null)
+        {
+            cty.transform.Find("stadtLV1").gameObject.SetActive(false);
+            if (city.upgradeLevel == 2)
+            {
+                cty.transform.Find("StadtLV2").gameObject.SetActive(true);
+            }
+            else
+            {
+                cty.transform.Find("StadtLV3").gameObject.SetActive(true);
+                cty.transform.Find("StadtLV2").gameObject.SetActive(false);
             }
         }
     }
