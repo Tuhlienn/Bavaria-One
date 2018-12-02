@@ -30,7 +30,9 @@ public class GridOverlay : MonoBehaviour
 			GL.Vertex(new Vector3(width / 2, 0, z));
 		}
 		GL.End();
+		GL.PopMatrix();
 
+		GL.PushMatrix();
 		ConnectionMaterial.SetPass(0);
 		GL.Begin(GL.LINES);
 		GL.Color(Color.white);
@@ -57,29 +59,37 @@ public class GridOverlay : MonoBehaviour
 			}
 		}
 		GL.End();
-		/* 
-		TrafficMaterial.SetPass(0);
+		GL.PopMatrix();
+
+		GL.PushMatrix();
+		ConnectionMaterial.SetPass(0);
 		GL.Begin(GL.LINES);
 		GL.Color(Color.white);
 		for(int x = -width / 2; x < width / 2; x++)
 		{
 			for(int z = -height / 2; z < height / 2; z++) 
 			{
-				GL.Vertex(new Vector3(x, 0, z));
-				GL.Vertex(new Vector3(x, 0, z + 1));
+				var connection = GameManager.Instance.Connections.ConnectionAt(new Vector2(x, z), new Vector2(x, z + 1));
+				if(connection != null && connection.isStammstrecke)
+				{
+					GL.Vertex(new Vector3(x, 0, z));
+					GL.Vertex(new Vector3(x, 0, z + 1));
+				}
 			}
 		}
 		for(int z = -height / 2; z < height / 2; z++) 
 		{
 			for(int x = -width / 2; x < width / 2; x++)
 			{
-				GL.Vertex(new Vector3(x, 0, z));
-				GL.Vertex(new Vector3(x + 1, 0, z));
+				var connection = GameManager.Instance.Connections.ConnectionAt(new Vector2(x, z), new Vector2(x + 1, z));
+				if(connection != null && connection.isStammstrecke)
+				{
+					GL.Vertex(new Vector3(x, 0, z));
+					GL.Vertex(new Vector3(x + 1, 0, z));
+				}
 			}
 		}
-		GL.End(); 
-		*/
-
+		GL.End();
 		GL.PopMatrix();
 	}
 }
