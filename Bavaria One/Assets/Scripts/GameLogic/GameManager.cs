@@ -8,7 +8,9 @@ public class GameManager : Singleton<GameManager>
     public int width = 100;
     public int height = 100;
     public ResourceCount startResources;
+
     public float Speed = 1.0f;
+    public bool IsPaused = false;
 
     public float ResourceFrequency = 0.1f;
     public int ResourceOctaves = 6;
@@ -16,6 +18,7 @@ public class GameManager : Singleton<GameManager>
 
     private Map map;
     private List<City> cities;
+    public HashSet<City> connected;
     private List<Train> trains;
     private List<Connection> tickingConnections;
     private Graph connections;
@@ -39,6 +42,10 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+        if (IsPaused)
+        {
+            return;
+        }
         DeltaTime += Time.deltaTime;
         if (DeltaTime >= (5.0f / Speed))
         {
