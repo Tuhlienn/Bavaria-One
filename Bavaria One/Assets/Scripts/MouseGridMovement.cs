@@ -19,6 +19,8 @@ public class MouseGridMovement : MonoBehaviour {
 	bool zBetweenPoints;
 	private int hoverType; //0 = edge, 1 = point, 2 = face
 
+    public AudioClip railSound;
+
 
     void Awake () 
 	{
@@ -121,6 +123,7 @@ public class MouseGridMovement : MonoBehaviour {
 						right = new Vector2(hoveredPoint.x, hoveredPoint.z + 0.5f);
 					}
 					cityManager.AddConnection(false, left, right);
+                    SoundManager.Instance.Play(railSound);
 				}
 			}
 		}

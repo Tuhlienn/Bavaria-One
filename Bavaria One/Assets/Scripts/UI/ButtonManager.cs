@@ -28,6 +28,8 @@ public class ButtonManager : MonoBehaviour {
 
     private CityView cityManager;
 
+    public AudioClip citySound;
+
     void Awake()
     {
         cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
@@ -129,6 +131,7 @@ public class ButtonManager : MonoBehaviour {
 
         var position = new Vector2(upgradePosition.x, upgradePosition.z);
         cityManager.AddCity(position);
+        SoundManager.Instance.Play(citySound);
     }
     public void TogglePause()
     {
