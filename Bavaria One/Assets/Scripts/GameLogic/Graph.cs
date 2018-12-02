@@ -74,6 +74,7 @@ public class Graph
                 Vector2 vec = con.left == from ? con.right : con.left;
                     if (!set.Contains(vec))
                     {
+                        
                         dict.Add(vec, from);
                         frontier.Enqueue(vec);
                     }
@@ -122,6 +123,11 @@ public class Graph
      */
     public void Connect (Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
     {
+        foreach(Connection con in connections)
+        {
+            if ((con.left == first && con.right == second) || (con.left == second && con.right == first))
+                return;
+        }
         connections.Add(new Connection( isStammstrecke, upgradeLevel, first, second));
     }
 }
