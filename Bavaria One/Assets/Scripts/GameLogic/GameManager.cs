@@ -8,7 +8,9 @@ public class GameManager : Singleton<GameManager>
     public int width = 100;
     public int height = 100;
     public ResourceCount startResources;
+
     public float Speed = 1.0f;
+    public bool IsPaused = false;
 
     public float ResourceFrequency = 0.1f;
     public int ResourceOctaves = 6;
@@ -39,6 +41,10 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+        if (IsPaused)
+        {
+            return;
+        }
         DeltaTime += Time.deltaTime;
         if (DeltaTime >= (5.0f / Speed))
         {
