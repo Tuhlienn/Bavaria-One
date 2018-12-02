@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ResourceIconAmountScript: MonoBehaviour {
+public class ResourceIconAmount: MonoBehaviour {
     public float CurrentAmount;
 	// Use this for initialization
 	void Start () {
