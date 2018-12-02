@@ -1,6 +1,4 @@
-﻿using System;
-
-[System.Serializable]
+﻿[System.Serializable]
 public struct ResourceCount {
     public float money;
     public float beer;
