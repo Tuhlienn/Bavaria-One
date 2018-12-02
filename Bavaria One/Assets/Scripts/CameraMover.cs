@@ -38,11 +38,11 @@ public class CameraMover : MonoBehaviour {
 				// Move the camera
 				deltaPosition.x -= CameraSpeed * Time.deltaTime;
 			}
-			if (Input.mousePosition.z >= Screen.height - PanningThreshold) {
+			if (Input.mousePosition.y >= Screen.height - PanningThreshold) {
 				// Move the camera
 				deltaPosition.z += CameraSpeed * Time.deltaTime;
 			}
-			if (Input.mousePosition.z <= PanningThreshold) {
+			if (Input.mousePosition.y <= PanningThreshold) {
 				// Move the camera
 				deltaPosition.z-= CameraSpeed * Time.deltaTime;
 			}
