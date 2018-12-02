@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour {
 
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
+    public GameObject pauseObject;
     private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
@@ -36,6 +37,10 @@ public class ButtonManager : MonoBehaviour {
         if (Input.GetKeyDown("1"))
         {
             OnToggleBuildMode();
+        }
+        if (Input.GetKeyDown("escape"))
+        {
+            TogglePause();
         }
     }
 
@@ -114,6 +119,10 @@ public class ButtonManager : MonoBehaviour {
         //Debug.Log("YAS"); werks
         popUpUpgrade.SetActive(false);
         popUpFixed = false;
+    }
+    public void TogglePause()
+    {
+        pauseObject.SetActive(!pauseObject.active);
     }
 
 }
