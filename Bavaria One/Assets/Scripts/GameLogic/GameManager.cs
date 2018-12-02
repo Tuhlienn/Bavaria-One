@@ -94,7 +94,41 @@ public class GameManager : Singleton<GameManager>
     }
 
     public static void addCity(Vector2 position) {
-        addCity(new City(position, Instance.connections, Instance.map, CityNameGenerator.GenerateName()));
+        City city = new City(position, Instance.connections, Instance.map, CityNameGenerator.GenerateName());
+        addCity(city);
+        for(int i = -1; i < 1; i++)
+        {
+            for(int j = -1; j < 1; j++)
+            {
+                int x = (int)position.x + i;
+                int y = (int)position.y + j;
+                ResourceCount MapResource = Instance.map.tiles[x, y].resource;
+                ResourceCount CityMultiResource = city.production.MultiResources();
+
+                float amount = 1.0f;
+                if (MapResource.money > 0 && CityMultiResource.money > 0)
+                {
+                    amount = 1.25f;
+                }
+                else if(MapResource.money > 0 && CityMultiResource.money > 0)
+                {
+                    amount = 1.25f;
+                }
+                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                {
+                    amount = 1.25f;
+                }
+                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                {
+                    amount = 1.25f;
+                }
+                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                {
+                    amount = 1.25f;
+                }
+                Instance.AddToResourceDisplay(x, y, amount);
+            }
+        }
     }
 
     public static void addCity(City city) {
@@ -153,5 +187,9 @@ public class GameManager : Singleton<GameManager>
         {
             this.resources = value;
         }
+    }
+    public void AddToResourceDisplay(int w, int h, float amount)
+    {
+        ResourceIcons[w, h].transform.GetChild(0).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
     }
 }

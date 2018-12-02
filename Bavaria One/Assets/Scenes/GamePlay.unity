@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028337, g: 0.22571531, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.24647513, g: 0.2823457, b: 0.34570342, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -616,6 +616,14 @@ MonoBehaviour:
   ResourceFrequency: 0.1
   ResourceOctaves: 6
   ResourceSeed: 111.684654
+  GeldPrefab: {fileID: 1124367334943906, guid: 5f78d2b1012c70f42ac856c58cd5b5fe, type: 2}
+  BierPrefab: {fileID: 1970388138569016, guid: 38c4da4c34198c14baf568773dc77f93, type: 2}
+  StahlPrefab: {fileID: 1082398020241050, guid: d8022ec552e367e428df9c3709dd64d8,
+    type: 2}
+  BetonPrefab: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a,
+    type: 2}
+  StromPrefab: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8,
+    type: 2}
 --- !u!4 &692640910
 Transform:
   m_ObjectHideFlags: 0
