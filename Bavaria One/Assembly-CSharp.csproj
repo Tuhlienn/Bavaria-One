@@ -63,10 +63,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ButtonManager.cs" />
     <Compile Include="Assets\Scripts\GridOverlay.cs" />
+    <Compile Include="Assets\Scripts\IntroSlide.cs" />
+    <Compile Include="Assets\Scripts\LogoSlide.cs" />
     <Compile Include="Assets\Scripts\MouseGridMovement.cs" />
     <Compile Include="Assets\Scripts\NoiseTerrain.cs" />
     <Compile Include="Assets\Scripts\RemoveNewspaper.cs" />
     <Compile Include="Assets\Scripts\SpawnNewspaper.cs" />
+    <Compile Include="Assets\Scripts\TextScrolling.cs" />
     <None Include="Assets\Effects\GridShader.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Universitaet/SemesterGameJam/Bavaria One/Bavaria One/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
