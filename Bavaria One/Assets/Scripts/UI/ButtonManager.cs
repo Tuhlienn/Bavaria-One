@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour {
 
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
+    public GameObject pauseObject;
     private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
@@ -43,6 +44,10 @@ public class ButtonManager : MonoBehaviour {
         if (Input.GetKeyDown("1"))
         {
             OnToggleBuildMode();
+        }
+        if (Input.GetKeyDown("escape"))
+        {
+            TogglePause();
         }
     }
 
@@ -124,6 +129,10 @@ public class ButtonManager : MonoBehaviour {
 
         var position = new Vector2(upgradePosition.x, upgradePosition.z);
         cityManager.AddCity(position);
+    }
+    public void TogglePause()
+    {
+        pauseObject.SetActive(!pauseObject.active);
     }
 
 }

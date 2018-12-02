@@ -25,6 +25,10 @@ public class CityView : MonoBehaviour
     }
     public void AddCity(Vector2 position)
     {
+        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
+            return;
+        GameManager.Instance.Resources += new ResourceCount(0, -1, -2, -4, 0);
+
         City city = new City(position,
             GameManager.Instance.Connections,
             GameManager.Instance.Map,
@@ -40,6 +44,10 @@ public class CityView : MonoBehaviour
 
     public void AddConnection(bool isStammstrecke,Vector2 left, Vector2 right)
     {
+        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 1 || GameManager.Instance.Resources.concrete < 1)
+            return;
+        GameManager.Instance.Resources += new ResourceCount(0, -1, -1, -1, 0);
+
         GameManager.addConnection(new Connection(isStammstrecke, 1, left, right));
         HashSet<City> adjecent = new HashSet<City>();
         foreach(City cty in GameManager.Instance.Cities)

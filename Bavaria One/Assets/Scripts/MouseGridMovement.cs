@@ -15,7 +15,9 @@ public class MouseGridMovement : MonoBehaviour {
 	private CityView cityManager;
 
 	private Vector3 hoveredPoint;
-	private int hoverType;
+	bool xBetweenPoints;
+	bool zBetweenPoints;
+	private int hoverType; //0 = edge, 1 = point, 2 = face
 
 
     void Awake () 
@@ -25,9 +27,6 @@ public class MouseGridMovement : MonoBehaviour {
 	
 	void Update () 
 	{
-        if (!selectMode)
-            return;
-
         if (EventSystem.current.IsPointerOverGameObject())
         {
             Selection.gameObject.SetActive(false);
@@ -46,8 +45,8 @@ public class MouseGridMovement : MonoBehaviour {
 			Vector3 temp = ray.GetPoint(distance);
 			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
 
-			bool xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
-			bool zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
+			xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
+			zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
 
 			if(xBetweenPoints && zBetweenPoints)
 			{
@@ -98,15 +97,32 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetMouseButtonDown(0) && Selection.gameObject.activeSelf) 
+		if(Selection.gameObject.activeSelf) 
 		{
-			if(selectMode) 
+			if(Input.GetMouseButtonDown(0) && selectMode) 
 			{
-				buttonManager.showPopup(hoveredPoint);
+				if(hoverType == 1 || hoverType == 2)
+					buttonManager.showPopup(hoveredPoint);
 			}
-			else 
+			
+			if(Input.GetMouseButton(0) && !selectMode) 
 			{
-				
+				if(hoverType == 0) 
+				{
+					Vector2 left;
+					Vector2 right;
+					if(xBetweenPoints)
+					{
+						left = new Vector2(hoveredPoint.x - 0.5f, hoveredPoint.z);
+						right = new Vector2(hoveredPoint.x + 0.5f, hoveredPoint.z);
+					}
+					else
+					{
+						left = new Vector2(hoveredPoint.x, hoveredPoint.z - 0.5f);
+						right = new Vector2(hoveredPoint.x, hoveredPoint.z + 0.5f);
+					}
+					cityManager.AddConnection(false, left, right);
+				}
 			}
 		}
 	}
