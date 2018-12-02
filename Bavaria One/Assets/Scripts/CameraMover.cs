@@ -11,11 +11,10 @@ public class CameraMover : MonoBehaviour {
 	public float PanningThreshold = 50f;
 	public bool EnablePanning = true; 
 
-	private Rect bounds;
+	public float xMin = -45.0f, xMax = 45.0f, zMin = -45.0f, zMax = 45.0f;
 
 	// Use this for initialization
 	void Start () {
-		bounds = new Rect(-10, 0, 25, 15);
 	}
 	
 	// Update is called once per frame
@@ -57,10 +56,10 @@ public class CameraMover : MonoBehaviour {
 		toMove = Quaternion.Euler(0, 45, 0) * toMove;
 		transform.Translate(toMove, Space.World);
 
-		// Vector3 newPos = new Vector3();
-		// newPos.x = Mathf.Clamp(transform.position.x, bounds.xMin, bounds.xMax);
-		// newPos.y = Mathf.Clamp(transform.position.y, bounds.yMin, bounds.yMax);
+		Vector3 newPos = new Vector3();
+		newPos.x = Mathf.Clamp(transform.position.x, xMin, xMax);
+		newPos.z = Mathf.Clamp(transform.position.z, zMin, zMax);
 
-		// transform.position = newPos;
+		transform.position = newPos;
 	}
 }
