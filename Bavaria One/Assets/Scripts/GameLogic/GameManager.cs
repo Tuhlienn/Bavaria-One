@@ -16,6 +16,13 @@ public class GameManager : Singleton<GameManager>
     public int ResourceOctaves = 6;
     public float ResourceSeed = 111.68465165f;
 
+    public GameObject[,] ResourceIcons;
+    public GameObject GeldPrefab;
+    public GameObject BierPrefab;
+    public GameObject StahlPrefab;
+    public GameObject BetonPrefab;
+    public GameObject StromPrefab;
+
     private Map map;
     private List<City> cities;
     public HashSet<City> connected;
@@ -37,6 +44,29 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
+        ResourceIcons = new GameObject[width, height];
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (map.tiles[i,j].resource.money > 0)
+                {
+                    ResourceIcons[i, j] = Instantiate(GeldPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                }
+                else if (map.tiles[i, j].resource.beer > 0)
+                {
+                    ResourceIcons[i, j] = Instantiate(BierPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                }
+                else if (map.tiles[i, j].resource.steel > 0)
+                {
+                    ResourceIcons[i, j] = Instantiate(StahlPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                }
+                else if (map.tiles[i, j].resource.concrete > 0)
+                {
+                    ResourceIcons[i, j] = Instantiate(BetonPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                }
+            }
+        }
         DeltaTime = 0.0f;
     }
 
