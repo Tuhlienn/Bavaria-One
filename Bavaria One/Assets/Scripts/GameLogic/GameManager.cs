@@ -39,6 +39,7 @@ public class GameManager : Singleton<GameManager>
         this.tickingConnections = new List<Connection>();
         this.connections = new Graph(width + 1, height + 1);
         this.resources = startResources;
+        this.connected = new HashSet<City>();
     }
 
     void Start()
