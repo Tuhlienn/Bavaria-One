@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TextScrolling : MonoBehaviour {
 
-    public float scrollSpeed = 20;
+    public float scrollSpeed;
 
     void Start()
     {
@@ -14,7 +15,13 @@ public class TextScrolling : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         StartCoroutine(MyCoroutine());
+       
 
+    }
+
+    IEnumerator MyCoroutine()
+    {
+        yield return new WaitForSeconds(27);
         Vector3 pos = transform.position;
         if (transform.position.y < 250.0f)
         {
@@ -24,12 +31,11 @@ public class TextScrolling : MonoBehaviour {
         }
         else
         {
-            //change Scene?
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
+      
+            }
         }
-    }
 
-    IEnumerator MyCoroutine()
-    {
-        yield return new WaitForSeconds(27);
     }
 }

@@ -6,10 +6,15 @@ using UnityEngine;
 public class LogoSlide : MonoBehaviour {
 
     public Image image;
+    public AudioClip IntroMusic;
     float scaleRate = -0.01f;
     float minScale= 0.8f;
 
-	// Use this for initialization
+    // Use this for initialization
+    void Awake() {
+        SoundManager.Instance.PlayMusic(IntroMusic);
+    }
+
 	void Start () {
         image = GetComponent<Image>();
     }
