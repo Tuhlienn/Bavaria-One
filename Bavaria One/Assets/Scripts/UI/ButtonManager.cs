@@ -12,6 +12,8 @@ public class ButtonManager : MonoBehaviour {
     //Upgrade Popup Menu
     public GameObject popUpUpgrade;
     public GameObject pauseObject;
+    public GameObject creditsObject;
+    public GameObject selectB;
     private RectTransform popUpTransform;
     public Text upgradeText;
     public Text costText;
@@ -47,7 +49,7 @@ public class ButtonManager : MonoBehaviour {
         {
             OnToggleBuildMode();
         }
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("escape")||Input.GetKeyDown("p"))
         {
             TogglePause();
         }
@@ -62,6 +64,7 @@ public class ButtonManager : MonoBehaviour {
     public void OnToggleBuildMode()
     {
         gridMovement.ToggleSelectMode();
+        selectB.SetActive(gridMovement.selectMode);
     }
 
     public void ExitGame()
@@ -148,6 +151,12 @@ public class ButtonManager : MonoBehaviour {
     public void TogglePause()
     {
         pauseObject.SetActive(!pauseObject.active);
+        GameManager.Instance.IsPaused = pauseObject.active;
+        if (creditsObject.active) ToggleCredits();
+    }
+    public void ToggleCredits()
+    {
+        creditsObject.SetActive(!creditsObject.active);
     }
 
 }
