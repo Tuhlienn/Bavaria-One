@@ -107,7 +107,8 @@ public class Graph
         {
             for (int j = -1; j <= 1; j++)
             {
-                if (ConnectionAt(position, new Vector2(position.x, (float)i)).isStammstrecke)
+                Connection con = ConnectionAt(position, position + new Vector2(i, j));
+                if (con != null && con.isStammstrecke)
                 {
                     return true;
                 }

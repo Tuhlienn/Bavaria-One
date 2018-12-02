@@ -7,6 +7,7 @@ public class CityView : MonoBehaviour
 {
     public Dictionary<City, GameObject> Cities;
     public GameObject CityPrefab;
+    bool Test = false;
     // Use this for initialization
     void Start()
     {
@@ -16,7 +17,11 @@ public class CityView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(!Test)
+        {
+            AddCity(new Vector2(0, 0));
+            Test = true;
+        }
     }
     public void AddCity(Vector2 position)
     {
@@ -25,9 +30,9 @@ public class CityView : MonoBehaviour
             GameManager.Instance.Map,
             CityNameGenerator.GenerateName());
 
-        GameManager.Instance.Cities.Add(city);
+        GameManager.addCity(city);
 
-        Cities.Add(city, Instantiate(CityPrefab));
+        Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
 
         GameObject cityGO;
         Cities.TryGetValue(city, out cityGO);
