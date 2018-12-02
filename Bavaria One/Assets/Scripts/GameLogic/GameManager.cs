@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public int width = 100;
     public int height = 100;
     public ResourceCount startResources;
+    public float Speed = 1.0f;
 
     public float ResourceFrequency = 0.1f;
     public int ResourceOctaves = 6;
@@ -19,6 +20,7 @@ public class GameManager : Singleton<GameManager>
     private List<Connection> tickingConnections;
     private Graph connections;
     private ResourceCount resources;
+    private float DeltaTime = 0.0f;
 
     void Awake() 
     {
@@ -32,19 +34,26 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
+        DeltaTime = 0.0f;
     }
 
     void Update()
     {
-        // Call Tick() on all Ticking objects 
-        foreach(Train train in trains) {
-            train.Tick();
-        }
-        foreach(Connection con in tickingConnections)
+        DeltaTime += Time.deltaTime;
+        if (DeltaTime >= (5.0f / Speed))
         {
-            con.Tick();
+            // Call Tick() on all Ticking objects 
+            foreach (Train train in trains)
+            {
+                train.Tick();
+            }
+            foreach (Connection con in tickingConnections)
+            {
+                con.Tick();
+            }
+            tickingConnections = new List<Connection>();
+            DeltaTime += 5.0f / Speed;
         }
-        tickingConnections = new List<Connection>();
     }
 
     public static void addCity(Vector2 position) {
