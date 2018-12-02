@@ -102,6 +102,14 @@ public class GameManager : Singleton<GameManager>
         Instance.cities.Add(city);
     }
 
+    public static City GetCity(Vector2 position) {
+        foreach(City city in Instance.Cities) {
+            if(city.position == position)
+                return city;
+        }
+        return null;
+    }
+
     public static void addTrain(Train train) {
         Instance.trains.Add(train);
     }
