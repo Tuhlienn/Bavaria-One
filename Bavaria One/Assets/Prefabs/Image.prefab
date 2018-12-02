@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222375929628738684}
   - component: {fileID: 114595026872273490}
   - component: {fileID: 95538350307389916}
+  - component: {fileID: 114013230217577998}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -47,6 +48,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114013230217577998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020494526034846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfbab45185dd6640971f529317ac7be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114595026872273490
 MonoBehaviour:
   m_ObjectHideFlags: 1
