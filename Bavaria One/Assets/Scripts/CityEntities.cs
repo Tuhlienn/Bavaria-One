@@ -5,8 +5,8 @@ using UnityEngine;
 public class CityEntities : MonoBehaviour {
     public GameObject[,] Cities;
     public GameObject CityPrefab;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         int width = GameManager.Instance.width;
         int height = GameManager.Instance.height;
         this.Cities = new GameObject[width, height];
@@ -17,12 +17,12 @@ public class CityEntities : MonoBehaviour {
                 Cities[i, j] = null;
             }
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        
+    }
     public void AddCity(Vector2 position)
     {
 
