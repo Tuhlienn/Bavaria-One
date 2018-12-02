@@ -12,11 +12,15 @@ public class MouseGridMovement : MonoBehaviour {
     public bool selectMode = true;
     public ButtonManager buttonManager;
 
+	private CityView cityManager;
+
 	private Vector3 hoveredPoint;
+	private int hoverType;
 
 
-    void Start () 
+    void Awake () 
 	{
+		cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
     }
 	
 	void Update () 
@@ -51,6 +55,7 @@ public class MouseGridMovement : MonoBehaviour {
                 {
                     var meshFilter = Selection.GetComponent<MeshFilter>();
                     meshFilter.mesh = meshes[2];
+					hoverType = 2;
                     Selection.position = hoveredPoint;
                     Selection.gameObject.SetActive(true);
                 }
@@ -67,10 +72,12 @@ public class MouseGridMovement : MonoBehaviour {
 					if(!(xBetweenPoints || zBetweenPoints))
 					{
 						meshFilter.mesh = meshes[1];
+						hoverType = 1;
 					}
 					else 
 					{
 						meshFilter.mesh = meshes[0];
+						hoverType = 0;
 						if(xBetweenPoints) 
 						{
 							Selection.transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0);
@@ -91,9 +98,16 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetMouseButtonDown(0) && selectMode && Selection.gameObject.activeSelf) 
+		if(Input.GetMouseButtonDown(0) && Selection.gameObject.activeSelf) 
 		{
-			buttonManager.showPopup(hoveredPoint);
+			if(selectMode) 
+			{
+				buttonManager.showPopup(hoveredPoint);
+			}
+			else 
+			{
+				
+			}
 		}
 	}
 
