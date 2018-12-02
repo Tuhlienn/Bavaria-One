@@ -19,15 +19,12 @@ public class SpawnNewspaper : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetKeyDown(KeyCode.F9) )
         {
             InstantiateNewspaper();
         }
        
-        if (Input.GetMouseButton(0))
-        {
-            currentNewspaper.GetComponent<Animator>().SetTrigger("fadeout");
-        }
+        
     }
 
     public void InstantiateNewspaper() {
