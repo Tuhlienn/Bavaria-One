@@ -14,7 +14,6 @@ public class GridOverlay : MonoBehaviour
 	void OnPostRender () 
 	{
 		GL.PushMatrix();
-		
 
 		int width = GameManager.Instance.width;
 		int height = GameManager.Instance.height;
@@ -32,7 +31,7 @@ public class GridOverlay : MonoBehaviour
 			GL.Vertex(new Vector3(-width / 2, 0, z));
 			GL.Vertex(new Vector3(width / 2, 0, z));
 		}
-		GL.End(); 
+		GL.End();
 
 		ConnectionMaterial.SetPass(0);
 		GL.Begin(GL.LINES);

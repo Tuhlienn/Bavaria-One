@@ -29,7 +29,7 @@ public class ButtonManager : MonoBehaviour {
 
     void Awake()
     {
-        cityManager = GameObject.Find("CityManager").GetComponent<CityView>()
+        cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
     }
 
     private void Start()

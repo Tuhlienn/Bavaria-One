@@ -40,7 +40,7 @@ public class CityView : MonoBehaviour
 
     public void AddConnection(bool isStammstrecke,Vector2 left, Vector2 right)
     {
-        GameManager.addConnection(new Connection(isStammstrecke, 1, left, right));
+        GameManager.Instance.Connections.Connect(left, right, isStammstrecke, 1);
         HashSet<City> adjecent = new HashSet<City>();
         foreach(City cty in GameManager.Instance.Cities)
         {

@@ -366,6 +366,7 @@ MonoBehaviour:
     concrete: 100
     energy: 100
   Speed: 1
+  IsPaused: 0
   ResourceFrequency: 0.1
   ResourceOctaves: 6
   ResourceSeed: 111.684654
@@ -497,6 +498,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridMaterial: {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
+  ConnectionMaterial: {fileID: 2100000, guid: 4a70d665a7b16db4fb13c231aa75ed69, type: 2}
+  TrafficMaterial: {fileID: 2100000, guid: 721aec5caa7787f4a8bdb159f2668e5b, type: 2}
   gridCount: 18
   gridSize: 1
 --- !u!114 &697348476
@@ -952,6 +955,11 @@ Prefab:
       propertyPath: m_FontData.m_MinSize
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114378737377067766, guid: a79360b13bc930c4b9ca7424db52ece1,
+        type: 2}
+      propertyPath: gridMovement
+      value: 
+      objectReference: {fileID: 1305803421}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a79360b13bc930c4b9ca7424db52ece1, type: 2}
   m_IsPrefabAsset: 0
