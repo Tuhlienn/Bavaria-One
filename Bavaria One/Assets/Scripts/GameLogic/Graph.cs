@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;
+using UnityEditor.Experimental.UIElements;
 
 public class Graph
 {
@@ -59,7 +60,7 @@ public class Graph
         Queue<Vector2> frontier = new Queue<Vector2>();
         HashSet<Vector2> set = new HashSet<Vector2>();
         Dictionary<Vector2, Vector2> dict = new Dictionary<Vector2, Vector2>();
-        dict.Add(from, Vector2.one * -1);
+        dict.Add(from, Vector2.one * int.MinValue);
 
         frontier.Enqueue(from);
         while (frontier.Count != 0)
@@ -73,9 +74,13 @@ public class Graph
             foreach(Connection con in ConnectionsWith(from))
             {
                 Vector2 vec = con.left == from ? con.right : con.left;
-                    if (!set.Contains(vec))
-                    {
-                        
+
+                Vector2 vec2 = Vector2.one * int.MinValue;
+                dict.TryGetValue(vec, out vec2);
+                if (vec2 != Vector2.one * int.MinValue) continue; 
+
+                if (!set.Contains(vec))
+                    { 
                         dict.Add(vec, from);
                         frontier.Enqueue(vec);
                     }
@@ -96,7 +101,7 @@ public class Graph
         {
             queue.Enqueue(state);
             dict.TryGetValue(state, out state);
-        } while (state != Vector2.one * -1);
+        } while (state != Vector2.one * int.MinValue);
 
         if (queue.Count == 0) return null;
         queue.Reverse();
