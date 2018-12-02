@@ -97,15 +97,14 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 		}
 
-		if(Selection.gameObject.activeSelf) 
+		if(Input.GetMouseButtonDown(0) && Selection.gameObject.activeSelf)
 		{
-			if(Input.GetMouseButtonDown(0) && selectMode) 
+			if(selectMode) 
 			{
 				if(hoverType == 1 || hoverType == 2)
 					buttonManager.showPopup(hoveredPoint);
 			}
-			
-			if(Input.GetMouseButton(0) && !selectMode) 
+			else
 			{
 				if(hoverType == 0) 
 				{

@@ -121,13 +121,14 @@ public class Graph
     /*
      *  Connect nodes (Bidirectional)
      */
-    public void Connect (Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
+    public bool Connect (Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
     {
         foreach(Connection con in connections)
         {
             if ((con.left == first && con.right == second) || (con.left == second && con.right == first))
-                return;
+                return false;
         }
         connections.Add(new Connection( isStammstrecke, upgradeLevel, first, second));
+        return true;
     }
 }

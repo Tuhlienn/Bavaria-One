@@ -7,8 +7,6 @@ public class GridOverlay : MonoBehaviour
 	public Material GridMaterial;
 	public Material ConnectionMaterial;
 	public Material TrafficMaterial;
-	public int gridCount = 10;
-	public float gridSize = 1.0f;
 	 
 
 	void OnPostRender () 
