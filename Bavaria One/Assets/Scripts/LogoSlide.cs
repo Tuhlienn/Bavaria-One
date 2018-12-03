@@ -12,7 +12,6 @@ public class LogoSlide : MonoBehaviour {
 
     // Use this for initialization
     void Awake() {
-        SoundManager.Instance.PlayMusic(IntroMusic);
     }
 
 	void Start () {
