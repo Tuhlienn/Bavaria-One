@@ -19,6 +19,25 @@ public class GridOverlay : MonoBehaviour
 		GridMaterial.SetPass(0);
 		GL.Begin(GL.LINES);
 		GL.Color(Color.white);
+		for(int i = -width / 2; i < width / 2; i++)
+		{
+			GL.Vertex(new Vector3(i, 0, -height / 2));
+			GL.Vertex(new Vector3(i, 0, height / 2));
+			GL.Vertex(new Vector3(-height / 2, 0, i));
+			GL.Vertex(new Vector3(height / 2, 0, i));
+		}
+		GL.End();
+		GL.PopMatrix();
+
+		/*
+		GL.PushMatrix();
+
+		int width = GameManager.Instance.width;
+		int height = GameManager.Instance.height;
+
+		GridMaterial.SetPass(0);
+		GL.Begin(GL.LINES);
+		GL.Color(Color.white);
 		for(int x = -width / 2; x < width / 2; x++)
 		{
 			GL.Vertex(new Vector3(x, 0, -height / 2));
@@ -91,5 +110,6 @@ public class GridOverlay : MonoBehaviour
 		}
 		GL.End();
 		GL.PopMatrix();
+		*/
 	}
 }

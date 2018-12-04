@@ -4,16 +4,24 @@ using UnityEngine;
 using TMPro;
 
 public class ResourceIconAmount: MonoBehaviour {
+   
+   private float lastAmount = 0;
     public float CurrentAmount;
+
+	private TextMeshPro textMesh;
 	// Use this for initialization
 	void Start () {
-		
+		textMesh = gameObject.GetComponent<TextMeshPro>();
+		CurrentAmount = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		TextMeshPro mText = gameObject.GetComponent<TextMeshPro>();
 
-        mText.text = CurrentAmount.ToString("0.00");
+		if(CurrentAmount != lastAmount) 
+		{
+        	textMesh.text = CurrentAmount.ToString("0.00");
+			lastAmount = CurrentAmount;
+		}
     }
 }
