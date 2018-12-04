@@ -19,19 +19,18 @@ public class Train : Ticking
     override
     public void Tick()
     {
-        if (myCity.path == null)
-            return;
+        if (myCity.path == null) return;
 
         if(queue.Count == 0) {
-            queue.Concat(myCity.path);
-            if (position.Equals(myCity.position)) {
+            queue = new Queue<Vector2>(myCity.path);
+            if (position == myCity.position) {
                 load = myCity.upgradeLevel * myCity.production;
                 load = load + 0.25f * myCity.upgradeLevel * myCity.production.MultiResources();
+                queue = new Queue<Vector2>(queue.Reverse());
             }
             else {
                 GameManager.Instance.Resources += load;
                 load = 0 * load;
-                queue.Reverse();
             }
         }
         if(queue.Count > 0) 

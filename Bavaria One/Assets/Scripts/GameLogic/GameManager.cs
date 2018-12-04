@@ -87,7 +87,7 @@ public class GameManager : Singleton<GameManager>
             }
             foreach (Connection con in tickingConnections)
             {
-                con.Tick();
+                if(con != null) con.Tick();
             }
             tickingConnections = new List<Connection>();
             DeltaTime += 5.0f / Speed;

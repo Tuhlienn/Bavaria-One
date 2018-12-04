@@ -60,34 +60,32 @@ public class Graph
         HashSet<Vector2> set = new HashSet<Vector2>();
         Dictionary<Vector2, Vector2> dict = new Dictionary<Vector2, Vector2>();
         dict.Add(from, Vector2.one * int.MinValue);
+        Vector2 curr;
 
         frontier.Enqueue(from);
         while (frontier.Count != 0)
         {
-            int fromIndex = (int)(width * (int)from.y) + ((int)from.x % width);
+            curr = frontier.Dequeue();
 
-            if(isGoal(from)) {
-                return ConstructPath(from, dict);
+            if (IsStammstrecke(curr)) {
+                return ConstructPath(curr, dict);
             }
 
-            foreach(Connection con in ConnectionsWith(from))
+            foreach(Connection con in ConnectionsWith(curr))
             {
-                Vector2 vec = con.left == from ? con.right : con.left;
+                Vector2 vec = con.left == curr ? con.right : con.left;
 
-                Vector2 vec2 = Vector2.one * int.MinValue;
-                dict.TryGetValue(vec, out vec2);
-                if (vec2 != Vector2.one * int.MinValue) continue; 
+                if (set.Contains(vec)) continue;
 
-                if (!set.Contains(vec))
-                    { 
-                        dict.Add(vec, from);
+                if (!frontier.Contains(vec))
+                    {
+                        dict[vec] = curr;
                         frontier.Enqueue(vec);
                     }
-            }
-            set.Add(from);
-            from = frontier.Dequeue();
-        } 
 
+            }
+            set.Add(curr);
+        } 
         return null;
     }
 
@@ -103,7 +101,6 @@ public class Graph
         } while (state != Vector2.one * int.MinValue);
 
         if (queue.Count == 0) return null;
-        queue.Reverse();
         return queue;
     }
 
