@@ -13,10 +13,10 @@ public class CityView : MonoBehaviour
     void Start()
     {
         this.Cities = new Dictionary<City, GameObject>();
-        AddMunich(new Vector2(0, 0));
-        AddConnection(true, new Vector2(0, 0), new Vector2(1, 0));
-        AddConnection(true, new Vector2(1, 0), new Vector2(2, 0));
-        AddConnection(true, new Vector2(2, 0), new Vector2(3, 0));
+        AddCity(new Vector2(0, 0), "Neu-München");
+        AddConnection(new Vector2(0, 0), new Vector2(1, 0), true);
+        AddConnection(new Vector2(1, 0), new Vector2(2, 0), true);
+        AddConnection(new Vector2(2, 0), new Vector2(3, 0), true);
         AddCity(new Vector2(3, 0));
     }
 
@@ -26,20 +26,40 @@ public class CityView : MonoBehaviour
 
     }
 
-    public void AddCity(Vector2 position)
+    public void BuildCity(Vector2 position) 
     {
         if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
             return;
         GameManager.Instance.Resources += new ResourceCount(0, -1, -2, -4, 0);
 
+        AddCity(position);
+    }
+
+    public void AddCity(Vector2 position, string name) 
+    {
+        City city = new City(position,
+            GameManager.Instance.Connections,
+            GameManager.Instance.Map,
+            name);
+
+        AddCity(city);        
+    }
+
+    public void AddCity(Vector2 position)
+    {
         City city = new City(position,
             GameManager.Instance.Connections,
             GameManager.Instance.Map,
             CityNameGenerator.GenerateName());
 
+        AddCity(city);
+    }
+
+    public void AddCity(City city)
+    {
         GameManager.addCity(city);
 
-        Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
+        Cities.Add(city, Instantiate(CityPrefab, new Vector3(city.position.x, 0, city.position.y), Quaternion.identity));
         if (city.path != null)
         {
             GameManager.addTrain(new Train(city.position, city));
@@ -50,36 +70,29 @@ public class CityView : MonoBehaviour
         SetLevel(city, "" + city.upgradeLevel);
     }
 
-    public void AddMunich(Vector2 position)
-    {
-        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
-            return;
-        GameManager.Instance.Resources += new ResourceCount(0, -1, -2, -4, 0);
-
-        City city = new City(position,
-            GameManager.Instance.Connections,
-            GameManager.Instance.Map,
-            "Neu-München");
-
-        GameManager.addCity(city);
-
-        Cities.Add(city, Instantiate(MunichPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
-
-        SetName(city, city.cityName);
-        SetLevel(city, "" + city.upgradeLevel);
-    }
-
-    public void AddConnection(bool isStammstrecke,Vector2 left, Vector2 right)
+    public void BuildConnection(Vector2 left, Vector2 right, bool isStammstrecke)
     {
         if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 1 || GameManager.Instance.Resources.concrete < 1)
+        {
             return;
-        
-        if(!GameManager.Instance.Connections.Connect(left, right, isStammstrecke, 1))
+        }
+
+        if(!AddConnection(left, right, isStammstrecke)) 
         {
             return;
         }
 
         GameManager.Instance.Resources += new ResourceCount(0, -1, -1, -1, 0);
+
+        
+    }
+
+    public bool AddConnection(Vector2 left, Vector2 right, bool isStammstrecke)
+    {
+        if(!GameManager.Instance.Connections.Connect(left, right, isStammstrecke, 1))
+        {
+            return false;
+        }
 
         HashSet<City> adjecent = new HashSet<City>();
         foreach(City cty in GameManager.Instance.Cities)
@@ -103,6 +116,8 @@ public class CityView : MonoBehaviour
         {
             cty.CalculatePaths(GameManager.Instance.Connections);
         }
+
+        return true;
     }
 
     public void UpgradeCity(Vector2 position)

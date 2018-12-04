@@ -23,7 +23,7 @@ public struct ResourceCount {
         r.energy *= x;
         return r;
     }
-    public static ResourceCount operator *(float x, ResourceCount r)
+    public static ResourceCount operator * (float x, ResourceCount r)
     {
         r.money *= x;
         r.beer *= x;
@@ -33,7 +33,7 @@ public struct ResourceCount {
         return r;
     }
 
-    public static ResourceCount operator +(ResourceCount l, ResourceCount r)
+    public static ResourceCount operator + (ResourceCount l, ResourceCount r)
     {
         l.money += r.money;
         l.beer += r.beer;

@@ -90,7 +90,7 @@ public class GameManager : Singleton<GameManager>
                 if(con != null) con.Tick();
             }
             tickingConnections = new List<Connection>();
-            DeltaTime += 5.0f / Speed;
+            DeltaTime -= 5.0f / Speed;
         }
     }
 

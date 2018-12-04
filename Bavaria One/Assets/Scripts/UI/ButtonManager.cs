@@ -140,7 +140,7 @@ public class ButtonManager : MonoBehaviour {
         if(gridMovement.selectedCity == null) 
         {
             var position = new Vector2(upgradePosition.x, upgradePosition.z);
-            cityManager.AddCity(position);
+            cityManager.BuildCity(position);
 			SoundManager.Instance.Play(citySound);
         }
         else 
