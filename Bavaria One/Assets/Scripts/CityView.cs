@@ -40,6 +40,11 @@ public class CityView : MonoBehaviour
         GameManager.addCity(city);
 
         Cities.Add(city, Instantiate(CityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity));
+        if (city.path != null)
+        {
+            GameManager.addTrain(new Train(city.position, city));
+            GameManager.Instance.connected.Add(city);
+        }
 
         SetName(city, city.cityName);
         SetLevel(city, "" + city.upgradeLevel);
