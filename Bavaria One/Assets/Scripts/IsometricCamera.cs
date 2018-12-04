@@ -9,13 +9,13 @@ public class IsometricCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-	}
+        SoundManager.Instance.PlayMusic(main);
+    }
 
     // Use this for initialization
     void Awake()
     {
-        SoundManager.Instance.PlayMusic(main);
+       
     }
 
     // Update is called once per frame

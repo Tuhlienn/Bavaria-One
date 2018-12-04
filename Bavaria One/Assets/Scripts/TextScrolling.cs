@@ -9,12 +9,17 @@ public class TextScrolling : MonoBehaviour {
 
     void Start()
     {
-        
+        StartCoroutine(MyCoroutine());
     }
 
     // Update is called once per frame
     void Update() {
-        StartCoroutine(MyCoroutine());
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
+
+        }
+        
        
 
     }
@@ -28,13 +33,6 @@ public class TextScrolling : MonoBehaviour {
             Vector3 localVectorUp = transform.TransformDirection(0, 1, 0);
             pos += localVectorUp * scrollSpeed * Time.deltaTime;
             transform.position = pos;
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                SceneManager.LoadScene(0, LoadSceneMode.Single);
-      
-            }
         }
 
     }
