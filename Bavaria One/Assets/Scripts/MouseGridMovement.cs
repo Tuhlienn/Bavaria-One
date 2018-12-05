@@ -137,8 +137,10 @@ public class MouseGridMovement : MonoBehaviour {
 						left = new Vector2(hoveredPoint.x, hoveredPoint.z - 0.5f);
 						right = new Vector2(hoveredPoint.x, hoveredPoint.z + 0.5f);
 					}
-					cityManager.BuildConnection(left, right, false);
-                    SoundManager.Instance.Play(railSound);
+					if(cityManager.BuildConnection(left, right, false))
+					{
+                    	SoundManager.Instance.Play(railSound);
+					}
 				}
 			}
 		}
