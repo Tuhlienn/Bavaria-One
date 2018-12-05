@@ -70,21 +70,20 @@ public class CityView : MonoBehaviour
         SetLevel(city, "" + city.upgradeLevel);
     }
 
-    public void BuildConnection(Vector2 left, Vector2 right, bool isStammstrecke)
+    public bool BuildConnection(Vector2 left, Vector2 right, bool isStammstrecke)
     {
         if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 1 || GameManager.Instance.Resources.concrete < 1)
         {
-            return;
+            return false;
         }
 
         if(!AddConnection(left, right, isStammstrecke)) 
         {
-            return;
+            return false;
         }
 
         GameManager.Instance.Resources += new ResourceCount(0, -1, -1, -1, 0);
-
-        
+        return true;
     }
 
     public bool AddConnection(Vector2 left, Vector2 right, bool isStammstrecke)
