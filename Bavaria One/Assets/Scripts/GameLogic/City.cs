@@ -12,7 +12,6 @@ public class City {
 
     public City (Vector2 position, Graph graph, Map map, string name) {
         this.position = position;
-        this.production = new ResourceCount(0, 0, 0, 0, 0);
         this.path = new Queue<Vector2>();
         this.upgradeLevel = 1;
         CalculatePaths(graph);
@@ -20,7 +19,9 @@ public class City {
         cityName = name;
     }
 
-    private void CalculateProduction(Map map) {
+    private void CalculateProduction(Map map) 
+    {
+        production = new ResourceCount(0, 0, 0, 0, 0);
         int width = GameManager.Instance.width;
         int height = GameManager.Instance.height;
 
@@ -29,7 +30,7 @@ public class City {
                 Vector2 vec = position + new Vector2(i, j);
                 if (vec.x < -(width / 2) || vec.x >= (width / 2) || vec.y < -(width / 2) || vec.y >= height / 2)
                     continue;
-                production += map.tiles[(int)vec.x + GameManager.Instance.width / 2, (int)vec.y + GameManager.Instance.height / 2].resource;
+                production += map.tiles[(int)vec.x + width / 2, (int)vec.y + height / 2].resource;
             }
         }
     }

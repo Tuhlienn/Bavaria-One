@@ -13,7 +13,8 @@ public class Train : Ticking
     TrainObject modelTrain;
     public GameObject trainPrefab;
 
-    public Train (Vector2 position, City myCity) {
+    public Train (Vector2 position, City myCity) 
+    {
         this.position = position;
         this.nextPosition = position;
         this.myCity = myCity;
@@ -22,8 +23,7 @@ public class Train : Ticking
         modelTrain = GameObject.Instantiate(GameManager.Instance.TrainPrefab, pos, Quaternion.identity).transform.GetComponent<TrainObject>();
     }
 
-    override
-    public void Tick()
+    override public void Tick()
     {
         if (myCity.path.Count == 1)
         {
@@ -34,13 +34,15 @@ public class Train : Ticking
         if(queue.Count == 0) {
             modelTrain.Hide();
             queue = new Queue<Vector2>(myCity.path);
-            if (position == myCity.position) {
+            if (position == myCity.position) 
+            {
                 load = myCity.upgradeLevel * myCity.production;
                 load = load + 0.25f * myCity.upgradeLevel * myCity.production.MultiResources();
                 queue = new Queue<Vector2>(queue.Reverse());
                 modelTrain.PackUp();
             }
-            else {
+            else 
+            {
                 GameManager.Instance.Resources += load;
                 load = 0 * load;
                 modelTrain.Unload();

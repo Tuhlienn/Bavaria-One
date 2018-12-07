@@ -140,7 +140,7 @@ public class ButtonManager : MonoBehaviour {
         if(gridMovement.selectedCity == null) 
         {
             var position = new Vector2(upgradePosition.x, upgradePosition.z);
-            cityManager.AddCity(position);
+            cityManager.BuildCity(position);
 			SoundManager.Instance.Play(citySound);
         }
         else 
@@ -149,12 +149,24 @@ public class ButtonManager : MonoBehaviour {
         }
         
     }
+
+    public void UpdateEffectsVolume(float volume) 
+    {
+        SoundManager.Instance.EffectsVolume = volume;
+    }
+
+    public void UpdateMusicVolume(float volume) 
+    {
+        SoundManager.Instance.MusicVolume = volume;
+    }
+
     public void TogglePause()
     {
         pauseObject.SetActive(!pauseObject.active);
         GameManager.Instance.IsPaused = pauseObject.active;
         if (creditsObject.active) ToggleCredits();
     }
+
     public void ToggleCredits()
     {
         creditsObject.SetActive(!creditsObject.active);
