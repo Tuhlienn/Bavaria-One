@@ -25,8 +25,8 @@ public class Connection : Ticking
             other.isStammstrecke == this.isStammstrecke && 
             other.upgradeLevel == this.upgradeLevel; 
     }
-    override
-    public void Tick()
+    
+    override public void Tick()
     {
         ResourceCount EnergyCost;
         int Overload = vehicleCount - upgradeLevel * 10;
@@ -36,7 +36,7 @@ public class Connection : Ticking
         }
         else
         {
-            EnergyCost = new ResourceCount(0, 0, 0, 0, -1 - Overload);
+            EnergyCost = new ResourceCount(0, 0, 0, 0, -(1 + Overload));
         }
         GameManager.Instance.Resources += EnergyCost;
     }
