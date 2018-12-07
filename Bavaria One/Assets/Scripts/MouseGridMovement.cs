@@ -47,56 +47,47 @@ public class MouseGridMovement : MonoBehaviour {
 			// get the hit point:
 			Vector3 temp = ray.GetPoint(distance);
 			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
+			if ((hoveredPoint - temp).magnitude > hoverPrecision)
+			{
+				Selection.gameObject.SetActive(false);
+				return;
+			}
 
 			xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
 			zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
 
 			if(xBetweenPoints && zBetweenPoints)
 			{
-                if ((hoveredPoint - temp).magnitude < hoverPrecision)
-                {
-                    var meshFilter = Selection.GetComponent<MeshFilter>();
-                    meshFilter.mesh = meshes[2];
-					hoverType = 2;
-                    Selection.position = hoveredPoint;
-                    Selection.gameObject.SetActive(true);
-                }
-                else
-                {
-                    Selection.gameObject.SetActive(false);
-                }
+				var meshFilter = Selection.GetComponent<MeshFilter>();
+				meshFilter.mesh = meshes[2];
+				hoverType = 2;
+				Selection.position = hoveredPoint;
+				Selection.gameObject.SetActive(true);
 			}
 			else 
 			{
-				if((hoveredPoint - temp).magnitude < hoverPrecision)
+				var meshFilter = Selection.GetComponent<MeshFilter>();
+				if(!(xBetweenPoints || zBetweenPoints))
 				{
-					var meshFilter = Selection.GetComponent<MeshFilter>();
-					if(!(xBetweenPoints || zBetweenPoints))
-					{
-						meshFilter.mesh = meshes[1];
-						hoverType = 1;
-					}
-					else 
-					{
-						meshFilter.mesh = meshes[0];
-						hoverType = 0;
-						if(xBetweenPoints) 
-						{
-							Selection.transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0);
-						}
-						else if(zBetweenPoints) 
-						{
-							Selection.transform.rotation = Quaternion.Euler(90.0f, 0, 0);
-						}
-					}
-
-					Selection.position = hoveredPoint;
-					Selection.gameObject.SetActive(true);
+					meshFilter.mesh = meshes[1];
+					hoverType = 1;
 				}
 				else 
 				{
-					Selection.gameObject.SetActive(false);
+					meshFilter.mesh = meshes[0];
+					hoverType = 0;
+					if(xBetweenPoints) 
+					{
+						Selection.transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0);
+					}
+					else if(zBetweenPoints) 
+					{
+						Selection.transform.rotation = Quaternion.Euler(90.0f, 0, 0);
+					}
 				}
+
+				Selection.position = hoveredPoint;
+				Selection.gameObject.SetActive(true);
 			}
 		}
 
