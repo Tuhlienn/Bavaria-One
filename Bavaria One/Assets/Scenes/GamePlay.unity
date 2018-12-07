@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.24647513, g: 0.2823457, b: 0.34570342, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571492, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -220,7 +220,7 @@ MonoBehaviour:
     steel: 100
     concrete: 100
     energy: 100
-  Speed: 1
+  Speed: 2
   IsPaused: 0
   ResourceFrequency: 0.1
   ResourceOctaves: 6
@@ -232,6 +232,8 @@ MonoBehaviour:
   BetonPrefab: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a,
     type: 2}
   StromPrefab: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8,
+    type: 2}
+  TrainPrefab: {fileID: 1018043088900418, guid: 26cdec201aac642a8b91f815dc36de4c,
     type: 2}
 --- !u!4 &692640910
 Transform:

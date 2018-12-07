@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject StahlPrefab;
     public GameObject BetonPrefab;
     public GameObject StromPrefab;
+    public GameObject TrainPrefab;
 
     private Map map;
     private List<City> cities;
@@ -90,7 +91,12 @@ public class GameManager : Singleton<GameManager>
                 if(con != null) con.Tick();
             }
             tickingConnections = new List<Connection>();
-            DeltaTime += 5.0f / Speed;
+            DeltaTime = 0.0f;//+= 5.0f / Speed;
+        }
+
+        foreach (Train train in trains)
+        {
+            train.Tock();
         }
     }
 
@@ -197,6 +203,15 @@ public class GameManager : Singleton<GameManager>
             this.resources = value;
         }
     }
+
+    public float DTime
+    {
+        get
+        {
+            return DeltaTime;
+        }
+    }
+
     public void AddToResourceDisplay(int w, int h, float amount)
     {
         ResourceIcons[w, h].transform.GetChild(0).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
