@@ -8,12 +8,17 @@ public class CityView : MonoBehaviour
     public Dictionary<City, GameObject> Cities;
     public GameObject CityPrefab;
     public GameObject MunichPrefab;
+
     bool Test = false;
+    GridRenderer Grid;
+
     // Use this for initialization
     void Start()
     {
+        Grid = Camera.main.GetComponent<GridRenderer>();
+        
         this.Cities = new Dictionary<City, GameObject>();
-        AddCity(new Vector2(0, 0), "Neu-München");
+        AddCity(new Vector2(0, 0), "Neu-München", MunichPrefab);
         AddConnection(new Vector2(0, 0), new Vector2(1, 0), true);
         AddConnection(new Vector2(1, 0), new Vector2(2, 0), true);
         AddConnection(new Vector2(2, 0), new Vector2(3, 0), true);
@@ -35,14 +40,14 @@ public class CityView : MonoBehaviour
         AddCity(position);
     }
 
-    public void AddCity(Vector2 position, string name) 
+    public void AddCity(Vector2 position, string name, GameObject prefab) 
     {
         City city = new City(position,
             GameManager.Instance.Connections,
             GameManager.Instance.Map,
             name);
 
-        AddCity(city);        
+        AddCity(city, prefab);        
     }
 
     public void AddCity(Vector2 position)
@@ -52,14 +57,14 @@ public class CityView : MonoBehaviour
             GameManager.Instance.Map,
             CityNameGenerator.GenerateName());
 
-        AddCity(city);
+        AddCity(city, CityPrefab);
     }
 
-    public void AddCity(City city)
+    public void AddCity(City city, GameObject prefab)
     {
         GameManager.addCity(city);
 
-        Cities.Add(city, Instantiate(CityPrefab, new Vector3(city.position.x, 0, city.position.y), Quaternion.identity));
+        Cities.Add(city, Instantiate(prefab, new Vector3(city.position.x, 0, city.position.y), Quaternion.identity));
         if (city.path != null)
         {
             GameManager.addTrain(new Train(city.position, city));
@@ -115,6 +120,8 @@ public class CityView : MonoBehaviour
         {
             cty.CalculatePaths(GameManager.Instance.Connections);
         }
+
+        Grid.AddConnectionToTexture(left, right);
 
         return true;
     }

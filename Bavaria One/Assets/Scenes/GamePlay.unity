@@ -214,7 +214,7 @@ Prefab:
         type: 2}
       propertyPath: gridMovement
       value: 
-      objectReference: {fileID: 1305803421}
+      objectReference: {fileID: 2119520872}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c3e743fb893fca4e8eaa8836e064ff6, type: 2}
   m_IsPrefabAsset: 0
@@ -283,7 +283,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 529128341}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
@@ -361,12 +361,12 @@ GameObject:
   m_Component:
   - component: {fileID: 697348471}
   - component: {fileID: 697348474}
-  - component: {fileID: 697348473}
   - component: {fileID: 697348472}
   - component: {fileID: 697348475}
+  - component: {fileID: 697348480}
+  - component: {fileID: 697348473}
   - component: {fileID: 697348477}
   - component: {fileID: 697348476}
-  - component: {fileID: 697348480}
   - component: {fileID: 697348479}
   - component: {fileID: 697348478}
   m_Layer: 0
@@ -466,11 +466,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 697348470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb1a874ecac94a445ae891b26428ecb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b3403f970a9e88438c3b26e9cc506e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridMaterial: {fileID: 2100000, guid: c84e6cad5c51b874095f72785c549162, type: 2}
-  ConnectionMaterial: {fileID: 2100000, guid: 4a70d665a7b16db4fb13c231aa75ed69, type: 2}
+  GridSpacing: 1
+  GridThickness: 0.03
+  GridColor: {r: 1, g: 0.97981757, b: 0, a: 0.5019608}
+  ConnectionThickness: 0.1
+  ConnectionColor: {r: 0.1318975, g: 0.2761658, b: 0.7169812, a: 1}
+  BaseColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &697348476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,55 +759,6 @@ MonoBehaviour:
   CityPrefab: {fileID: 1778572386296750, guid: 9f3f9f49084934049bc398c178cdc4d9, type: 2}
   MunichPrefab: {fileID: 1742315870850676, guid: 8a5e36545a352b74e8b1d69a29905532,
     type: 2}
---- !u!1 &1305803420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1305803422}
-  - component: {fileID: 1305803421}
-  m_Layer: 0
-  m_Name: GridObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1305803421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1305803420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c87020085de85f4d8d86200fef1df49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Selection: {fileID: 529128345}
-  hoverPrecision: 0.35
-  meshes:
-  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  selectMode: 1
-  buttonManager: {fileID: 1962299406}
-  railSound: {fileID: 8300000, guid: 405917747c4bf2046bcedea826d714f0, type: 3}
---- !u!4 &1305803422
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1305803420}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1438160639
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,3 +928,111 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 174.46, z: 0}
+--- !u!1 &2119520867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119520871}
+  - component: {fileID: 2119520870}
+  - component: {fileID: 2119520869}
+  - component: {fileID: 2119520868}
+  - component: {fileID: 2119520872}
+  m_Layer: 0
+  m_Name: Grid Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &2119520868
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2119520869
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: a517eadf1ef14914ab6ffd284f0dd7bc, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &2119520870
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2119520871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2119520872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c87020085de85f4d8d86200fef1df49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Selection: {fileID: 529128345}
+  hoverPrecision: 0.35
+  meshes:
+  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  selectMode: 1
+  buttonManager: {fileID: 1962299406}
+  railSound: {fileID: 8300000, guid: 405917747c4bf2046bcedea826d714f0, type: 3}
