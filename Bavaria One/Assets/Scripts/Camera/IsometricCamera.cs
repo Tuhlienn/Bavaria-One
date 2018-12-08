@@ -5,20 +5,7 @@ using UnityEngine;
 public class IsometricCamera : MonoBehaviour {
 
 	public float minSize = 0.5f, maxSize = 5.0f;
-    public AudioClip main;
-
-	// Use this for initialization
-	void Start () {
-        SoundManager.Instance.PlayMusic(main);
-    }
-
-    // Use this for initialization
-    void Awake()
-    {
-       
-    }
-
-    // Update is called once per frame
+	
     void Update () {
 		if (Input.GetAxis("Mouse ScrollWheel") != 0f ) // forward
 		{

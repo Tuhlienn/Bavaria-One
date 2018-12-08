@@ -48,9 +48,10 @@ public class SoundManager : Singleton<SoundManager>
 	}
 
 	// Play a single clip through the music source.
-	public void PlayMusic(AudioClip clip)
+	public void PlayMusic(AudioClip clip, bool looping)
 	{
 		MusicSource.clip = clip;
+		MusicSource.loop = looping;
 		MusicSource.Play();
 	}
 

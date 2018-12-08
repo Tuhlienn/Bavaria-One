@@ -17,12 +17,14 @@ public class GameManager : Singleton<GameManager>
     public float ResourceSeed = 111.68465165f;
 
     public GameObject[,] ResourceIcons;
-    public GameObject GeldPrefab;
-    public GameObject BierPrefab;
-    public GameObject StahlPrefab;
-    public GameObject BetonPrefab;
-    public GameObject StromPrefab;
+    public GameObject GoldPrefab;
+    public GameObject BeerPrefab;
+    public GameObject SteelPrefab;
+    public GameObject ConcretePrefab;
+    public GameObject EnergyPrefab;
     public GameObject TrainPrefab;
+
+    public AudioClip BackgroundMusic;
 
     private Map map;
     private List<City> cities;
@@ -47,29 +49,35 @@ public class GameManager : Singleton<GameManager>
     {
         this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed != 0 ? ResourceSeed : System.DateTime.Now.Millisecond);
         ResourceIcons = new GameObject[width, height];
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
+                var position = new Vector3(i - width / 2.0f, 0, j - height / 2.0f) + new Vector3(0.4f, 0.1f, 0.4f);
+                var rotation = Quaternion.Euler(60.0f, 45.0f, 0.0f);
+                
                 if (map.tiles[i,j].resource.money > 0)
                 {
-                    ResourceIcons[i, j] = Instantiate(GeldPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                    ResourceIcons[i, j] = Instantiate(GoldPrefab, position, rotation, this.transform);
                 }
                 else if (map.tiles[i, j].resource.beer > 0)
                 {
-                    ResourceIcons[i, j] = Instantiate(BierPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                    ResourceIcons[i, j] = Instantiate(BeerPrefab, position, rotation, this.transform);
                 }
                 else if (map.tiles[i, j].resource.steel > 0)
                 {
-                    ResourceIcons[i, j] = Instantiate(StahlPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                    ResourceIcons[i, j] = Instantiate(SteelPrefab, position, rotation, this.transform);
                 }
                 else if (map.tiles[i, j].resource.concrete > 0)
                 {
-                    ResourceIcons[i, j] = Instantiate(BetonPrefab, new Vector3(i - width / 2.0f + 0.6f, 0.1f, j - height / 2.0f + 0.1f), Quaternion.Euler(60.0f, 45.0f, 0.0f), this.transform);
+                    ResourceIcons[i, j] = Instantiate(ConcretePrefab, position, rotation, this.transform);
                 }
             }
         }
         DeltaTime = 0.0f;
+
+        SoundManager.Instance.PlayMusic(BackgroundMusic, true);
     }
 
     void Update()
@@ -94,15 +102,20 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public static void addCity(Vector2 position) {
-        City city = new City(position, Instance.connections, Instance.map, CityNameGenerator.GenerateName());
-        addCity(city);
+    public static void addCity(City city) 
+    {
+        Instance.cities.Add(city);
+        UpdateResourceCounts(city);
+    }
+
+    public static void UpdateResourceCounts(City city)
+    {
         for(int i = -1; i < 1; i++)
         {
             for(int j = -1; j < 1; j++)
             {
-                int x = (int)position.x + i;
-                int y = (int)position.y + j;
+                int x = (int)city.position.x + i + Instance.width / 2;
+                int y = (int)city.position.y + j + Instance.height / 2;
                 ResourceCount MapResource = Instance.map.tiles[x, y].resource;
                 ResourceCount CityMultiResource = city.production.MultiResources();
 
@@ -111,19 +124,19 @@ public class GameManager : Singleton<GameManager>
                 {
                     amount = 1.25f;
                 }
-                else if(MapResource.money > 0 && CityMultiResource.money > 0)
+                else if(MapResource.beer > 0 && CityMultiResource.beer > 0)
                 {
                     amount = 1.25f;
                 }
-                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                else if (MapResource.steel > 0 && CityMultiResource.steel > 0)
                 {
                     amount = 1.25f;
                 }
-                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                else if (MapResource.concrete > 0 && CityMultiResource.concrete > 0)
                 {
                     amount = 1.25f;
                 }
-                else if (MapResource.money > 0 && CityMultiResource.money > 0)
+                else if (MapResource.energy > 0 && CityMultiResource.energy > 0)
                 {
                     amount = 1.25f;
                 }
@@ -132,19 +145,18 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public static void addCity(City city) {
-        Instance.cities.Add(city);
-    }
-
-    public static City GetCity(Vector2 position) {
-        foreach(City city in Instance.Cities) {
+    public static City GetCity(Vector2 position) 
+    {
+        foreach(City city in Instance.Cities) 
+        {
             if(city.position == position)
                 return city;
         }
         return null;
     }
 
-    public static void addTrain(Train train) {
+    public static void addTrain(Train train) 
+    {
         Instance.trains.Add(train);
     }
     
@@ -208,6 +220,10 @@ public class GameManager : Singleton<GameManager>
 
     public void AddToResourceDisplay(int w, int h, float amount)
     {
-        ResourceIcons[w, h].transform.GetChild(0).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
+        var icon = ResourceIcons[w, h];
+        if(icon != null) 
+        {
+            icon.transform.GetChild(1).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
+        }
     }
 }

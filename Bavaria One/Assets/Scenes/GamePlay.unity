@@ -330,16 +330,17 @@ MonoBehaviour:
   ResourceFrequency: 0.2
   ResourceOctaves: 6
   ResourceSeed: 0
-  GeldPrefab: {fileID: 1124367334943906, guid: 5f78d2b1012c70f42ac856c58cd5b5fe, type: 2}
-  BierPrefab: {fileID: 1970388138569016, guid: 38c4da4c34198c14baf568773dc77f93, type: 2}
-  StahlPrefab: {fileID: 1082398020241050, guid: d8022ec552e367e428df9c3709dd64d8,
+  GoldPrefab: {fileID: 1049694680881198, guid: 27f71d931631acb41b2c8351a4d4c153, type: 2}
+  BeerPrefab: {fileID: 1386653576357478, guid: 29d479685e0d94441bf33b28b11ffd33, type: 2}
+  SteelPrefab: {fileID: 1965274117727680, guid: 0947433543f01c54b9438b73df0abce2,
     type: 2}
-  BetonPrefab: {fileID: 1613123124617388, guid: 45cdd2444abed154b97c1cb7915eba3a,
+  ConcretePrefab: {fileID: 1494084093461626, guid: 30b209da872f5e84091c7f03a17df8f0,
     type: 2}
-  StromPrefab: {fileID: 1622842443662064, guid: 15bf24b02e174e445bf35883c15ab1b8,
+  EnergyPrefab: {fileID: 1858805192346962, guid: 4a505125ff3f0c443925e9d608e715b8,
     type: 2}
   TrainPrefab: {fileID: 1018043088900418, guid: 26cdec201aac642a8b91f815dc36de4c,
     type: 2}
+  BackgroundMusic: {fileID: 8300000, guid: 041eedd8a9d48a241bff82f3a951204e, type: 3}
 --- !u!4 &692640910
 Transform:
   m_ObjectHideFlags: 0
@@ -410,7 +411,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSize: 0.5
   maxSize: 5
-  main: {fileID: 8300000, guid: 041eedd8a9d48a241bff82f3a951204e, type: 3}
 --- !u!81 &697348473
 AudioListener:
   m_ObjectHideFlags: 0

@@ -5,14 +5,14 @@ using TMPro;
 
 public class ResourceIconAmount: MonoBehaviour {
    
-   private float lastAmount = 0;
+   private float lastAmount = -1;
     public float CurrentAmount;
 
 	private TextMeshPro textMesh;
 	// Use this for initialization
 	void Start () {
 		textMesh = gameObject.GetComponent<TextMeshPro>();
-		CurrentAmount = 1;
+		CurrentAmount = 0;
 	}
 	
 	// Update is called once per frame
@@ -20,7 +20,7 @@ public class ResourceIconAmount: MonoBehaviour {
 
 		if(CurrentAmount != lastAmount) 
 		{
-        	textMesh.text = CurrentAmount.ToString("0.00");
+        	textMesh.text = CurrentAmount == 0.0f ? "" : CurrentAmount.ToString("0.00");
 			lastAmount = CurrentAmount;
 		}
     }

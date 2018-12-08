@@ -50,15 +50,14 @@ public class Train : Ticking
         }
         if(queue.Count > 0) 
         {
-            Vector2 NewPosition = queue.Dequeue();
-            GameManager Instance = GameManager.Instance;
-            GameManager.addConnection(Instance.Connections.ConnectionAt(position, NewPosition));
+            Vector2 newPosition = queue.Dequeue();
+            GameManager.addConnection(GameManager.Instance.Connections.ConnectionAt(position, newPosition));
             if(queue.Count > 0)
             {
                 nextPosition = queue.Peek();
                 modelTrain.SetTarget(nextPosition);
             }
-            position = NewPosition;
+            position = newPosition;
         }
     }
 }
