@@ -35,7 +35,15 @@ public class City {
         }
     }
 
-    public void CalculatePaths(Graph graph) {
-        path = graph.ToStammstrecke(position);
+    public bool CalculatePaths(Graph graph) 
+    {
+        var temp = graph.ToStammstrecke(position);
+        if(temp != null && temp != path)
+        {
+            path = temp;
+            return true;
+        }
+        
+        return false;
     }
 }

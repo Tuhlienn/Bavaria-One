@@ -25,7 +25,7 @@ public class Train : Ticking
 
     override public void Tick()
     {
-        if (myCity.path.Count == 1)
+        if (myCity.path != null && myCity.path.Count == 1)
         {
             modelTrain.Hide();
             return;
@@ -54,14 +54,17 @@ public class Train : Ticking
             GameManager Instance = GameManager.Instance;
             GameManager.addConnection(Instance.Connections.ConnectionAt(position, NewPosition));
             if(queue.Count > 0)
+            {
                 nextPosition = queue.Peek();
+                modelTrain.SetTarget(nextPosition);
+            }
             position = NewPosition;
         }
     } 
 
     public void Tock ()
     {
-        float frac = GameManager.Instance.DTime / (5.0f / GameManager.Instance.Speed);
+        float frac = GameManager.Instance.DTime / (1.0f / GameManager.Instance.Speed);
         modelTrain.MoveTo(nextPosition, frac);
     }
 }

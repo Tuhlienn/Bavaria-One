@@ -10,8 +10,6 @@ public class TerrainGenerator : MonoBehaviour
     public int GridY;
     public float Spacing;
 
-
-    // Use this for initialization
     void Start()
     {
         //Generate Terrain Meshes
@@ -26,11 +24,5 @@ public class TerrainGenerator : MonoBehaviour
                     this.transform);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

@@ -98,27 +98,22 @@ public class CityView : MonoBehaviour
             return false;
         }
 
-        HashSet<City> adjecent = new HashSet<City>();
+        HashSet<City> newConnected = new HashSet<City>();
         foreach(City cty in GameManager.Instance.Cities)
         {
-            if(cty.position == left || cty.position == right)
+            if(cty.CalculatePaths(GameManager.Instance.Connections))
             {
-                adjecent.Add(cty);
+                newConnected.Add(cty);
             }
         }
 
-        foreach(City cty in adjecent)
+        foreach(City cty in newConnected)
         {
             if(!GameManager.Instance.connected.Contains(cty))
             {
                 GameManager.addTrain(new Train(cty.position, cty));
                 GameManager.Instance.connected.Add(cty);
             }
-        }
-
-        foreach(City cty in GameManager.Instance.Cities)
-        {
-            cty.CalculatePaths(GameManager.Instance.Connections);
         }
 
         Grid.AddConnectionToTexture(left, right);

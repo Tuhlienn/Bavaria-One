@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed);
+        this.map = new Map(width, height, ResourceFrequency, ResourceOctaves, ResourceSeed != 0 ? ResourceSeed : System.DateTime.Now.Millisecond);
         ResourceIcons = new GameObject[width, height];
         for (int i = 0; i < width; i++)
         {
@@ -79,9 +79,8 @@ public class GameManager : Singleton<GameManager>
             return;
         }
         DeltaTime += Time.deltaTime;
-        if (DeltaTime >= (5.0f / Speed))
+        if (DeltaTime >= (1.0f / Speed))
         {
-            // Call Tick() on all Ticking objects 
             foreach (Train train in trains)
             {
                 train.Tick();
@@ -91,13 +90,13 @@ public class GameManager : Singleton<GameManager>
                 if(con != null) con.Tick();
             }
             tickingConnections = new List<Connection>();
-            DeltaTime = 0.0f;//+= 5.0f / Speed;
+            DeltaTime -= 1.0f / Speed;
         }
 
-        foreach (Train train in trains)
+        /* foreach (Train train in trains)
         {
             train.Tock();
-        }
+        } */
     }
 
     public static void addCity(Vector2 position) {

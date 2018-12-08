@@ -16,10 +16,10 @@
     Lighting Off
     Cull Off
     ZWrite Off
-    ZTest LEqual
+    ZTest Less
     Fog { Mode Off }
     
-    Tags { "Queue"="Transparent+1" }
+    Tags { "Queue"="Transparent" }
     
     Pass 
     {

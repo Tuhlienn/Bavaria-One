@@ -1,17 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro.EditorUtilities;
 using System.Security.Policy;
 
 public class TrainObject : MonoBehaviour
 {
-    Renderer train, packed;
+    Transform train;
+    Transform packed;
 
-    public void Awake()
+    Vector3 target;
+
+    void Awake()
     {
-        train = transform.Find("train").GetComponentInChildren<Renderer>();
-        packed = transform.Find("train_packed").GetComponentInChildren<Renderer>();
+        train = transform.Find("train");
+        packed = transform.Find("train_packed");
+        target = transform.position;
+    }
+
+    void Update()
+    {
+        float frac = GameManager.Instance.DTime / (1.0f / GameManager.Instance.Speed);
+        transform.position = Vector3.Lerp(transform.position, target, frac);
+        transform.LookAt(target);
     }
 
     public void SetPosition(Vector2 vec)
@@ -21,29 +31,25 @@ public class TrainObject : MonoBehaviour
 
     public void Unload()
     {
-        if (train != null && packed != null)
-        {
-            train.enabled = true;
-            packed.enabled = false;
-        }
+        train.gameObject.SetActive(true);
+        packed.gameObject.SetActive(false);
     }
 
     public void PackUp()
     {
-        if (train != null && packed != null)
-        {
-            train.enabled = false;
-            packed.enabled = true;
-        }
+        train.gameObject.SetActive(false);
+        packed.gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        if (train != null && packed != null)
-        {
-            train.enabled = false;
-            packed.enabled = false;
-        }
+        train.gameObject.SetActive(false);
+        packed.gameObject.SetActive(false);
+    }
+
+    public void SetTarget(Vector2 vec)
+    {
+        target = new Vector3(vec.x, 0.0f, vec.y);
     }
 
     public void MoveTo(Vector2 vec, float frac)

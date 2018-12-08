@@ -18,7 +18,7 @@ public class MouseGridMovement : MonoBehaviour {
 	public City selectedCity;
 	private bool xBetweenPoints;
 	private bool zBetweenPoints;
-	private int hoverType; //0 = edge, 1 = point, 2 = face
+	private int hoverType; //0 = point, 1 = edge, 2 = face
 
     public AudioClip railSound;
 
@@ -47,6 +47,8 @@ public class MouseGridMovement : MonoBehaviour {
 			// get the hit point:
 			Vector3 temp = ray.GetPoint(distance);
 			hoveredPoint = new Vector3((int)Mathf.Round(temp.x * 2), 0, (int)Mathf.Round(temp.z * 2)) / 2.0f;
+
+			//No point nearby
 			if ((hoveredPoint - temp).magnitude > hoverPrecision)
 			{
 				Selection.gameObject.SetActive(false);
@@ -55,47 +57,37 @@ public class MouseGridMovement : MonoBehaviour {
 
 			xBetweenPoints = hoveredPoint.x % 1 != 0.0f;
 			zBetweenPoints = hoveredPoint.z % 1 != 0.0f;
-
-			if(xBetweenPoints && zBetweenPoints)
+			var meshFilter = Selection.GetComponent<MeshFilter>();
+			
+			//Hovering over point
+			if(!xBetweenPoints && !zBetweenPoints)
 			{
-				var meshFilter = Selection.GetComponent<MeshFilter>();
+				meshFilter.mesh = meshes[0];
+				hoverType = 0;
+			}
+			//Hovering over edge
+			else if(!xBetweenPoints || !zBetweenPoints)
+			{
+				meshFilter.mesh = meshes[1];
+				hoverType = 1;
+				Selection.transform.rotation = Quaternion.Euler(90.0f, xBetweenPoints ? 90.0f : 0.0f, 0);
+			}
+			//Hovering over face
+			else
+			{
 				meshFilter.mesh = meshes[2];
 				hoverType = 2;
-				Selection.position = hoveredPoint;
-				Selection.gameObject.SetActive(true);
 			}
-			else 
-			{
-				var meshFilter = Selection.GetComponent<MeshFilter>();
-				if(!(xBetweenPoints || zBetweenPoints))
-				{
-					meshFilter.mesh = meshes[1];
-					hoverType = 1;
-				}
-				else 
-				{
-					meshFilter.mesh = meshes[0];
-					hoverType = 0;
-					if(xBetweenPoints) 
-					{
-						Selection.transform.rotation = Quaternion.Euler(90.0f, 90.0f, 0);
-					}
-					else if(zBetweenPoints) 
-					{
-						Selection.transform.rotation = Quaternion.Euler(90.0f, 0, 0);
-					}
-				}
 
-				Selection.position = hoveredPoint;
-				Selection.gameObject.SetActive(true);
-			}
+			Selection.position = hoveredPoint;
+			Selection.gameObject.SetActive(true);
 		}
 
 		if(Input.GetMouseButtonDown(0) && Selection.gameObject.activeSelf)
 		{
 			if(selectMode) 
 			{
-				if(hoverType == 1)
+				if(hoverType == 0)
 				{
 					var lvl = 0;
 					var cost = 2;
@@ -114,7 +106,7 @@ public class MouseGridMovement : MonoBehaviour {
 			}
 			else
 			{
-				if(hoverType == 0) 
+				if(hoverType == 1) 
 				{
 					Vector2 left;
 					Vector2 right;
