@@ -92,11 +92,6 @@ public class GameManager : Singleton<GameManager>
             tickingConnections = new List<Connection>();
             DeltaTime -= 1.0f / Speed;
         }
-
-        /* foreach (Train train in trains)
-        {
-            train.Tock();
-        } */
     }
 
     public static void addCity(Vector2 position) {

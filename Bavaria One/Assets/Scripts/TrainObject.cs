@@ -24,9 +24,9 @@ public class TrainObject : MonoBehaviour
         transform.LookAt(target);
     }
 
-    public void SetPosition(Vector2 vec)
+    public void SetTarget(Vector2 vec)
     {
-        transform.position = new Vector3(vec.x, 0f, vec.y);
+        target = new Vector3(vec.x, 0.0f, vec.y);
     }
 
     public void Unload()
@@ -45,16 +45,5 @@ public class TrainObject : MonoBehaviour
     {
         train.gameObject.SetActive(false);
         packed.gameObject.SetActive(false);
-    }
-
-    public void SetTarget(Vector2 vec)
-    {
-        target = new Vector3(vec.x, 0.0f, vec.y);
-    }
-
-    public void MoveTo(Vector2 vec, float frac)
-    {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(vec.x, 0f, vec.y), frac);
-        transform.LookAt(new Vector3(vec.x, 0.0f, vec.y));
     }
 }

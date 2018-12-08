@@ -60,11 +60,5 @@ public class Train : Ticking
             }
             position = NewPosition;
         }
-    } 
-
-    public void Tock ()
-    {
-        float frac = GameManager.Instance.DTime / (1.0f / GameManager.Instance.Speed);
-        modelTrain.MoveTo(nextPosition, frac);
     }
 }
