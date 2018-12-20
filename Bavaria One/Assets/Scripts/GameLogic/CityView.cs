@@ -33,9 +33,12 @@ public class CityView : MonoBehaviour
 
     public void BuildCity(Vector2 position) 
     {
-        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 2 || GameManager.Instance.Resources.concrete < 4)
+        var resourceCost = new ResourceCount(0, 1, 2, 4, 0);
+        if (GameManager.Instance.Resources < resourceCost)
+        {
             return;
-        GameManager.Instance.Resources += new ResourceCount(0, -1, -2, -4, 0);
+        }
+        GameManager.Instance.Resources -= resourceCost;
 
         AddCity(position);
     }
@@ -72,7 +75,7 @@ public class CityView : MonoBehaviour
         }
 
         SetName(city, city.cityName);
-        SetLevel(city, "" + city.upgradeLevel);
+        SetLevel(city, "" + city.UpgradeLevel);
     }
 
     public bool BuildConnection(Vector2 left, Vector2 right, bool isStammstrecke)
@@ -134,8 +137,16 @@ public class CityView : MonoBehaviour
 
     public void UpgradeCity(City city) 
     {
-        city.upgradeLevel++;
-        SetLevel(city, "" + city.upgradeLevel);
+        int cost = city.UpgradeCost;
+        var resourceCost = new ResourceCount(cost, cost, cost, cost, 0);
+        if (GameManager.Instance.Resources < resourceCost)
+        {
+            return;
+        }
+        GameManager.Instance.Resources -= resourceCost;
+
+        city.UpgradeLevel++;
+        SetLevel(city, "" + city.UpgradeLevel);
 
         GameObject cty;
         Cities.TryGetValue(city, out cty);
@@ -143,7 +154,7 @@ public class CityView : MonoBehaviour
         if (cty != null)
         {
             cty.transform.Find("stadtLV1").gameObject.SetActive(false);
-            if (city.upgradeLevel == 2)
+            if (city.UpgradeLevel == 2)
             {
                 cty.transform.Find("StadtLV2").gameObject.SetActive(true);
             }

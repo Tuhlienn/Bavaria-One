@@ -42,6 +42,35 @@ public struct ResourceCount {
         l.energy += r.energy;
         return l;
     }
+
+    public static ResourceCount operator - (ResourceCount l, ResourceCount r)
+    {
+        l.money -= r.money;
+        l.beer -= r.beer;
+        l.steel -= r.steel;
+        l.concrete -= r.concrete;
+        l.energy -= r.energy;
+        return l;
+    }
+
+    public static bool operator < (ResourceCount l, ResourceCount r)
+    {
+        return l.money < r.money 
+            || l.beer < r.beer 
+            || l.steel < r.steel 
+            || l.concrete < r.concrete 
+            || l.energy < r.energy;
+    }
+
+    public static bool operator > (ResourceCount l, ResourceCount r)
+    {
+        return l.money > r.money 
+            && l.beer > r.beer 
+            && l.steel > r.steel 
+            && l.concrete > r.concrete 
+            && l.energy > r.energy;
+    }
+
     public ResourceCount MultiResources()
     {
         ResourceCount result = new ResourceCount(0,0,0,0,0);

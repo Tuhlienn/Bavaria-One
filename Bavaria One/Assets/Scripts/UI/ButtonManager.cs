@@ -8,16 +8,13 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour {
 
     //Resource Fields
-    public Text[] resourceTextFields = new Text[5];
+    public Text[] ResourceTextFields = new Text[5];
 
     //Upgrade Popup Menu
-    public GameObject popUpUpgrade;
-    public GameObject pauseObject;
-    public GameObject creditsObject;
-    public GameObject selectB;
+    public GameObject PopUpUpgrade;
+    public Text UpgradeText;
+    public Text CostText;
     private RectTransform popUpTransform;
-    public Text upgradeText;
-    public Text costText;
     private Vector3 upgradePosition;
     public Vector3 UpgradePosition 
     {
@@ -25,22 +22,35 @@ public class ButtonManager : MonoBehaviour {
         set { upgradePosition = value; }
     }
 
-    //Build mode
-    public MouseGridMovement gridMovement;
-    public bool popUpFixed = false;
+    //Toggle Buttons
+    public Transform ConnectionBuilderButton;
+    private bool connectionBuilderMode;
+    public bool ConnectionBuilderMode 
+    {
+        get { return connectionBuilderMode; }
+        set { connectionBuilderMode = value; }
+    }
+    public Transform CityBuilderButton;
+    private bool cityBuilderMode;
+    public bool CityBuilderMode 
+    {
+        get { return cityBuilderMode; }
+        set { cityBuilderMode = value; }
+    }
 
+    //Pause Menu
+    public GameObject PauseObject;
+    public GameObject CreditsObject;
+
+
+    public MouseGridMovement GridMovement;
+    public AudioClip CitySound;
     private CityView cityManager;
-
-    public AudioClip citySound;
 
     void Awake()
     {
         cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
-    }
-
-    private void Start()
-    {
-        popUpTransform = popUpUpgrade.GetComponent<RectTransform>();
+        popUpTransform = PopUpUpgrade.GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -48,9 +58,13 @@ public class ButtonManager : MonoBehaviour {
         //Modes
         if (Input.GetKeyDown("1"))
         {
-            OnToggleBuildMode();
+            ToggleConnectionBuilder();
         }
-        if (Input.GetKeyDown("escape")||Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("2"))
+        {
+            ToggleCityBuilder();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Space))
         {
             TogglePause();
         }
@@ -61,11 +75,48 @@ public class ButtonManager : MonoBehaviour {
         UpdateResources();
     }
 
-
-    public void OnToggleBuildMode()
+    public void ToggleConnectionBuilder()
     {
-        gridMovement.ToggleSelectMode();
-        selectB.SetActive(gridMovement.selectMode);
+        connectionBuilderMode = !connectionBuilderMode;
+
+        Transform child1 = ConnectionBuilderButton.Find("Unchecked");
+        child1.gameObject.SetActive(!connectionBuilderMode);
+
+        Transform child2 = ConnectionBuilderButton.Find("Checked");
+        child2.gameObject.SetActive(connectionBuilderMode);
+
+        if(connectionBuilderMode && cityBuilderMode)
+        {
+            ToggleCityBuilder();
+        }
+    }
+
+    public void ToggleCityBuilder()
+    {
+        cityBuilderMode = !cityBuilderMode;
+
+        Transform child1 = CityBuilderButton.Find("Unchecked");
+        child1.gameObject.SetActive(!cityBuilderMode);
+
+        Transform child2 = CityBuilderButton.Find("Checked");
+        child2.gameObject.SetActive(cityBuilderMode);
+
+        if(connectionBuilderMode && cityBuilderMode)
+        {
+            ToggleConnectionBuilder();
+        }
+    }
+
+    public void TogglePause()
+    {
+        PauseObject.SetActive(!PauseObject.activeInHierarchy);
+        GameManager.Instance.IsPaused = PauseObject.activeInHierarchy;
+        if (PauseObject.activeInHierarchy) ToggleCredits();
+    }
+
+    public void ToggleCredits()
+    {
+        CreditsObject.SetActive(!CreditsObject.activeInHierarchy);
     }
 
     public void ExitGame()
@@ -79,73 +130,64 @@ public class ButtonManager : MonoBehaviour {
 
     public void UpdateResources()
     {
-        for(int i = 0; i < resourceTextFields.Length; i ++)
+        for(int i = 0; i < ResourceTextFields.Length; i ++)
         {
             var resources = GameManager.Instance.Resources;
             switch (i) //why no array :(
             {
                 case 0:
-                    resourceTextFields[i].text = resources.money.ToString(); 
+                    ResourceTextFields[i].text = resources.money.ToString(); 
                     break;
 
                 case 1:
-                    resourceTextFields[i].text = resources.beer.ToString();
+                    ResourceTextFields[i].text = resources.beer.ToString();
                     break;
 
                 case 2:
-                    resourceTextFields[i].text = resources.steel.ToString();
+                    ResourceTextFields[i].text = resources.steel.ToString();
                     break;
 
                 case 3:
-                    resourceTextFields[i].text = resources.concrete.ToString();
+                    ResourceTextFields[i].text = resources.concrete.ToString();
                     break;
 
                 case 4:
-                    resourceTextFields[i].text = resources.energy.ToString();
+                    ResourceTextFields[i].text = resources.energy.ToString();
                     break;
             }
         }
     }
 
-    public void showPopup(Vector3 position, int currentLevel, int upgradeCost) 
+    public void showPopup(Vector3 position) 
     {
-        if (!popUpFixed)
-        {
-            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
+        var city = GridMovement.selectedCity;
 
-            Vector2 anchoredPosition;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, screenPoint, null, out anchoredPosition);
-            popUpTransform.anchoredPosition = anchoredPosition;
-            
-            popUpUpgrade.SetActive(true);
-            upgradePosition = position;
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
 
-            upgradeText.text = "Level: " + currentLevel;
-            costText.text = "Cost: " + upgradeCost;
-        }
+        Vector2 anchoredPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)popUpTransform.parent, screenPoint, null, out anchoredPosition);
+        popUpTransform.anchoredPosition = anchoredPosition;
+        
+        PopUpUpgrade.SetActive(true);
+        upgradePosition = position;
+
+        UpgradeText.text = "Level: " + (city == null ? 0 : city.UpgradeLevel);
+        CostText.text = "Cost: " + (city == null ? 2 : city.UpgradeCost);
     }
 
-    public void TogglePopUp(bool enabled)
+    public void BuildCity()
     {
+        PopUpUpgrade.SetActive(false);
 
-    }
-
-    public void Upgrade()
-    {
-        //Debug.Log("YAS"); werks
-        popUpUpgrade.SetActive(false);
-        popUpFixed = false;
-
-		SoundManager.Instance.Play(citySound);
-        if(gridMovement.selectedCity == null) 
+		SoundManager.Instance.Play(CitySound);
+        if(GridMovement.selectedCity == null) 
         {
             var position = new Vector2(upgradePosition.x, upgradePosition.z);
             cityManager.BuildCity(position);
-			SoundManager.Instance.Play(citySound);
         }
         else 
         {
-            GameObject.Find("CityManager").GetComponent<CityView>().UpgradeCity(gridMovement.selectedCity);
+            GameObject.Find("CityManager").GetComponent<CityView>().UpgradeCity(GridMovement.selectedCity);
         }
         
     }
@@ -158,18 +200,6 @@ public class ButtonManager : MonoBehaviour {
     public void UpdateMusicVolume(float volume) 
     {
         SoundManager.Instance.MusicVolume = volume;
-    }
-
-    public void TogglePause()
-    {
-        pauseObject.SetActive(!pauseObject.active);
-        GameManager.Instance.IsPaused = pauseObject.active;
-        if (creditsObject.active) ToggleCredits();
-    }
-
-    public void ToggleCredits()
-    {
-        creditsObject.SetActive(!creditsObject.active);
     }
 
     public void LoadScene(string name)

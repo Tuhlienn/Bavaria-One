@@ -9,7 +9,6 @@ public class MouseGridMovement : MonoBehaviour {
 	public float hoverPrecision = 0.35f;
 	public Mesh[] meshes;
 
-    public bool selectMode = true;
     public ButtonManager buttonManager;
 
 	private CityView cityManager;
@@ -19,6 +18,8 @@ public class MouseGridMovement : MonoBehaviour {
 	private bool xBetweenPoints;
 	private bool zBetweenPoints;
 	private int hoverType; //0 = point, 1 = edge, 2 = face
+	private Vector2 connectionStart;
+	private bool connecting = false;
 
     public AudioClip railSound;
 
@@ -83,31 +84,41 @@ public class MouseGridMovement : MonoBehaviour {
 			Selection.gameObject.SetActive(true);
 		}
 
-		if(Input.GetMouseButtonDown(0) && Selection.gameObject.activeSelf)
+		if(Selection.gameObject.activeSelf)
 		{
-			if(selectMode) 
+			if(Input.GetMouseButtonDown(0))
 			{
 				if(hoverType == 0)
 				{
-					var lvl = 0;
-					var cost = 2;
-					selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
-					if(selectedCity != null) 
+					//ConnectionBuilder Mode
+					if(buttonManager.ConnectionBuilderMode)
 					{
-						lvl = selectedCity.upgradeLevel;
-						cost = cost + lvl;
+						connectionStart = hoveredPoint;
+						return;
 					}
-					buttonManager.showPopup(hoveredPoint, lvl, cost);
+
+
+					//CityBuilder Mode
+					if(buttonManager.CityBuilderMode)
+					{
+						selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
+						buttonManager.UpgradePosition = hoveredPoint;
+						buttonManager.BuildCity();
+					}
+					//Normal Mode
+					else 
+					{
+						selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
+						buttonManager.showPopup(hoveredPoint);
+					}
 				}
-				if(hoverType == 2)
+				else if(hoverType == 1) 
 				{
-					//buttonManager.showPopup(hoveredPoint);
-				}
-			}
-			else
-			{
-				if(hoverType == 1) 
-				{
+					if(buttonManager.CityBuilderMode)
+					{
+						return;
+					}
+
 					Vector2 left;
 					Vector2 right;
 					if(xBetweenPoints)
@@ -122,21 +133,23 @@ public class MouseGridMovement : MonoBehaviour {
 					}
 					if(cityManager.BuildConnection(left, right, false))
 					{
-                    	SoundManager.Instance.Play(railSound);
+						SoundManager.Instance.Play(railSound);
 					}
+				}
+				else if(hoverType == 2)
+				{
+					//buttonManager.showPopup(hoveredPoint);
+				}
+			}
+
+			if(Input.GetMouseButton(0))
+			{
+				if(hoverType == 0 && connecting)
+				{
+					var path = GameManager.Instance.Connections.ToGoal(connectionStart, hoveredPoint);
 				}
 			}
 		}
+		
 	}
-
-    public void ToggleSelectMode()
-    {
-        selectMode = !selectMode;
-
-        if (!selectMode)
-        {
-			Selection.gameObject.SetActive(false);
-			buttonManager.popUpUpgrade.SetActive(false);
-        }
-    }
 }

@@ -9,9 +9,10 @@ public class Graph
 {
     List<Connection> connections;
     int width, height;
-    private delegate bool IsGoal(Vector2 position);
+    private delegate bool IsGoal(Vector2 position, Vector2 other);
 
-    public Graph (int width, int height) {
+    public Graph (int width, int height) 
+    {
         this.width = width;
         this.height = height;
         connections = new List<Connection>();
@@ -20,8 +21,14 @@ public class Graph
     /*
      *  Returns path from this node to Stammstrecke
      */
-    public Queue<Vector2> ToStammstrecke(Vector2 from) {
-        return BFS(from, IsStammstrecke);
+    public Queue<Vector2> ToStammstrecke(Vector2 from) 
+    {
+        return BFS(from, Vector2.zero, IsStammstrecke);
+    }
+
+    public Queue<Vector2> ToGoal(Vector2 from, Vector2 to)
+    {
+        return BFS(from, to, Equals);
     }
 
     /*
@@ -54,8 +61,8 @@ public class Graph
     /*
      * Buggy BFS
      */
-    private Queue<Vector2> BFS (Vector2 from, IsGoal isGoal){
-
+    private Queue<Vector2> BFS (Vector2 from, Vector2 to, IsGoal isGoal)
+    {
         Queue<Vector2> frontier = new Queue<Vector2>();
         HashSet<Vector2> set = new HashSet<Vector2>();
         Dictionary<Vector2, Vector2> dict = new Dictionary<Vector2, Vector2>();
@@ -67,7 +74,8 @@ public class Graph
         {
             curr = frontier.Dequeue();
 
-            if (IsStammstrecke(curr)) {
+            if (isGoal(curr, to)) 
+            {
                 return ConstructPath(curr, dict);
             }
 
@@ -98,7 +106,8 @@ public class Graph
         {
             queue.Enqueue(state);
             dict.TryGetValue(state, out state);
-        } while (state != Vector2.one * int.MinValue);
+        } 
+        while (state != Vector2.one * int.MinValue);
 
         if (queue.Count == 0) return null;
         return queue;
@@ -107,7 +116,7 @@ public class Graph
     /*
      * Returns true if this node is connected to a Stammstrecke edge
      */ 
-    private bool IsStammstrecke(Vector2 position)
+    private bool IsStammstrecke(Vector2 position, Vector2 other)
     {
         for (int i = -1; i <= 1; i++)
         {
@@ -122,6 +131,12 @@ public class Graph
         }
         return false;
     }
+
+    private bool Equals(Vector2 position, Vector2 other)
+    {
+        return position == other;
+    }
+
 
     /*
      *  Connect nodes (Bidirectional)
