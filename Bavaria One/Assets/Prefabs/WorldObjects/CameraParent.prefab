@@ -352,6 +352,8 @@ MonoBehaviour:
   GridColor: {r: 1, g: 0.97981757, b: 0, a: 0.5019608}
   ConnectionThickness: 0.1
   ConnectionColor: {r: 0.1318975, g: 0.2761658, b: 0.7169812, a: 1}
+  PreviewColor: {r: 0.5803922, g: 1, b: 0, a: 0.5019608}
+  PreviewOverlayColor: {r: 0, g: 1, b: 0.98223853, a: 0.5019608}
   BaseColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114769964534814222
 MonoBehaviour:

@@ -36,8 +36,9 @@ public class Train : Ticking
             queue = new Queue<Vector2>(myCity.path);
             if (position == myCity.position) 
             {
-                load = myCity.UpgradeLevel * myCity.production;
-                load = load + 0.25f * myCity.UpgradeLevel * myCity.production.MultiResources();
+                load = myCity.production;
+                load += 0.25f * myCity.production.MultiResources;
+                load *= myCity.UpgradeLevel;
                 queue = new Queue<Vector2>(queue.Reverse());
                 modelTrain.PackUp();
             }

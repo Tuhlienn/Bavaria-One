@@ -80,17 +80,16 @@ public class CityView : MonoBehaviour
 
     public bool BuildConnection(Vector2 left, Vector2 right, bool isStammstrecke)
     {
-        if (GameManager.Instance.Resources.beer < 1 || GameManager.Instance.Resources.steel < 1 || GameManager.Instance.Resources.concrete < 1)
+        var resourceCost = new ResourceCount(0, 1, 1, 1, 0);
+        if (GameManager.Instance.Resources < resourceCost)
         {
             return false;
         }
-
         if(!AddConnection(left, right, isStammstrecke)) 
         {
             return false;
         }
-
-        GameManager.Instance.Resources += new ResourceCount(0, -1, -1, -1, 0);
+        GameManager.Instance.Resources -= resourceCost;
         return true;
     }
 
@@ -119,7 +118,7 @@ public class CityView : MonoBehaviour
             }
         }
 
-        Grid.AddConnectionToTexture(left, right);
+        Grid.AddConnectionToBuilt(left, right);
 
         return true;
     }
@@ -147,6 +146,7 @@ public class CityView : MonoBehaviour
 
         city.UpgradeLevel++;
         SetLevel(city, "" + city.UpgradeLevel);
+        GameManager.UpdateResourceCounts(city);
 
         GameObject cty;
         Cities.TryGetValue(city, out cty);

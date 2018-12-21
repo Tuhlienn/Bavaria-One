@@ -6,7 +6,8 @@ public struct Map{
     
     public Tile[,] tiles;
 
-    public Map(int width, int height, float ResourceFrequency, int ResourceOctaves, float ResourceSeed) {
+    public Map(int width, int height, float ResourceFrequency, int ResourceOctaves, float ResourceSeed) 
+    {
         tiles = new Tile[width,height];
         //Generate Resource Grid
         for (int i = 0; i < width; i++)

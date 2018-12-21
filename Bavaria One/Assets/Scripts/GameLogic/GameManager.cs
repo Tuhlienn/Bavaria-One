@@ -35,12 +35,65 @@ public class GameManager : Singleton<GameManager>
     private ResourceCount resources;
     private float DeltaTime = 0.0f;
 
+    public Map Map
+    {
+        get
+        {
+            return map;
+        }
+    }
+
+    public List<City> Cities
+    {
+        get
+        {
+            return cities;
+        }
+    }
+
+    public List<Train> Trains
+    {
+        get
+        {
+            return trains;
+        }
+    }
+
+    public Graph Connections
+    {
+        get
+        {
+            return connections;
+        }
+    }
+
+    public ResourceCount Resources
+    {
+        get
+        {
+            return resources;
+        }
+
+        set
+        {
+            this.resources = value;
+        }
+    }
+
+    public float DTime
+    {
+        get
+        {
+            return DeltaTime;
+        }
+    }
+
     void Awake() 
     {
         this.cities = new List<City>();
         this.trains = new List<Train>();
         this.tickingConnections = new List<Connection>();
-        this.connections = new Graph(width + 1, height + 1);
+        this.connections = new Graph();
         this.resources = startResources;
         this.connected = new HashSet<City>();
     }
@@ -108,6 +161,54 @@ public class GameManager : Singleton<GameManager>
         UpdateResourceCounts(city);
     }
 
+    public static bool BuildEnergyPanel(Vector2 position)
+    {
+        ResourceCount resourceCost = new ResourceCount(0, 3, 2, 0, 0);
+        if(Instance.Resources < resourceCost)
+        {
+            return false;
+        }
+        Instance.Resources -= resourceCost;
+
+        Instance.Map.tiles[(int)position.x, (int)position.y].resource = new ResourceCount(0, 0, 0, 0, 1);
+
+        UpdateResourceCounts(position);
+        return true;
+    }
+
+    public static void UpdateResourceCounts(Vector2 tile)
+    {
+        ResourceCount mapResource = Instance.Map.tiles[(int)tile.x, (int)tile.y].resource;
+        int x = (int) tile.x;
+        int y = (int) tile.y;
+
+        float amount = 0.0f;
+        for(int i = 0; i < 2; i++)
+        {
+            for(int j = 0; j < 2; j++)
+            {
+                var pos = new Vector2(x + i - Instance.width / 2, y + j - Instance.width / 2);
+
+                City city = GetCity(pos);
+                if(city != null)
+                {
+                    amount += 1.0f;
+                    var multiResources = city.production.MultiResources;
+                    if ((mapResource.money > 0 && multiResources.money > 0)
+                        || (mapResource.beer > 0 && multiResources.beer > 0)
+                        || (mapResource.steel > 0 && multiResources.steel > 0)
+                        || (mapResource.concrete > 0 && multiResources.concrete > 0)
+                        || (mapResource.energy > 0 && multiResources.energy > 0))
+                    {
+                        amount += 0.25f;
+                    }
+                    amount *= city.UpgradeLevel;
+                }
+            }
+        }
+        Instance.SetResourceDisplay(x, y, amount);
+    }
+
     public static void UpdateResourceCounts(City city)
     {
         for(int i = -1; i < 1; i++)
@@ -116,31 +217,7 @@ public class GameManager : Singleton<GameManager>
             {
                 int x = (int)city.position.x + i + Instance.width / 2;
                 int y = (int)city.position.y + j + Instance.height / 2;
-                ResourceCount MapResource = Instance.map.tiles[x, y].resource;
-                ResourceCount CityMultiResource = city.production.MultiResources();
-
-                float amount = 1.0f;
-                if (MapResource.money > 0 && CityMultiResource.money > 0)
-                {
-                    amount = 1.25f;
-                }
-                else if(MapResource.beer > 0 && CityMultiResource.beer > 0)
-                {
-                    amount = 1.25f;
-                }
-                else if (MapResource.steel > 0 && CityMultiResource.steel > 0)
-                {
-                    amount = 1.25f;
-                }
-                else if (MapResource.concrete > 0 && CityMultiResource.concrete > 0)
-                {
-                    amount = 1.25f;
-                }
-                else if (MapResource.energy > 0 && CityMultiResource.energy > 0)
-                {
-                    amount = 1.25f;
-                }
-                Instance.AddToResourceDisplay(x, y, amount);
+                UpdateResourceCounts(new Vector2(x, y));
             }
         }
     }
@@ -165,65 +242,12 @@ public class GameManager : Singleton<GameManager>
         Instance.tickingConnections.Add(connection);
     }
 
-    public Map Map
+    public void SetResourceDisplay(int x, int y, float amount)
     {
-        get
-        {
-            return map;
-        }
-    }
-
-    public List<City> Cities
-    {
-        get
-        {
-            return cities;
-        }
-    }
-
-    public List<Train> Trains
-    {
-        get
-        {
-            return trains;
-        }
-    }
-
-    public Graph Connections
-    {
-        get
-        {
-            return connections;
-        }
-    }
-
-    public ResourceCount Resources
-    {
-        get
-        {
-            return resources;
-        }
-
-        set
-        {
-            this.resources = value;
-        }
-    }
-
-    public float DTime
-    {
-        get
-        {
-            return DeltaTime;
-        }
-    }
-
-    public void AddToResourceDisplay(int w, int h, float amount)
-    {
-        var icon = ResourceIcons[w, h];
+        var icon = ResourceIcons[x, y];
         if(icon != null) 
         {
-            icon.transform.GetChild(1).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount += amount;
+            icon.transform.GetChild(1).gameObject.GetComponent<ResourceIconAmount>().CurrentAmount = amount;
         }
     }
 }

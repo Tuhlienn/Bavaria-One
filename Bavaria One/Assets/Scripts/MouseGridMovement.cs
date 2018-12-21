@@ -12,6 +12,7 @@ public class MouseGridMovement : MonoBehaviour {
     public ButtonManager buttonManager;
 
 	private CityView cityManager;
+	private GridRenderer Grid;
 
 	private Vector3 hoveredPoint;
 	public City selectedCity;
@@ -20,6 +21,7 @@ public class MouseGridMovement : MonoBehaviour {
 	private int hoverType; //0 = point, 1 = edge, 2 = face
 	private Vector2 connectionStart;
 	private bool connecting = false;
+	private List<Vector2> previewConnections;
 
     public AudioClip railSound;
 
@@ -27,6 +29,8 @@ public class MouseGridMovement : MonoBehaviour {
     void Awake () 
 	{
 		cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
+        Grid = Camera.main.GetComponent<GridRenderer>();
+		previewConnections = new List<Vector2>();
     }
 	
 	void Update () 
@@ -84,31 +88,34 @@ public class MouseGridMovement : MonoBehaviour {
 			Selection.gameObject.SetActive(true);
 		}
 
+		//Handle Input
 		if(Selection.gameObject.activeSelf)
 		{
 			if(Input.GetMouseButtonDown(0))
 			{
+				Vector2 clicked = new Vector2(hoveredPoint.x, hoveredPoint.z);
+
 				if(hoverType == 0)
 				{
 					//ConnectionBuilder Mode
 					if(buttonManager.ConnectionBuilderMode)
 					{
-						connectionStart = hoveredPoint;
+						connectionStart = clicked;
+						connecting = true;
 						return;
 					}
-
 
 					//CityBuilder Mode
 					if(buttonManager.CityBuilderMode)
 					{
-						selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
+						selectedCity = GameManager.GetCity(clicked);
 						buttonManager.UpgradePosition = hoveredPoint;
 						buttonManager.BuildCity();
 					}
 					//Normal Mode
 					else 
 					{
-						selectedCity = GameManager.GetCity(new Vector2(hoveredPoint.x, hoveredPoint.z));
+						selectedCity = GameManager.GetCity(clicked);
 						buttonManager.showPopup(hoveredPoint);
 					}
 				}
@@ -138,7 +145,11 @@ public class MouseGridMovement : MonoBehaviour {
 				}
 				else if(hoverType == 2)
 				{
-					//buttonManager.showPopup(hoveredPoint);
+					if(buttonManager.CityBuilderButton)
+					{
+						var pos = new Vector2(hoveredPoint.x - 0.5f + GameManager.Instance.width / 2, hoveredPoint.y - 0.5f + GameManager.Instance.height / 2);
+						//GameManager.BuildEnergyPanel(pos);
+					}
 				}
 			}
 
@@ -146,7 +157,43 @@ public class MouseGridMovement : MonoBehaviour {
 			{
 				if(hoverType == 0 && connecting)
 				{
-					var path = GameManager.Instance.Connections.ToGoal(connectionStart, hoveredPoint);
+					for(int i = 0; i < previewConnections.Count - 1; i++)
+					{
+						var left = previewConnections[i];
+						var right = previewConnections[i + 1];
+						Grid.RemoveConnectionFromPreview(left, right);
+					}
+
+					var path = GameManager.Instance.Connections.AStar(connectionStart, new Vector2(hoveredPoint.x, hoveredPoint.z));
+					if(path != null && path.Count >= 2)
+					{
+						previewConnections = path;
+
+						for(int i = 0; i < previewConnections.Count - 1; i++)
+						{
+							var left = previewConnections[i];
+							var right = previewConnections[i + 1];
+							Grid.AddConnectionToPreview(left, right);
+						}
+					}
+				}
+			}
+
+			if(Input.GetMouseButtonUp(0))
+			{
+				if(connecting)
+				{
+					connecting = false;
+					
+					for(int i = 0; i < previewConnections.Count - 1; i++)
+					{
+						var left = previewConnections[i];
+						var right = previewConnections[i + 1];
+						Grid.RemoveConnectionFromPreview(left, right);
+						cityManager.BuildConnection(left, right, false);
+					}
+
+					previewConnections = new List<Vector2>();
 				}
 			}
 		}

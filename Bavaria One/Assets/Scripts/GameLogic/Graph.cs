@@ -8,13 +8,10 @@ using System.Linq;
 public class Graph
 {
     List<Connection> connections;
-    int width, height;
-    private delegate bool IsGoal(Vector2 position, Vector2 other);
+    private delegate bool IsGoal(Vector2 position);
 
-    public Graph (int width, int height) 
+    public Graph () 
     {
-        this.width = width;
-        this.height = height;
         connections = new List<Connection>();
     }
 
@@ -23,12 +20,7 @@ public class Graph
      */
     public Queue<Vector2> ToStammstrecke(Vector2 from) 
     {
-        return BFS(from, Vector2.zero, IsStammstrecke);
-    }
-
-    public Queue<Vector2> ToGoal(Vector2 from, Vector2 to)
-    {
-        return BFS(from, to, Equals);
+        return BFS(from, IsStammstrecke);
     }
 
     /*
@@ -58,10 +50,76 @@ public class Graph
         return cons;
     }
 
+    public List<Vector2> AStar (Vector2 left, Vector2 right)
+    {        
+        Coord start = new Coord(left);
+        Coord goal = new Coord(right);
+        Coord current;
+
+        PriorityList<Coord> frontier = new PriorityList<Coord>();
+		Dictionary<Coord, Coord> cameFrom = new Dictionary<Coord, Coord>();
+		Dictionary<Coord, float> costSoFar = new Dictionary<Coord, float>();
+
+        cameFrom.Add(start, start);
+		costSoFar.Add(start, 0.0f);
+
+		frontier.Enqueue(start, 0.0f);
+
+		while (!frontier.isEmpty()) {
+			current = frontier.Dequeue();
+
+			if (current.Equals(goal)) 
+            {
+                //Create result
+				List<Vector2> path = new List<Vector2>();
+
+                current = goal;
+                path.Add(current.toVector2());
+                while (!start.Equals(current))
+                {
+                    current = cameFrom[current];
+                    path.Add(current.toVector2());
+                }
+                return path;
+			}
+
+			foreach (Coord next in getNeighbours(current)) 
+            {
+                var connection = ConnectionAt(current.toVector2(), next.toVector2());
+				float newCost = costSoFar[current] + (connection == null ? 1 : 0.9f);
+
+				if (!costSoFar.ContainsKey(next) || newCost < costSoFar[next]) 
+                {
+					costSoFar.Remove(next);
+					costSoFar.Add(next, newCost);
+					float priority = newCost + next.manhattanDistance(goal);				
+					frontier.Enqueue(next, priority);
+					cameFrom.Remove(next);
+					cameFrom.Add(next, current);
+				}
+			}
+		}
+
+        return null;
+	}
+
+    List<Coord> getNeighbours(Coord center)
+    {
+		int x = center.x;
+		int y = center.y;
+		return new List<Coord> () 
+        {
+            new Coord(x - 1, y),
+            new Coord(x, y - 1),
+            new Coord(x + 1, y),
+            new Coord(x, y + 1)
+        };
+	}
+
     /*
-     * Buggy BFS
+     * Breadth First Search along Connections
      */
-    private Queue<Vector2> BFS (Vector2 from, Vector2 to, IsGoal isGoal)
+    private Queue<Vector2> BFS(Vector2 from, IsGoal isGoal)
     {
         Queue<Vector2> frontier = new Queue<Vector2>();
         HashSet<Vector2> set = new HashSet<Vector2>();
@@ -74,7 +132,7 @@ public class Graph
         {
             curr = frontier.Dequeue();
 
-            if (isGoal(curr, to)) 
+            if (isGoal(curr)) 
             {
                 return ConstructPath(curr, dict);
             }
@@ -100,7 +158,8 @@ public class Graph
     /*
      * Constucts path from BFS result
      */
-    private Queue<Vector2> ConstructPath(Vector2 state ,Dictionary<Vector2, Vector2> dict) {
+    private Queue<Vector2> ConstructPath(Vector2 state, Dictionary<Vector2, Vector2> dict) 
+    {
         Queue<Vector2> queue = new Queue<Vector2>();
         do
         {
@@ -116,7 +175,7 @@ public class Graph
     /*
      * Returns true if this node is connected to a Stammstrecke edge
      */ 
-    private bool IsStammstrecke(Vector2 position, Vector2 other)
+    private bool IsStammstrecke(Vector2 position)
     {
         for (int i = -1; i <= 1; i++)
         {
@@ -132,23 +191,17 @@ public class Graph
         return false;
     }
 
-    private bool Equals(Vector2 position, Vector2 other)
-    {
-        return position == other;
-    }
-
-
     /*
      *  Connect nodes (Bidirectional)
      */
-    public bool Connect (Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
+    public bool Connect(Vector2 first, Vector2 second, bool isStammstrecke, int upgradeLevel) 
     {
         foreach(Connection con in connections)
         {
             if ((con.left == first && con.right == second) || (con.left == second && con.right == first))
                 return false;
         }
-        connections.Add(new Connection( isStammstrecke, upgradeLevel, first, second));
+        connections.Add(new Connection(isStammstrecke, upgradeLevel, first, second));
         return true;
     }
 }

@@ -20,25 +20,18 @@ public class Connection : Ticking
         this.right = right;
     }
 
-    public bool Equals ( Connection other){
-        return other.connected == this.connected && 
-            other.isStammstrecke == this.isStammstrecke && 
-            other.upgradeLevel == this.upgradeLevel; 
+    public bool Equals(Connection other)
+    {
+        return other.connected == this.connected 
+            && other.isStammstrecke == this.isStammstrecke 
+            && other.upgradeLevel == this.upgradeLevel; 
     }
     
     override public void Tick()
     {
-        ResourceCount EnergyCost;
-        int Overload = vehicleCount - upgradeLevel * 10;
-        if (Overload < 0)
-        {
-            EnergyCost = new ResourceCount(0, 0, 0, 0, -1);
-        }
-        else
-        {
-            EnergyCost = new ResourceCount(0, 0, 0, 0, -(1 + Overload));
-        }
-        GameManager.Instance.Resources += EnergyCost;
+        int overload = vehicleCount - upgradeLevel;
+        ResourceCount energyCost = new ResourceCount(0, 0, 0, 0, (overload <= 0 ? 1 : 1 + overload));
+        GameManager.Instance.Resources -= energyCost;
     }
 
 }
