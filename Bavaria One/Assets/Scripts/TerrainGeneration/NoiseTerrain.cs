@@ -16,7 +16,6 @@ public class NoiseTerrain : MonoBehaviour
 
 	Vector3[] vertices;
 	int[] triangles;
-	Color[] colors;
 	Mesh terrain;
 
 	// Use this for initialization
@@ -87,7 +86,6 @@ public class NoiseTerrain : MonoBehaviour
 		terrain.Clear();
 		terrain.vertices = vertices;
 		terrain.triangles = triangles;
-		terrain.colors = colors;
 
 		terrain.RecalculateNormals();
 	}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.180283, g: 0.22571442, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028337, g: 0.22571531, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -289,9 +289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a8de402f748412cbd4c89e4ee03d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CityPrefab: {fileID: 1778572386296750, guid: 9f3f9f49084934049bc398c178cdc4d9, type: 2}
-  MunichPrefab: {fileID: 1742315870850676, guid: 8a5e36545a352b74e8b1d69a29905532,
+  cityPrefab: {fileID: 1778572386296750, guid: 9f3f9f49084934049bc398c178cdc4d9, type: 2}
+  munichPrefab: {fileID: 1742315870850676, guid: 8a5e36545a352b74e8b1d69a29905532,
     type: 2}
+  railSound: {fileID: 8300000, guid: 405917747c4bf2046bcedea826d714f0, type: 3}
 --- !u!1001 &1583829288
 Prefab:
   m_ObjectHideFlags: 0
@@ -499,12 +500,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &1904180496 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114952307094881214, guid: 0c3e743fb893fca4e8eaa8836e064ff6,
-    type: 2}
-  m_PrefabInternal: {fileID: 1583829288}
-  m_Script: {fileID: 11500000, guid: 6786eedd93b224c49a3d53a3b8e944c1, type: 3}
 --- !u!1 &2062474603
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,11 +618,13 @@ GameObject:
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2119520871}
+  - component: {fileID: 2119520874}
   - component: {fileID: 2119520870}
   - component: {fileID: 2119520869}
   - component: {fileID: 2119520868}
   - component: {fileID: 2119520872}
+  - component: {fileID: 2119520873}
+  - component: {fileID: 2119520871}
   m_Layer: 0
   m_Name: Grid Object
   m_TagString: Untagged
@@ -691,19 +688,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2119520867}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &2119520871
-Transform:
+--- !u!114 &2119520871
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2119520867}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &2119520872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,14 +715,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c87020085de85f4d8d86200fef1df49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Selection: {fileID: 529128345}
+  selectionObject: {fileID: 529128345}
   hoverPrecision: 0.35
-  meshes:
-  - {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  buttonManager: {fileID: 1904180496}
-  railSound: {fileID: 8300000, guid: 405917747c4bf2046bcedea826d714f0, type: 3}
+  pointMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  edgeMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  faceMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!223 &2119520873
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &2119520874
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2119520867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2126343186
 Prefab:
   m_ObjectHideFlags: 0

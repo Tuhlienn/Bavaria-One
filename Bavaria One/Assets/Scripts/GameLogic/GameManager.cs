@@ -161,21 +161,6 @@ public class GameManager : Singleton<GameManager>
         UpdateResourceCounts(city);
     }
 
-    public static bool BuildEnergyPanel(Vector2 position)
-    {
-        ResourceCount resourceCost = new ResourceCount(0, 3, 2, 0, 0);
-        if(Instance.Resources < resourceCost)
-        {
-            return false;
-        }
-        Instance.Resources -= resourceCost;
-
-        Instance.Map.tiles[(int)position.x, (int)position.y].resource = new ResourceCount(0, 0, 0, 0, 1);
-
-        UpdateResourceCounts(position);
-        return true;
-    }
-
     public static void UpdateResourceCounts(Vector2 tile)
     {
         ResourceCount mapResource = Instance.Map.tiles[(int)tile.x, (int)tile.y].resource;

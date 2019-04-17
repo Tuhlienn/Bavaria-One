@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class GridRenderer : MonoBehaviour 
 {
+	public static GridRenderer Instance;
+
 	public float GridSpacing;
 	public float GridThickness;
 	public Color GridColor;
@@ -23,6 +25,11 @@ public class GridRenderer : MonoBehaviour
 
 	void Awake()
 	{
+		if(Instance == null)
+		{
+			Instance = this;
+		}
+
 		MeshRenderer mr = GameObject.Find("Grid Object").GetComponent<MeshRenderer>();
         material = mr.materials[0];
 

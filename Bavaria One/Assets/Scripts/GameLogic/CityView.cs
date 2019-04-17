@@ -5,20 +5,30 @@ using UnityEngine.UI;
 
 public class CityView : MonoBehaviour
 {
+    public static CityView Instance;
+
+    [SerializeField] protected GameObject cityPrefab;
+    [SerializeField] protected GameObject munichPrefab;
+    [SerializeField] protected AudioClip railSound;
+
     public Dictionary<City, GameObject> Cities;
-    public GameObject CityPrefab;
-    public GameObject MunichPrefab;
 
-    bool Test = false;
-    GridRenderer Grid;
+    protected GridRenderer Grid;
 
-    // Use this for initialization
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         Grid = Camera.main.GetComponent<GridRenderer>();
         
         this.Cities = new Dictionary<City, GameObject>();
-        AddCity(new Vector2(0, 0), "Neu-München", MunichPrefab);
+        AddCity(new Vector2(0, 0), "Neu-München", munichPrefab);
         AddConnection(new Vector2(0, 0), new Vector2(1, 0), true);
         AddConnection(new Vector2(1, 0), new Vector2(2, 0), true);
         AddConnection(new Vector2(2, 0), new Vector2(3, 0), true);
@@ -60,7 +70,7 @@ public class CityView : MonoBehaviour
             GameManager.Instance.Map,
             CityNameGenerator.GenerateName());
 
-        AddCity(city, CityPrefab);
+        AddCity(city, cityPrefab);
     }
 
     public void AddCity(City city, GameObject prefab)
@@ -90,6 +100,7 @@ public class CityView : MonoBehaviour
             return false;
         }
         GameManager.Instance.Resources -= resourceCost;
+        SoundManager.Instance.Play(railSound);
         return true;
     }
 
@@ -120,6 +131,21 @@ public class CityView : MonoBehaviour
 
         Grid.AddConnectionToBuilt(left, right);
 
+        return true;
+    }
+
+    public bool BuildEnergyPanel(Vector2 position)
+    {
+        ResourceCount resourceCost = new ResourceCount(0, 3, 2, 0, 0);
+        if(GameManager.Instance.Resources < resourceCost)
+        {
+            return false;
+        }
+        GameManager.Instance.Resources -= resourceCost;
+
+        GameManager.Instance.Map.tiles[(int)position.x, (int)position.y].resource = new ResourceCount(0, 0, 0, 0, 1);
+
+        GameManager.UpdateResourceCounts(position);
         return true;
     }
 

@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
-public class ButtonManager : MonoBehaviour {
+public class ButtonManager : MonoBehaviour 
+{
+    public static ButtonManager Instance;
 
     //Resource Fields
     public Text[] ResourceTextFields = new Text[5];
@@ -45,11 +47,14 @@ public class ButtonManager : MonoBehaviour {
 
     public MouseGridMovement GridMovement;
     public AudioClip CitySound;
-    private CityView cityManager;
 
     void Awake()
     {
-        cityManager = GameObject.Find("CityManager").GetComponent<CityView>();
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        
         popUpTransform = PopUpUpgrade.GetComponent<RectTransform>();
     }
 
@@ -183,7 +188,7 @@ public class ButtonManager : MonoBehaviour {
         if(GridMovement.selectedCity == null) 
         {
             var position = new Vector2(upgradePosition.x, upgradePosition.z);
-            cityManager.BuildCity(position);
+            CityView.Instance.BuildCity(position);
         }
         else 
         {
